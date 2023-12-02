@@ -1,0 +1,236 @@
+﻿@page "/englishbook"
+<PageTitle>English</PageTitle>
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		body, html {
+			margin: 0;
+			padding: 0;
+		}
+
+		.checked {
+			color: orange;
+		}
+
+		.container {
+			display: flex;
+			margin-left: 20px auto;
+			margin-right: 20px auto;
+			gap: 20px;
+			
+		}
+
+		.image-container {
+			flex: 1;
+			margin: 0px;
+		}
+
+		.product-details {
+			flex: 2;
+			background-color: #f6efe7;
+		}
+
+		.reviews {
+			flex: 3;
+			margin-left: 95px;
+			margin-right: 95px;
+			background-color: #f6efe7;
+			padding: 20px;
+		}
+
+		.user-info {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+		}
+
+		.user-icon {
+			margin: 1px;
+			border: 1px solid #ddd;
+			border-radius: 500px;
+			padding: 3px;
+			width: 30px;
+		}
+
+		.rating {
+			margin: 1px;
+		}
+
+		.other-books {
+			flex: 1;
+			padding: 20px;
+			background-color: #FAEBD7;
+			margin: 20px;
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+			display: block;
+			margin: 0 auto;
+		}
+
+		h1 {
+			margin-bottom: 15px;
+		}
+
+		p {
+			margin: 15px;
+			font-size: 20px;
+		}
+
+		hr {
+			margin: 15px;
+		}
+	</style>
+</head>
+<div class="container">
+	<div class="image-container">
+		<img src="https://popularonline.com.sg/cdn/shop/files/ExpressS2EngExamPrac9789815133011.jpg?v=1689325289" alt="Product Image">
+	</div>
+	<div class="product-details">
+		<h1>English Examination Practice Express Secondary 2</h1>
+		<p>by <b>Joanne Tan, Alex Wang</b> (Authors) / <b>Educational Publishing House</b> (Publisher)</p>
+		<p>
+			<em>
+				5.0
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				<span class="fa fa-star checked"></span>
+				| 46,370 Reviews
+			</em>
+		</p>
+		<p>
+			- 12 practice papers based on the latest 2023 exam format<br />
+			- Includes all Paper 2 components: Visual Text, Narrative/Recount, Non-narrative Text<br />
+			- With additional Editing practice<br />
+
+			In order to do well in weighted assessments and examinations, students should familiarise themselves with the examination format and practise questions that are commonly tested.
+			<br />
+			The English Examination Practice series aims to help students score well by providing questions that are modelled closely after those found in examinations. By practising these questions, students will have an understanding of the level of proficiency expected of them.
+			<br />
+			Students will feel more confident when they sit for their weighted assessments and examinations after they have completed the practices in this series.
+		</p>
+		<p>Price: 10.90</p>
+		<p>Availability: In Stock</p>
+		<button>Add to Cart</button>
+	</div>
+	<br>
+</div>
+<hr>
+<div class="reviews">
+    <!-- Add in DateTime, Stars, Picture? -->
+	<h1>Top Reviews</h1>
+	<form>
+		<!--<label for="reviewText">/label>-->
+		<textarea id="reviewText" rows="5" cols="40" @bind="@newReviewText"></textarea>
+		<br>
+		<!--<label for="userRating"></label>-->
+		<select id="userRating" @bind="@newReviewRating">
+			<option value="1">1 star</option>
+			<option value="2">2 stars</option>
+			<option value="3">3 stars</option>
+			<option value="4">4 stars</option>
+			<option value="5">5 stars</option>
+		</select>
+		<br>
+		<button type="button" @onclick="submitReview">Submit review</button>
+	</form>
+	<br>
+
+	<!-- Existing reviews -->
+	@foreach (var review in reviewsArray)
+	{
+		<div class="user-info">
+			<img src="https://images-na.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png" alt="User Icon" class="user-icon">
+			<span class="rating"></span>
+			Customer | <em>@($"{review.rating}")| Published on @($"{review.date}")</em>
+		</div>
+		<p>@review.text</p>
+		<br>
+	}
+</div>
+<hr>
+<div class="other-books">
+<h1>Other books you might like</h1>
+</div>
+@code {
+	// Initialize an array to store reviews
+	List<Review> reviewsArray = new List<Review>();
+
+	// Properties for binding in the form
+	string newReviewText = "";
+	int newReviewRating = 1;
+
+	// Initialization logic
+	protected override void OnInitialized()
+	{
+		// Initialize some sample reviews
+		reviewsArray.Add(new Review
+			{
+				text = "Great book, really helped me. Would recommend!",
+				rating = 5,
+				date = "12/01/2023",
+			});
+
+		reviewsArray.Add(new Review
+			{
+				text = "Not good book, don't recommend",
+				rating = 1,
+				date = "11/30/2023",
+			});
+	}
+
+	// Function to add a review to the array
+	private void submitReview()
+	{
+		if (!string.IsNullOrWhiteSpace(newReviewText))
+		{
+			var newReview = new Review
+				{
+					text = newReviewText,
+					rating = newReviewRating,
+					date = GetCurrentDate(),
+				};
+
+			// Add the new review to the array
+			reviewsArray.Add(newReview);
+
+			// Clear the form fields
+			newReviewText = "";
+			newReviewRating = 1;
+		}
+	}
+
+	// Function to get the current date in MM/DD/YYYY format
+	private string GetCurrentDate()
+	{
+		var today = DateTime.Now;
+		return today.ToString("MM/dd/yyyy");
+	}
+
+	// Review class to store review information
+	public class Review
+	{
+		public string text { get; set; }
+		public int rating { get; set; }
+		public string date { get; set; }
+	}
+	public string getStars(int value)
+	{
+		string stars = "";
+
+		for (int i = 0; i < value; i++)
+		{
+			stars = stars + "<span class='fa fa-star checked'></span>";
+		}
+		for (int i = 0; i < (5-value); i++)
+		{
+			stars = stars + "<span class='fa fa-star'></span>";
+		}
+
+		return stars;
+	}
+}
