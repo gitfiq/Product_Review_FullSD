@@ -1,5 +1,5 @@
-﻿@page "/englishbook"
-<PageTitle>English</PageTitle>
+﻿@page "/physicsbook"
+<PageTitle>Physics</PageTitle>
 <head>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<style>
@@ -17,7 +17,6 @@
 			margin-left: 20px auto;
 			margin-right: 20px auto;
 			gap: 20px;
-			
 		}
 
 		.image-container {
@@ -89,6 +88,7 @@
 			max-width: 200px;
 			margin: 0 auto;
 		}
+
 		.product {
 			flex: 1;
 			text-align: center;
@@ -101,10 +101,10 @@
 				height: auto;
 				align-content: center
 			}
-			.product h1{
 
+			.product h1 {
 			}
-			
+
 
 		.product-title {
 			margin-top: 10px;
@@ -114,35 +114,29 @@
 </head>
 <div class="container">
 	<div class="image-container">
-		<img src="https://popularonline.com.sg/cdn/shop/files/ExpressS2EngExamPrac9789815133011.jpg?v=1689325289" alt="Product Image">
+		<img src="https://popularonline.com.sg/cdn/shop/files/O_NLevelAtYourFingertipsSciencePhysics.jpg?v=1698634470" alt="Product Image">
 	</div>
 	<div class="product-details">
-		<h1>English Examination Practice Express Secondary 2</h1>
-		<p>by <b>Joanne Tan, Alex Wang</b> (Authors) / <b>Educational Publishing House</b> (Publisher)</p>
+		<h1>O/N Level (G3/G2) Science Physics At Your Fingertips </h1>
+		<p>by <b>Thang ML</b> (Author) / <b>Educational Publishing House</b> (Publisher)</p>
 		<p>
 			<em>
-				5.0
+				4.0
 				<span class="fa fa-star checked"></span>
 				<span class="fa fa-star checked"></span>
 				<span class="fa fa-star checked"></span>
 				<span class="fa fa-star checked"></span>
-				<span class="fa fa-star checked"></span>
-				| 46,370 Reviews
+				<span class="fa fa-star"></span>
+				| 961,870 Reviews
 			</em>
 		</p>
 		<p>
-			- 12 practice papers based on the latest 2023 exam format<br />
-			- Includes all Paper 2 components: Visual Text, Narrative/Recount, Non-narrative Text<br />
-			- With additional Editing practice<br />
+			The O/N-Level (G2/G3) At Your Fingertips series is a useful everyday handbook reference for Upper Secondary students revising important concepts in the O/N Level.<br/>
 
-			In order to do well in weighted assessments and examinations, students should familiarise themselves with the examination format and practise questions that are commonly tested.
-			<br />
-			The English Examination Practice series aims to help students score well by providing questions that are modelled closely after those found in examinations. By practising these questions, students will have an understanding of the level of proficiency expected of them.
-			<br />
-			Students will feel more confident when they sit for their weighted assessments and examinations after they have completed the practices in this series.
+			Each topic contains revision notes, practical tips, worked examples and a concept map that students can refer to as they attempt past-year questions in the ten-year series during their daily practices.
 		</p>
-		<p>Price: 10.90</p>
-		<p>Availability: In Stock</p>
+		<p>Price: 7.90</p>
+		<p>Availability: Out of Stock</p>
 		<button>Add to Cart</button>
 	</div>
 	<br>
@@ -186,22 +180,19 @@
 	}
 </div>
 <hr>
-
 <div class="other-books">
 	<div>
 		<h1>Other books you might like</h1>
 	</div>
 	<div class="product-container">
 		<!-- Product 1 -->
-		
 		<div class="product">
-			<img src="https://popularonline.com.sg/cdn/shop/files/O_NLevelAtYourFingertipsSciencePhysics.jpg?v=1698634470" alt="Product Image">
-			<div class="product-title"><a href="physicsbook">Physics Book</a></div>
+			<img src="https://popularonline.com.sg/cdn/shop/files/ExpressS2EngExamPrac9789815133011.jpg?v=1689325289" alt="Product Image">
+			<div class="product-title"><a href="englishbook">English Book</a></div>
 		</div>
 	</div>
 </div>
 <br />
-	
 @code {
 	// Initialize an array to store reviews
 	List<Review> reviewsArray = new List<Review>();
@@ -217,7 +208,7 @@
 		// Initialize some sample reviews
 		reviewsArray.Add(new Review
 			{
-				text = "Great book, really helped me. Would recommend!",
+				text = "I love physics!",
 				rating = 5,
 				date = "12/01/2023",
 				username = "John"
@@ -225,7 +216,7 @@
 
 		reviewsArray.Add(new Review
 			{
-				text = "Not good book, don't recommend",
+				text = "I do not like physics.",
 				rating = 1,
 				date = "11/30/2023",
 				username = "Mike"
