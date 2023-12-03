@@ -124,6 +124,9 @@
     <!-- Add in DateTime, Stars, Picture? -->
 	<h1>Top Reviews</h1>
 	<form>
+		<label for="usernameText">Username: </label>
+		<textarea id="usernameText" rows="1" cols="20" @bind="@newUsernameText"></textarea>
+		<br />
 		<!--<label for="reviewText">/label>-->
 		<textarea id="reviewText" rows="5" cols="40" @bind="@newReviewText"></textarea>
 		<br>
@@ -146,7 +149,9 @@
 		<div class="user-info">
 			<img src="https://images-na.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png" alt="User Icon" class="user-icon">
 			<span class="rating"></span>
-			Customer | <em>@($"{review.rating}")| Published on @($"{review.date}")</em>
+			@review.username | <em>@($"{review.rating}") 
+				@getStars(review.rating)
+				| Published on @($"{review.date}")</em>
 		</div>
 		<p>@review.text</p>
 		<br>
@@ -161,6 +166,7 @@
 	List<Review> reviewsArray = new List<Review>();
 
 	// Properties for binding in the form
+	string newUsernameText = "Customer";
 	string newReviewText = "";
 	int newReviewRating = 1;
 
@@ -173,6 +179,7 @@
 				text = "Great book, really helped me. Would recommend!",
 				rating = 5,
 				date = "12/01/2023",
+				username = "John"
 			});
 
 		reviewsArray.Add(new Review
@@ -180,6 +187,7 @@
 				text = "Not good book, don't recommend",
 				rating = 1,
 				date = "11/30/2023",
+				username = "Mike"
 			});
 	}
 
@@ -193,6 +201,7 @@
 					text = newReviewText,
 					rating = newReviewRating,
 					date = GetCurrentDate(),
+					username = newUsernameText
 				};
 
 			// Add the new review to the array
@@ -201,6 +210,7 @@
 			// Clear the form fields
 			newReviewText = "";
 			newReviewRating = 1;
+			newUsernameText = "Customer";
 		}
 	}
 
@@ -215,22 +225,22 @@
 	public class Review
 	{
 		public string text { get; set; }
+		public string username { get; set; }
 		public int rating { get; set; }
 		public string date { get; set; }
 	}
-	public string getStars(int value)
+	public MarkupString getStars(int value)
 	{
 		string stars = "";
-
 		for (int i = 0; i < value; i++)
 		{
-			stars = stars + "<span class='fa fa-star checked'></span>";
+			stars = stars +"<span class='fa fa-star checked'></span>" ;
 		}
 		for (int i = 0; i < (5-value); i++)
 		{
 			stars = stars + "<span class='fa fa-star'></span>";
 		}
-
-		return stars;
+		return new MarkupString(stars);
 	}
+	
 }
