@@ -1,0 +1,25 @@
+﻿.search-input {
+    position: absolute;
+    width: 60%;
+    height: 50px;
+    padding: 5px 10px;
+    border: 3px solid #D8C4B6;
+    border-radius: 15px;
+    font-size: 18px;
+    background-color: antiquewhite;
+    top: 230%;
+    left:19%;
+}
+.btn {
+    position: absolute;
+    display: inline-block;
+    width: 10%;
+    height: 50px;
+    padding: 5px 10px;
+    border: 3px solid #D8C4B6;
+    border-radius: 15px;
+    font-size: 18px;
+    background-color: antiquewhite;
+    top: 230%;
+    left: 80%;
+}

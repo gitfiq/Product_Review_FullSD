@@ -1,32 +1,55 @@
-﻿<div class="top-row ps-3 navbar">
+﻿@inject NavigationManager Navigation
+
+<div class="top-row navbar">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Project</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="d-flex flex-row">
+            <a class="navbar-brand" href="">Project</a>
+            <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+                <ul class="navbar-nav mb-0 close">
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                            <span class="oi oi-home" aria-hidden="true"></span> Home
+                        </NavLink>
+                    </li>
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="counter">
+                            <span class="oi oi-plus" aria-hidden="true"></span> Counter
+                        </NavLink>
+                    </li>
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="fetchdata">
+                            <span class="oi oi-list-rich" aria-hidden="true"></span> Topic
+                        </NavLink>
+                    </li>
+                    <li class="nav-item dropdown px-3">
+                        <NavLink class="nav-link dropdown-toggle" role="button">
+                            Dropdown
+                        </NavLink>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <NavLink class="dropdown-item" href="#">Math</NavLink>
+                            </li>
+                            <li>
+                                <NavLink class="dropdown-item" href="#">Science</NavLink>
+                            </li>
+                            <li>
+                                <NavLink class="dropdown-item" href="#">English</NavLink>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+        <div class="d-flex flex-row-reverse">
+            <LoginDisplay />
+        </div>
     </div>
 </div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="navbar-nav me-auto mb-0 mb-lg-0">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
-</div>
-
 
 
 
@@ -38,5 +61,9 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+    private void BeginLogOut(MouseEventArgs args)
+    {
+        Navigation.NavigateToLogout("authentication/logout", "/");
     }
 }
