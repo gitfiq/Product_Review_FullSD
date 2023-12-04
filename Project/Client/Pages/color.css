@@ -1,0 +1,85 @@
+﻿namespace Project.Client.Pages
+{
+    public class color
+    {
+		body, html {
+			margin: 0;
+			padding: 0;
+		}
+
+		.checked {
+			color: orange;
+		}
+
+		.container {
+			display: flex;
+			margin-left: 20px auto;
+			margin-right: 20px auto;
+			gap: 20px;
+			
+		}
+
+		.image-container {
+			flex: 1;
+			margin: 0px;
+		}
+
+		.product-details {
+			flex: 2;
+			background-color: #f6efe7;
+		}
+
+		.reviews {
+			flex: 3;
+			margin-left: 95px;
+			margin-right: 95px;
+			background-color: #f6efe7;
+			padding: 20px;
+		}
+
+		.user-info {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+		}
+
+		.user-icon {
+			margin: 1px;
+			border: 1px solid #ddd;
+			border-radius: 500px;
+			padding: 3px;
+			width: 30px;
+		}
+
+		.rating {
+			margin: 1px;
+		}
+
+		.other-books {
+			flex: 1;
+			padding: 20px;
+			background-color: #FAEBD7;
+			margin: 20px;
+		}
+
+		img {
+			max-width: 100%;
+			height: auto;
+			display: block;
+			margin: 0 auto;
+		}
+
+		h1 {
+			margin-bottom: 15px;
+		}
+
+		p {
+			margin: 15px;
+			font-size: 20px;
+		}
+
+		hr {
+			margin: 15px;
+		}
+    }
+}
