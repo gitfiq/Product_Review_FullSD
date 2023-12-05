@@ -1,5 +1,5 @@
 ﻿.search-input {
-    position: absolute;
+    position: relative;
     width: 60%;
     height: 50px;
     padding: 5px 10px;
@@ -11,7 +11,7 @@
     left:19%;
 }
 .btn {
-    position: absolute;
+    position: relative;
     display: inline-block;
     width: 10%;
     height: 50px;
@@ -20,6 +20,40 @@
     border-radius: 15px;
     font-size: 18px;
     background-color: antiquewhite;
-    top: 230%;
-    left: 80%;
+    margin-top: -10px; /* Adjust as needed */
+    margin-left: 300px; /* Adjust as needed */
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.product {
+    flex: 1;
+    text-align: center;
+    height: 50px;
+}
+
+    .product img {
+        flex: 1;
+        max-width: 100%;
+        height: auto;
+        align-content: center
+    }
+
+.product-title {
+    margin-top: 10px;
+    font-size: 14px;
 }
