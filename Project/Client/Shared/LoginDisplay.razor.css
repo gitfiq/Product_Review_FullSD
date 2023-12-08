@@ -1,4 +1,4 @@
-﻿.oi {
+.oi {
     width: 2rem;
     font-size: 1.0rem;
     vertical-align: text-top;
@@ -7,11 +7,13 @@
 
 .nav-item {
     font-size: 1.0rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding-bottom: 3px;
 }
 
 
     .nav-item ::deep a {
-        color: #d7d7d7;
         border-radius: 5px;
         height: 3rem;
         display: flex;
@@ -21,12 +23,12 @@
     }
 
         .nav-item ::deep a.active {
-            background-color: rgba(255,255,255,0.20);
-            color: blanchedalmond;
+            background-color: #D8C4B6;
+            color: #1d3357;
         }
 
         .nav-item ::deep a:hover {
-            background-color: rgba(255,255,255,0.1);
-            color: blanchedalmond;
+            background-color: #D8C4B6;
+            color: #1d3357;
         }
 
