@@ -7,8 +7,9 @@
 }
 
 .navbar-brand {
+    padding-top: 10px;
     font-size: 1.0rem;
-    color: #D8C4B6
+    color: antiquewhite;
 }
 
 .oi {
@@ -19,27 +20,29 @@
 }
 
 .nav-item {
-    font-size: 0.9rem;
+    font-size: 1.0rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding-bottom: 3px;
 }
 
     .nav-item ::deep a {
-        color: #d7d7d7;
         border-radius: 4px;
         height: 3rem;
         display: flex;
         align-items: center;
         line-height: 3rem;
-        color: #D8C4B6
+        color: antiquewhite;
     }
 
         .nav-item ::deep a.active {
-            background-color: rgba(255,255,255,0.20);
-            color: #D8C4B6;
+            background-color: #D8C4B6;
+            color: #1d3357;
         }
 
         .nav-item ::deep a:hover {
-            background-color: rgba(255,255,255,0.1);
-            color: #D8C4B6;
+            background-color: #D8C4B6;
+            color: #1d3357;
         }
 
 @media (min-width: 641px) {
