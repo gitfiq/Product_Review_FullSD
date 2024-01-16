@@ -1,0 +1,97 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@book" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Title: </label>
+        <div>
+            <InputText @bind-Value="@book.Title" class="form-control" />
+            <ValidationMessage For="@(() => book.Title)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Book Description: </label>
+        <div>
+            <InputTextArea @bind-Value="@book.Description" class="form-control" />
+            <ValidationMessage For="@(() => book.Description)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Publish Year: </label>
+        <div>
+            <InputNumber @bind-Value="@book.PublishYear" class="form-control" />
+            <ValidationMessage For="@(() => book.PublishYear)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Edition: </label>
+        <div>
+            <InputText @bind-Value="@book.Edition" class="form-control" />
+            <ValidationMessage For="@(() => book.Edition)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Subject: </label>
+        <div>
+            <InputText @bind-Value="@book.Subject" class="form-control" />
+            <ValidationMessage For="@(() => book.Subject)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>School Level: </label>
+        <div>
+            <InputText @bind-Value="@book.SchoolLevel" class="form-control" />
+            <ValidationMessage For="@(() => book.SchoolLevel)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Number Of Pages: </label>
+        <div>
+            <InputNumber @bind-Value="@book.NumberOfPages" class="form-control" />
+            <ValidationMessage For="@(() => book.NumberOfPages)" />
+        </div>
+    </div>
+
+    <div class="forn-group">
+        <label>Publisher: </label>
+        <div>
+            <InputSelect @bind-Value="book.PublisherID" class="form-control">
+                <option value="">--Select Publisher--</option>
+                @if (Publishers != null)
+                {
+                    foreach (var publisher in Publishers)
+                    {
+                        <option value="@publisher.PublisherId">@publisher.PublisherName</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => book.PublisherID)" />
+        </div>
+    </div>
+    <br /> <br />
+
+    <button type="submit" class="btn btn-success btn-block">
+        @ButtonText
+    </button>
+    <BackToList Target="books" />
+</EditForm>
+@code {
+    [Parameter] public Book? book { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Publisher>? Publishers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Publishers = await _client.GetFromJsonAsync<List<Publisher>>($"{Endpoints.PublishersEndpoint}");
+    }
+}

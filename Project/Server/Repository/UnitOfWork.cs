@@ -1,0 +1,74 @@
+﻿using Project.Server.IRepository;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Project.Server.Data;
+using Project.Server.Models;
+using Project.Shared.Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+
+namespace Project.Server.Repository
+{
+    public class UnitOfWork : IUnitOfWork
+    {
+        private readonly ApplicationDbContext _context;
+        private IGenericRepository<Recommendation> _recommendations;
+        private IGenericRepository<Staff> _staffs;
+        private IGenericRepository<Book> _books;
+        private IGenericRepository<Review> _reviews;
+        private IGenericRepository<Publisher> _publishers;
+
+        private UserManager<ApplicationUser> _userManager;
+
+        public UnitOfWork(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        {
+            _context = context;
+            _userManager = userManager;
+        }
+
+        public IGenericRepository<Book> Books
+            => _books ??= new GenericRepository<Book>(_context);
+        public IGenericRepository<Staff> Staffs
+            => _staffs ??= new GenericRepository<Staff>(_context);
+        public IGenericRepository<Review> Reviews
+            => _reviews ??= new GenericRepository<Review>(_context);
+        public IGenericRepository<Recommendation> Recommendations
+            => _recommendations ??= new GenericRepository<Recommendation>(_context);
+        public IGenericRepository<Publisher> Publishers
+            => _publishers ??= new GenericRepository<Publisher>(_context);
+
+        public void Dispose()
+        {
+            _context.Dispose();
+            GC.SuppressFinalize(this);
+        }
+
+
+        public async Task Save(HttpContext httpContext)
+        {
+            //To be implemented
+            string user = "System";
+
+            var entries = _context.ChangeTracker.Entries()
+                .Where(q => q.State == EntityState.Modified ||
+                    q.State == EntityState.Added);
+
+            foreach (var entry in entries)
+            {
+                ((BaseDomainModel)entry.Entity).DateUpdated = DateTime.Now;
+                ((BaseDomainModel)entry.Entity).UpdatedBy = user;
+                if (entry.State == EntityState.Added)
+                {
+                    ((BaseDomainModel)entry.Entity).DateCreated = DateTime.Now;
+                    ((BaseDomainModel)entry.Entity).CreatedBy = user;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
+    }
+}

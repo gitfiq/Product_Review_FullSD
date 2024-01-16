@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Project.Server.Data;
 using Microsoft.AspNetCore.Identity;
 using Project.Server.Models;
+using Project.Server.IRepository;
+using Project.Server.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +24,10 @@ builder.Services.AddIdentityServer()
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson(op =>op.SerializerSettings.ReferenceLoopHandling =Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddRazorPages();
+
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 

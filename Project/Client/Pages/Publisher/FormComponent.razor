@@ -1,0 +1,56 @@
+﻿<EditForm Model="@publisher" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="form-group">
+        <label>Publisher Name: </label>
+        <div>
+            <InputText @bind-Value="@publisher.PublisherName" class="form-control"/>
+            <ValidationMessage For="@(() => publisher.PublisherName)"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Email Address: </label>
+        <div>
+            <InputText @bind-Value="@publisher.EmailAddress" class="form-control" />
+            <ValidationMessage For="@(() => publisher.EmailAddress)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Contact Information: </label>
+        <div>
+            <InputText @bind-Value="@publisher.ContactInfo" class="form-control" />
+            <ValidationMessage For="@(() => publisher.ContactInfo)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Addess: </label>
+        <div>
+            <InputText @bind-Value="@publisher.Address" class="form-control" />
+            <ValidationMessage For="@(() => publisher.Address)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Website Link: </label>
+        <div>
+            <InputText @bind-Value="@publisher.WebsiteLink" class="form-control" />
+            <ValidationMessage For="@(() => publisher.WebsiteLink)" />
+        </div>
+    </div>
+    <br /> <br />
+
+    <button type="submit" class="btn btn-success btn-block">
+        @ButtonText
+    </button>
+    <BackToList Target="publishers" />
+</EditForm>
+
+@code {
+    [Parameter] public Publisher? publisher { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

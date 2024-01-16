@@ -1,0 +1,79 @@
+﻿@page "/publishers/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3 class="card-title">Manage Publisher</h3>
+<br />
+<br />
+
+<a href="/publishers/create" class="btn btn-primary">
+    <span class="oi oi-plus"></span>
+    Add New Publisher
+</a>
+<br />
+<br />
+
+@if (Publishers == null)
+{
+    <div class="alert alert-info">Looding Publishers....</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>PublisherName</th>
+                <th>EmailAddress</th>
+                <th>Contact Info</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Publisher in Publishers)
+            {
+                <tr>
+                    <td>@Publisher.PublisherName</td>
+                    <td>@Publisher.EmailAddress</td>
+                    <td>@Publisher.ContactInfo</td>
+                    <td>@Publisher.Address</td>
+                    <td>
+                        <a href="/publishers/view/@Publisher.PublisherId" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/publishers/edit/@Publisher.PublisherId" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(Publisher.PublisherId))">
+                            <span class="oi oi-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Publisher>? Publishers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Publishers = await _client.GetFromJsonAsync<List<Publisher>>($"{Endpoints.PublishersEndpoint}");
+    }
+
+    async Task Delete(int PublisherId)
+    {
+        if (Publishers != null)
+        {
+            var Publisher = Publishers.First(q => q.PublisherId == PublisherId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Publisher.PublisherName}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.PublishersEndpoint}/{PublisherId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+}

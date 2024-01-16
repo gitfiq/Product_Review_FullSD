@@ -1,0 +1,22 @@
+﻿@page "/publishers/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title"> Add Publisher</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Publisher" publisher="publisher" OnValidSubmit="@CreatePublisher" />
+
+
+@code {
+    Publisher publisher = new Publisher();
+
+    private async Task CreatePublisher()
+    {
+        await _client.PostAsJsonAsync(Endpoints.PublishersEndpoint, publisher);
+        //Console.Write("FGFGFGFG");
+        _navManager.NavigateTo("/publishers/");
+    }
+
+}

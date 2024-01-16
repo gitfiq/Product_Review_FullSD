@@ -1,0 +1,30 @@
+﻿@page "/recommendations/create/"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3 class="card-title"> Add Recommendation</h3>
+<hr />
+<br />
+
+<FormComponent ButtonText="Create Recommendations" recommendation="recommendation" OnValidSubmit="@CreateRecommendation" />
+
+
+@code {
+    Recommendation recommendation = new Recommendation();
+
+    private IList<Book>? Books;
+    private IList<Staff>? Staffs;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+    }
+
+    private async Task CreateRecommendation()
+    {
+        await _client.PostAsJsonAsync(Endpoints.RecommendationsEndpoint, recommendation);
+        _navManager.NavigateTo("/recommendations/");
+    }
+
+}

@@ -1,0 +1,85 @@
+﻿@inject HttpClient _client
+
+<EditForm Model="@recommendation" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Recommendation Description: </label>
+        <div>
+            <InputTextArea @bind-Value="@recommendation.Description" class="form-control" />
+            <ValidationMessage For="@(() => recommendation.Description)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Recommendation Date: </label>
+        <div>
+            <InputDate @bind-Value="@recommendation.Date" class="form-control" />
+            <ValidationMessage For="@(() => recommendation.Date)" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Staff Rating: </label>
+        <div>
+            <InputNumber @bind-Value="@recommendation.StaffRating" class="form-control" />
+            <ValidationMessage For="@(() => recommendation.StaffRating)" />
+        </div>
+    </div>
+
+    <div class="forn-group">
+        <label>Staff: </label>
+        <div>
+            <InputSelect @bind-Value="recommendation.StaffID" class="form-control">
+                <option value="">--Select Staff--</option>
+                @if (Staffs != null)
+                {
+                    foreach (var staff in Staffs)
+                    {
+                        <option value="@staff.StaffID">@staff.FirstName @staff.LastName</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => recommendation.StaffID)" />
+        </div>
+    </div>
+
+    <div class="forn-group">
+        <label>Book: </label>
+        <div>
+            <InputSelect @bind-Value="recommendation.BookID" class="form-control">
+                <option value="">--Select Book--</option>
+                @if (Books != null)
+                {
+                    foreach (var book in Books)
+                    {
+                        <option value="@book.BookId">@book.Title</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => recommendation.BookID)" />
+        </div>
+    </div>
+    <br /> <br />
+
+    <button type="submit" class="btn btn-success btn-block">
+        @ButtonText
+    </button>
+    <BackToList Target="recommendations" />
+</EditForm>
+
+@code {
+    [Parameter] public Recommendation? recommendation { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Staff>? Staffs;
+    private IList<Book>? Books;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
+    }
+}
