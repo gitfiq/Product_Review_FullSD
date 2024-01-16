@@ -1,8 +1,10 @@
-﻿using Duende.IdentityServer.EntityFramework.Options;
+﻿    using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Project.Server.Configuration.Entities;
 using Project.Server.Models;
+using Project.Shared.Domain;
 
 namespace Project.Server.Data
 {
@@ -12,6 +14,23 @@ namespace Project.Server.Data
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
+        }
+        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<BookAuthorDetail> BookAuthorDetail { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new AppUserSeedConfiguration());
+            builder.ApplyConfiguration(new AuthorSeedConfiguration());
+            builder.ApplyConfiguration(new ReviewSeedConfiguration());
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
         }
     }
 }
