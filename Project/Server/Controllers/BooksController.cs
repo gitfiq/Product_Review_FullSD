@@ -2,59 +2,62 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Project.Server.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project.Server.Data;
-using Project.Server.IRepository;
 using Project.Shared.Domain;
+using System.Drawing;
 
 namespace Project.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorsController : ControllerBase
+    public class BooksController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public AuthorsController(IUnitOfWork unitOfWork)
+        public BooksController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Authors
+        // GET: api/Books
         [HttpGet]
-        public async Task<IActionResult> GetAuthors()
+        public async Task<IActionResult> GetBooks()
         {
-            var authors = await _unitOfWork.Authors.GetAll();
-            return Ok(authors);
+
+            var books = await _unitOfWork.Books.GetAll();
+            return Ok(books);
         }
 
-        // GET: api/Authors/5
+        // GET: api/Books/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAuthor(int id)
+        public async Task<IActionResult> GetBook(int id)
         {
-            var author = await _unitOfWork.Authors.Get(q => q.Id == id);
 
-            if (author == null)
+            var book = await _unitOfWork.Books.Get(q => q.Id == id);
+
+            if (book == null)
             {
                 return NotFound();
             }
 
-            return Ok(author);
+            return Ok(book);
         }
 
-        // PUT: api/Authors/5
+        // PUT: api/Books/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAuthor(int id, Author author)
+        public async Task<IActionResult> PutBook(int id, Book book)
         {
-            if (id != author.Id)
+            if (id != book.Id)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Authors.Update(author);
+            _unitOfWork.Books.Update(book);
+
 
             try
             {
@@ -62,7 +65,7 @@ namespace Project.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!await AuthorExists(id))
+                if (!await BookExists(id))
                 {
                     return NotFound();
                 }
@@ -75,37 +78,38 @@ namespace Project.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Authors
+        // POST: api/Books
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Author>> PostAuthor(Author author)
+        public async Task<ActionResult<Book>> PostBook(Book book)
         {
-            await _unitOfWork.Authors.Insert(author);
+
+            await _unitOfWork.Books.Insert(book);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetAuthor", new { id = author.Id }, author);
+            return CreatedAtAction("GetBook", new { id = book.Id }, book);
         }
 
-        // DELETE: api/Authors/5
+        // DELETE: api/Books/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAuthor(int id)
+        public async Task<IActionResult> DeleteBook(int id)
         {
-            var author = await _unitOfWork.Authors.Get(q => q.Id == id);
-            if (author == null)
+            var book = await _unitOfWork.Books.Get(q => q.Id == id);
+
+            if (book == null)
             {
                 return NotFound();
             }
-
-            await _unitOfWork.Authors.Delete(id);
+            await _unitOfWork.Books.Delete(id);
             await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
-        private async Task<bool> AuthorExists(int id)
+        private async Task<bool> BookExists(int id)
         {
-            var author = await _unitOfWork.Authors.Get(q => q.Id == id);
-            return author != null;
+            var book = await _unitOfWork.Books.Get(q => q.Id == id);
+            return book != null;
         }
     }
 }

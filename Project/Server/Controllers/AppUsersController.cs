@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Project.Server.Data;
+using Project.Server.IRepository;
 using Project.Shared.Domain;
 
 namespace Project.Server.Controllers
@@ -14,40 +9,33 @@ namespace Project.Server.Controllers
     [ApiController]
     public class AppUsersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AppUsersController(ApplicationDbContext context)
+        public AppUsersController(IUnitOfWork unitOfWOrk)
         {
-            _context = context;
+            _unitOfWork = unitOfWOrk;
         }
 
         // GET: api/AppUsers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetAppUsers()
+        public async Task<IActionResult> GetAppUsers()
         {
-          if (_context.AppUsers == null)
-          {
-              return NotFound();
-          }
-            return await _context.AppUsers.ToListAsync();
+            var appUsers = await _unitOfWork.AppUsers.GetAll();
+            return Ok(appUsers);
         }
 
         // GET: api/AppUsers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetAppUser(int id)
+        public async Task<IActionResult> GetAppUser(int id)
         {
-          if (_context.AppUsers == null)
-          {
-              return NotFound();
-          }
-            var appUser = await _context.AppUsers.FindAsync(id);
+            var appUser = await _unitOfWork.AppUsers.Get(q => q.Id == id);
 
             if (appUser == null)
             {
                 return NotFound();
             }
 
-            return appUser;
+            return Ok(appUser);
         }
 
         // PUT: api/AppUsers/5
@@ -60,15 +48,15 @@ namespace Project.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(appUser).State = EntityState.Modified;
+            _unitOfWork.AppUsers.Update(appUser);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _unitOfWork.Save(HttpContext);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AppUserExists(id))
+                if (!await AppUserExists(id))
                 {
                     return NotFound();
                 }
@@ -86,12 +74,8 @@ namespace Project.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<AppUser>> PostAppUser(AppUser appUser)
         {
-          if (_context.AppUsers == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.AppUsers'  is null.");
-          }
-            _context.AppUsers.Add(appUser);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.AppUsers.Insert(appUser);
+            await _unitOfWork.Save(HttpContext);
 
             return CreatedAtAction("GetAppUser", new { id = appUser.Id }, appUser);
         }
@@ -100,25 +84,22 @@ namespace Project.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppUser(int id)
         {
-            if (_context.AppUsers == null)
-            {
-                return NotFound();
-            }
-            var appUser = await _context.AppUsers.FindAsync(id);
+            var appUser = await _unitOfWork.AppUsers.Get(q => q.Id == id);
             if (appUser == null)
             {
                 return NotFound();
             }
 
-            _context.AppUsers.Remove(appUser);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.AppUsers.Delete(id);
+            await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
-        private bool AppUserExists(int id)
+        private async Task<bool> AppUserExists(int id)
         {
-            return (_context.AppUsers?.Any(e => e.Id == id)).GetValueOrDefault();
+            var appUser = await _unitOfWork.AppUsers.Get(q => q.Id == id);
+            return appUser != null;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using CarRentalManagement.Shared.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,8 +15,8 @@ namespace Project.Shared.Domain
         //Review Content
         public string? Content { get; set; }
         //FK to User
-        public virtual AppUser? User { get; set; }
-        public int UserID { get; set; }
+        public virtual AppUser? AppUser { get; set; }
+        public int AppUserID { get; set; }
         //FK to Book
         public virtual Book? Book { get; set; }
         public int BookID { get; set; }

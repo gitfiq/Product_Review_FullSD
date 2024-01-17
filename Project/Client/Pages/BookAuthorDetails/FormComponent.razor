@@ -1,0 +1,64 @@
+﻿@inject HttpClient _client
+
+<EditForm Model = "@bookAuthorDetail" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <div class="form-group">
+                <label>Book: </label>
+                <div>
+                    <InputSelect @bind-Value="bookAuthorDetail.BookID" class="form-control">
+                        <option value="">-- Select Book --</option>
+                        @if (Books != null)
+                        {
+                            foreach (var book in Books)
+                            {
+                                <option value="@book.Id">@book.Title</option>
+                            }
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => bookAuthorDetail.BookID)" />
+                </div>
+            </div>
+            <label>Author: </label>
+            <div>
+                <InputSelect @bind-Value="bookAuthorDetail.AuthorID" class="form-control">
+                    <option value="">-- Select Author--</option>
+                    @if (Authors != null)
+                    {
+                        foreach (var author in Authors)
+                        {
+                            <option value="@author.Id">@author.FirstName @author.LastName</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => bookAuthorDetail.Author)" />
+            </div>
+        </div>
+    </fieldset>
+    @if(!Disabled){
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <br />
+    <BackToList Target="reviews" />
+</EditForm>
+
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public BookAuthorDetail? bookAuthorDetail { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Author>? Authors;
+    private IList<Book>? Books;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Authors = await _client.GetFromJsonAsync<List<Author>>($"{Endpoints.AuthorsEndpoint}");
+        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
+    }
+}

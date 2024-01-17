@@ -27,6 +27,24 @@ namespace Project.Server.Configuration.Entities
                     ContactInfo = "11335577",
                     FirstName = "George",
                     LastName = "Orwell"
+                },
+                new Author
+                {
+                    Id = 3,
+                    EmailAddress = "jrrtolkien@bookmail.com",
+                    Biography = "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ",
+                    ContactInfo = "48591526",
+                    FirstName = "J.R.R",
+                    LastName = "Tolkien"
+                },
+                new Author
+                {
+                    Id = 4,
+                    EmailAddress = "jkrowling@bookmail.com",
+                    Biography = "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.",
+                    ContactInfo = "35246857",
+                    FirstName = "J.K",
+                    LastName = "Rowling"
                 }
             );
         }

@@ -1,6 +1,5 @@
-﻿using CarRentalManagement.Shared.Domain;
+﻿using Project.Shared.Domain;
 using Microsoft.AspNetCore.Http;
-using Project.Shared.Domain;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,5 +15,6 @@ namespace Project.Server.IRepository
         IGenericRepository<AppUser> AppUsers { get; }
         IGenericRepository<Book> Books { get; }
         IGenericRepository<BookAuthorDetail> BookAuthorDetails { get; }
+        IGenericRepository<Review> Reviews { get; }
     }
 }

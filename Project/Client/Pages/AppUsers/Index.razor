@@ -1,0 +1,80 @@
+﻿@page "/appUsers/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]  
+
+<h3 class="card-title">App Users</h3>
+<a href="/appUsers/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Add New App User
+</a>
+
+<br />
+
+@if (AppUsers == null)
+{
+    <div class="alert alert-info">Loading App Users...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Email Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appUser in AppUsers)
+            {
+                <tr>
+                    <td>@appUser.FirstName</td>
+                    <td>@appUser.LastName</td>
+                    <td>@appUser.Gender</td>
+                    <td>@appUser.Username</td>
+                    <td>@appUser.Password</td>
+                    <td>@appUser.EmailAddress</td>
+                    <td>
+                        <a href="/appUsers/view/@appUser.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/appUsers/edit/@appUser.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(appUser.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<AppUser>? AppUsers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        AppUsers = await _client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AppUsersEndpoint}");
+    }
+
+    async Task Delete(int appUserId)
+    {
+        if (AppUsers != null)
+        {
+            var appUser = AppUsers.First(q => q.Id == appUserId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {appUser.FirstName} {appUser.LastName}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.AppUsersEndpoint}/{appUserId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+}

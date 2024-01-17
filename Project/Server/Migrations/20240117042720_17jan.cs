@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class _15jan : Migration
+    public partial class _17jan : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -103,6 +103,7 @@ namespace Project.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -313,7 +314,7 @@ namespace Project.Server.Migrations
                     UserRating = table.Column<double>(type: "float", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    AppUserID = table.Column<int>(type: "int", nullable: false),
                     BookID = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -324,8 +325,8 @@ namespace Project.Server.Migrations
                 {
                     table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reviews_AppUsers_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Reviews_AppUsers_AppUserID",
+                        column: x => x.AppUserID,
                         principalTable: "AppUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -342,8 +343,8 @@ namespace Project.Server.Migrations
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "FirstName", "Gender", "LastName", "Password", "UpdatedBy", "Username" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2024, 1, 15, 12, 6, 28, 823, DateTimeKind.Local).AddTicks(4959), new DateTime(2024, 1, 15, 12, 6, 28, 823, DateTimeKind.Local).AddTicks(4979), "rayleong@bookmail.com", "Ray", "Male", "Leong", "password", "System", "User_Ray" },
-                    { 2, "System", new DateTime(2024, 1, 15, 12, 6, 28, 823, DateTimeKind.Local).AddTicks(4982), new DateTime(2024, 1, 15, 12, 6, 28, 823, DateTimeKind.Local).AddTicks(4982), "afiq@bookmail.com", "Afiq", "Male", "Afiq", "password", "System", "User_Afiq" }
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "rayleong@bookmail.com", "Ray", "Male", "Leong", "password", null, "User_Ray" },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "afiq@bookmail.com", "Afiq", "Male", "Afiq", "password", null, "User_Afiq" }
                 });
 
             migrationBuilder.InsertData(
@@ -352,8 +353,33 @@ namespace Project.Server.Migrations
                 values: new object[,]
                 {
                     { 1, "Roald Dahl (1916-1990) was a prolific British author renowned for his captivating and whimsical children's literature. Born in Wales, Dahl's diverse career began as a fighter pilot in World War II before he found success as a writer. His imaginative tales, such as \"Charlie and the Chocolate Factory,\" \"Matilda,\" and \"James and the Giant Peach,\" have become timeless classics, celebrated for their dark humor and memorable characters. Dahl's unique storytelling and vivid imagination earned him widespread acclaim, making him one of the most beloved and influential children's authors of the 20th century. His legacy endures, enchanting readers of all ages.", "22446688", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "roalddahl@bookmail.com", "Roald", "Dahl", null },
-                    { 2, "George Orwell (1903-1950), born Eric Arthur Blair in India, was a British writer and journalist renowned for his penetrating social and political critiques. Best known for dystopian classics \"Nineteen Eighty-Four\" and \"Animal Farm,\" Orwell delved into the perils of totalitarianism and the abuse of power. A committed democratic socialist, his experiences during the Spanish Civil War and reflections on totalitarian regimes fueled his compelling narratives. Orwell's non-fiction works, including \"Homage to Catalonia\" and \"Down and Out in Paris and London,\" displayed a keen eye for societal injustice. His incisive prose and commitment to truth make Orwell a literary giant whose influence persists globally.", "11335577", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "georgeorwell@bookmail.com", "George", "Orwell", null }
+                    { 2, "George Orwell (1903-1950), born Eric Arthur Blair in India, was a British writer and journalist renowned for his penetrating social and political critiques. Best known for dystopian classics \"Nineteen Eighty-Four\" and \"Animal Farm,\" Orwell delved into the perils of totalitarianism and the abuse of power. A committed democratic socialist, his experiences during the Spanish Civil War and reflections on totalitarian regimes fueled his compelling narratives. Orwell's non-fiction works, including \"Homage to Catalonia\" and \"Down and Out in Paris and London,\" displayed a keen eye for societal injustice. His incisive prose and commitment to truth make Orwell a literary giant whose influence persists globally.", "11335577", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "georgeorwell@bookmail.com", "George", "Orwell", null },
+                    { 3, "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ", "48591526", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jrrtolkien@bookmail.com", "J.R.R", "Tolkien", null },
+                    { 4, "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.", "35246857", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jkrowling@bookmail.com", "J.K", "Rowling", null }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Title", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Harry Potter", null },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Lord Of The Rings", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "BookAuthorDetail",
+                columns: new[] { "Id", "AuthorID", "BookID", "CreatedBy", "DateCreated", "DateUpdated", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, 4, 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 2, 3, 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Reviews",
+                columns: new[] { "Id", "AppUserID", "BookID", "Content", "CreatedBy", "DateCreated", "DateUpdated", "Title", "UpdatedBy", "UserRating" },
+                values: new object[] { 1, 1, 1, "This book has changed my life, and I would highly recommend this to anyone who is in school.", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "I love this book", null, 5.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -441,14 +467,14 @@ namespace Project.Server.Migrations
                 columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reviews_AppUserID",
+                table: "Reviews",
+                column: "AppUserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reviews_BookID",
                 table: "Reviews",
                 column: "BookID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reviews_UserID",
-                table: "Reviews",
-                column: "UserID");
         }
 
         /// <inheritdoc />

@@ -417,29 +417,25 @@ namespace Project.Server.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 15, 12, 6, 28, 823, DateTimeKind.Local).AddTicks(4959),
-                            DateUpdated = new DateTime(2024, 1, 15, 12, 6, 28, 823, DateTimeKind.Local).AddTicks(4979),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "rayleong@bookmail.com",
                             FirstName = "Ray",
                             Gender = "Male",
                             LastName = "Leong",
                             Password = "password",
-                            UpdatedBy = "System",
                             Username = "User_Ray"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 15, 12, 6, 28, 823, DateTimeKind.Local).AddTicks(4982),
-                            DateUpdated = new DateTime(2024, 1, 15, 12, 6, 28, 823, DateTimeKind.Local).AddTicks(4982),
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmailAddress = "afiq@bookmail.com",
                             FirstName = "Afiq",
                             Gender = "Male",
                             LastName = "Afiq",
                             Password = "password",
-                            UpdatedBy = "System",
                             Username = "User_Afiq"
                         });
                 });
@@ -505,6 +501,28 @@ namespace Project.Server.Migrations
                             EmailAddress = "georgeorwell@bookmail.com",
                             FirstName = "George",
                             LastName = "Orwell"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Biography = "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ",
+                            ContactInfo = "48591526",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "jrrtolkien@bookmail.com",
+                            FirstName = "J.R.R",
+                            LastName = "Tolkien"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Biography = "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.",
+                            ContactInfo = "35246857",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "jkrowling@bookmail.com",
+                            FirstName = "J.K",
+                            LastName = "Rowling"
                         });
                 });
 
@@ -525,12 +543,31 @@ namespace Project.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Harry Potter"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Lord Of The Rings"
+                        });
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.BookAuthorDetail", b =>
@@ -566,6 +603,24 @@ namespace Project.Server.Migrations
                     b.HasIndex("BookID");
 
                     b.ToTable("BookAuthorDetail");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthorID = 4,
+                            BookID = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AuthorID = 3,
+                            BookID = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.Review", b =>
@@ -575,6 +630,9 @@ namespace Project.Server.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppUserID")
+                        .HasColumnType("int");
 
                     b.Property<int>("BookID")
                         .HasColumnType("int");
@@ -597,19 +655,29 @@ namespace Project.Server.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
                     b.Property<double>("UserRating")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserID");
+
                     b.HasIndex("BookID");
 
-                    b.HasIndex("UserID");
-
                     b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AppUserID = 1,
+                            BookID = 1,
+                            Content = "This book has changed my life, and I would highly recommend this to anyone who is in school.",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "I love this book",
+                            UserRating = 5.0
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -680,21 +748,21 @@ namespace Project.Server.Migrations
 
             modelBuilder.Entity("Project.Shared.Domain.Review", b =>
                 {
+                    b.HasOne("Project.Shared.Domain.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Project.Shared.Domain.Book", "Book")
                         .WithMany()
                         .HasForeignKey("BookID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Project.Shared.Domain.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("AppUser");
 
                     b.Navigation("Book");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

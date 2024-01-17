@@ -14,7 +14,6 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using CarRentalManagement.Shared.Domain;
 
 namespace Project.Server.Repository
 {
@@ -22,9 +21,10 @@ namespace Project.Server.Repository
     {
         private readonly ApplicationDbContext _context;
         private IGenericRepository<AppUser> _appUsers;
+        private IGenericRepository<Review> _reviews;
         private IGenericRepository<Author> _authors;
         private IGenericRepository<Book> _books;
-        private IGenericRepository<BookAuthorDetail> _bookAuthorDetail;
+        private IGenericRepository<BookAuthorDetail> _bookAuthorDetails;
 
         private UserManager<ApplicationUser> _userManager;
 
@@ -38,10 +38,12 @@ namespace Project.Server.Repository
             => _appUsers ??= new GenericRepository<AppUser>(_context);
         public IGenericRepository<Author> Authors
             => _authors ??= new GenericRepository<Author>(_context);
+        public IGenericRepository<Review> Reviews
+            => _reviews ??= new GenericRepository<Review>(_context);
         public IGenericRepository<Book> Books
             => _books ??= new GenericRepository<Book>(_context);
         public IGenericRepository<BookAuthorDetail> BookAuthorDetails
-            => _bookAuthorDetail ??= new GenericRepository<BookAuthorDetail>(_context);
+            => _bookAuthorDetails ??= new GenericRepository<BookAuthorDetail>(_context);
         public void Dispose()
         {
             _context.Dispose();

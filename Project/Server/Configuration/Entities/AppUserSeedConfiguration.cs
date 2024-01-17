@@ -18,11 +18,7 @@ namespace Project.Server.Configuration.Entities
                     EmailAddress = "rayleong@bookmail.com",
                     FirstName = "Ray",
                     LastName = "Leong",
-                    Gender = "Male",
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    CreatedBy = "System",
-                    UpdatedBy = "System"
+                    Gender = "Male"
                 },
                 new AppUser
                 {
@@ -32,11 +28,7 @@ namespace Project.Server.Configuration.Entities
                     EmailAddress = "afiq@bookmail.com",
                     FirstName = "Afiq",
                     LastName = "Afiq",
-                    Gender = "Male",
-                    DateCreated = DateTime.Now,
-                    DateUpdated = DateTime.Now,
-                    CreatedBy = "System",
-                    UpdatedBy = "System"
+                    Gender = "Male"
                 }
             );
         }
