@@ -30,6 +30,11 @@ namespace Project.Server.Data
             builder.ApplyConfiguration(new UserRoleSeedConfiguration());
             builder.ApplyConfiguration(new UserSeedConfiguration());
             builder.ApplyConfiguration(new RoleSeedConfiguration());
+
+            // Map the Image property to varbinary(MAX)
+            builder.Entity<Book>()
+                .Property(b => b.Image)
+                .HasColumnType("varbinary(MAX)");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

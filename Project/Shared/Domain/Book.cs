@@ -20,7 +20,7 @@
 
         public int? NumberOfPages { get; set; }
 
-        public string? BookImage { get; set; }
+        public byte[]? Image { get; set; }
 
         public int PublisherID { get; set; }
 
