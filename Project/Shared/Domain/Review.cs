@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Project.Shared.Domain
 {
     public class Review : BaseDomainModel
+    {
         //Rating
         public double UserRating { get; set; }
         //Review Title

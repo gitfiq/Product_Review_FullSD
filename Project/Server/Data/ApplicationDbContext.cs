@@ -21,7 +21,10 @@ namespace Project.Server.Data
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Recommendation> Recommendations { get; set;}
         public DbSet<Staff> Staffs { get; set;}
-
+        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<BookAuthorDetail> BookAuthorDetails { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
