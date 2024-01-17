@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Project.Server.Configurations.Entities;
 using Project.Server.Models;
 using Project.Shared.Domain;
+using System.Reflection.Emit;
 
 namespace Project.Server.Data
 {
@@ -24,12 +25,17 @@ namespace Project.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new AppUserSeedConfiguration());
+            builder.ApplyConfiguration(new AuthorSeedConfiguration());
+            builder.ApplyConfiguration(new BookSeedConfiguration());
+            builder.ApplyConfiguration(new ReviewSeedConfiguration());
 
             builder.ApplyConfiguration(new StaffSeedConfiguration());
             builder.ApplyConfiguration(new PublisherSeedConfiguration());
             builder.ApplyConfiguration(new UserRoleSeedConfiguration());
             builder.ApplyConfiguration(new UserSeedConfiguration());
             builder.ApplyConfiguration(new RoleSeedConfiguration());
+            builder.ApplyConfiguration(new BookAuthorDetailSeedConfiguration());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

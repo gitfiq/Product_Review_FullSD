@@ -1,4 +1,6 @@
-﻿namespace Project.Shared.Domain
+﻿using Project.Shared.Domain;
+
+namespace Project.Shared.Domain
 {
     public class Book :BaseDomainModel
     {

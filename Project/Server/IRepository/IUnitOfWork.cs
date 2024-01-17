@@ -13,6 +13,7 @@ namespace Project.Server.IRepository
         IGenericRepository<Recommendation> Recommendations { get; }
         IGenericRepository<Staff> Staffs { get; }
         IGenericRepository<Book> Books { get; }
+        IGenericRepository<BookAuthorDetail> BookAuthorDetails { get; }
         IGenericRepository<Review> Reviews { get; }
         IGenericRepository<Publisher> Publishers { get; }
     }

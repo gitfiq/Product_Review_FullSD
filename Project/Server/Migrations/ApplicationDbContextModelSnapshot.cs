@@ -466,6 +466,34 @@ namespace Project.Server.Migrations
 
                     b.HasIndex("PublisherID");
 
+                    b.ToTable("AppUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "rayleong@bookmail.com",
+                            FirstName = "Ray",
+                            Gender = "Male",
+                            LastName = "Leong",
+                            Password = "password",
+                            Username = "User_Ray"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "afiq@bookmail.com",
+                            FirstName = "Afiq",
+                            Gender = "Male",
+                            LastName = "Afiq",
+                            Password = "password",
+                            Username = "User_Afiq"
+                        });
+                });
                     b.ToTable("Books");
                 });
 
@@ -511,6 +539,47 @@ namespace Project.Server.Migrations
                     b.HasData(
                         new
                         {
+                            Id = 1,
+                            Biography = "Roald Dahl (1916-1990) was a prolific British author renowned for his captivating and whimsical children's literature. Born in Wales, Dahl's diverse career began as a fighter pilot in World War II before he found success as a writer. His imaginative tales, such as \"Charlie and the Chocolate Factory,\" \"Matilda,\" and \"James and the Giant Peach,\" have become timeless classics, celebrated for their dark humor and memorable characters. Dahl's unique storytelling and vivid imagination earned him widespread acclaim, making him one of the most beloved and influential children's authors of the 20th century. His legacy endures, enchanting readers of all ages.",
+                            ContactInfo = "22446688",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "roalddahl@bookmail.com",
+                            FirstName = "Roald",
+                            LastName = "Dahl"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Biography = "George Orwell (1903-1950), born Eric Arthur Blair in India, was a British writer and journalist renowned for his penetrating social and political critiques. Best known for dystopian classics \"Nineteen Eighty-Four\" and \"Animal Farm,\" Orwell delved into the perils of totalitarianism and the abuse of power. A committed democratic socialist, his experiences during the Spanish Civil War and reflections on totalitarian regimes fueled his compelling narratives. Orwell's non-fiction works, including \"Homage to Catalonia\" and \"Down and Out in Paris and London,\" displayed a keen eye for societal injustice. His incisive prose and commitment to truth make Orwell a literary giant whose influence persists globally.",
+                            ContactInfo = "11335577",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "georgeorwell@bookmail.com",
+                            FirstName = "George",
+                            LastName = "Orwell"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Biography = "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ",
+                            ContactInfo = "48591526",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "jrrtolkien@bookmail.com",
+                            FirstName = "J.R.R",
+                            LastName = "Tolkien"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Biography = "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.",
+                            ContactInfo = "35246857",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "jkrowling@bookmail.com",
+                            FirstName = "J.K",
+                            LastName = "Rowling"
                             PublisherId = 1,
                             Address = "15 Serangoon North Avenue 5, Singapore 554360",
                             ContactInfo = "64629603",
@@ -595,6 +664,25 @@ namespace Project.Server.Migrations
 
                     b.HasIndex("BookId");
 
+                    b.ToTable("BookAuthorDetail");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthorID = 4,
+                            BookID = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AuthorID = 3,
+                            BookID = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                     b.ToTable("Review");
                 });
 
@@ -604,6 +692,13 @@ namespace Project.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppUserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookID")
+                        .HasColumnType("int");
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StaffID"));
 
                     b.Property<string>("ContactInfo")
@@ -632,10 +727,15 @@ namespace Project.Server.Migrations
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
+                    b.Property<double>("UserRating")
+                        .HasColumnType("float");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
+                    b.HasIndex("AppUserID");
+
+                    b.HasIndex("BookID");
                     b.HasKey("StaffID");
 
                     b.ToTable("Staffs");
@@ -654,6 +754,20 @@ namespace Project.Server.Migrations
                             Password = "Abc123!",
                             UpdatedBy = "System",
                             Username = "admin1"
+                        });
+                    b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AppUserID = 1,
+                            BookID = 1,
+                            Content = "This book has changed my life, and I would highly recommend this to anyone who is in school.",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "I love this book",
+                            UserRating = 5.0
                         });
                 });
 
@@ -724,14 +838,21 @@ namespace Project.Server.Migrations
                     b.HasOne("Project.Shared.Domain.Book", "Book")
                         .WithMany("Recommendations")
                         .HasForeignKey("BookID")
+                    b.HasOne("Project.Shared.Domain.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Project.Shared.Domain.Book", "Book")
                     b.HasOne("Project.Shared.Domain.Staff", "Staff")
                         .WithMany()
+                        .HasForeignKey("BookID")
                         .HasForeignKey("StaffID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Book");
 
