@@ -8,8 +8,6 @@ namespace Project.Shared.Domain
 {
     public class Staff : BaseDomainModel
     {
-        public int StaffID { get; set; }
-
         public string? Username { get; set; }
 
         public string? Password { get; set; }

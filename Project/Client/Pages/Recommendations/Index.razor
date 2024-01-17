@@ -38,13 +38,13 @@ else
                     <td>@Recommendation.Date</td>
                     <td>@Recommendation.StaffRating</td>
                     <td>
-                        <a href="/recommendations/view/@Recommendation.RecommendationId" class="btn btn-primary">
+                        <a href="/recommendations/view/@Recommendation.Id" class="btn btn-primary">
                             <span class="oi oi-recommendation"></span>
                         </a>
-                        <a href="/recommendations/edit/@Recommendation.RecommendationId" class="btn btn-warning">
+                        <a href="/recommendations/edit/@Recommendation.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(Recommendation.RecommendationId))">
+                        <button class="btn btn-danger" @onclick="@(() => Delete(Recommendation.Id))">
                             <span class="oi oi-trash"></span>
                         </button>
                     </td>
@@ -62,15 +62,15 @@ else
         Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
     }
 
-    async Task Delete(int RecommendationId)
+    async Task Delete(int Id)
     {
         if (Recommendations != null)
         {
-            var Recommendation = Recommendations.First(q => q.RecommendationId == RecommendationId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Recommendation.RecommendationId}?");
+            var Recommendation = Recommendations.First(q => q.Id == Id);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Recommendation.Id}?");
             if (confirm)
             {
-                await _client.DeleteAsync($"{Endpoints.RecommendationsEndpoint}/{RecommendationId}");
+                await _client.DeleteAsync($"{Endpoints.RecommendationsEndpoint}/{Id}");
                 await OnInitializedAsync();
             }
         }

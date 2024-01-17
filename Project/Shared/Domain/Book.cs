@@ -4,8 +4,6 @@ namespace Project.Shared.Domain
 {
     public class Book :BaseDomainModel
     {
-        public int BookId { get; set; }
-
         public string? Title { get; set; }
 
         public string? Description { get; set; }

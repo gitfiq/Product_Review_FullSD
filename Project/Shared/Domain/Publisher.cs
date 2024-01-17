@@ -8,8 +8,6 @@ namespace Project.Shared.Domain
 {
     public class Publisher : BaseDomainModel
     {
-        public int PublisherId { get; set; }
-
         public string? PublisherName { get; set;}
 
         public string? EmailAddress { get; set; }

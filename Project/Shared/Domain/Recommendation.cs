@@ -8,8 +8,6 @@ namespace Project.Shared.Domain
 {
     public class Recommendation : BaseDomainModel
     {
-        public int RecommendationId { get; set; }
-
         public string? Description { get; set; }
 
         public DateTime Date {  get; set; }

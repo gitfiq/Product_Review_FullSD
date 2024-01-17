@@ -37,7 +37,7 @@
                 {
                     foreach (var staff in Staffs)
                     {
-                        <option value="@staff.StaffID">@staff.FirstName @staff.LastName</option>
+                        <option value="@staff.Id">@staff.FirstName @staff.LastName</option>
                     }
                 }
             </InputSelect>
@@ -54,7 +54,7 @@
                 {
                     foreach (var book in Books)
                     {
-                        <option value="@book.BookId">@book.Title</option>
+                        <option value="@book.Id">@book.Title</option>
                     }
                 }
             </InputSelect>

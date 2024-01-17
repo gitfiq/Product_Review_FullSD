@@ -43,13 +43,13 @@ else
                     <th>@Book.Subject</th>
                     <th>@Book.SchoolLevel</th>
                     <td>
-                        <a href="/books/view/@Book.BookId" class="btn btn-primary">
+                        <a href="/books/view/@Book.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/books/edit/@Book.BookId" class="btn btn-warning">
+                        <a href="/books/edit/@Book.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(Book.BookId))">
+                        <button class="btn btn-danger" @onclick="@(() => Delete(Book.Id))">
                             <span class="oi oi-trash"></span>
                         </button>
                     </td>
@@ -67,15 +67,15 @@ else
         Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
     }
 
-    async Task Delete(int BookId)
+    async Task Delete(int Id)
     {
         if (Books != null)
         {
-            var Book = Books.First(q => q.BookId == BookId);
+            var Book = Books.First(q => q.Id == Id);
             var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Book.Title}?");
             if (confirm)
             {
-                await _client.DeleteAsync($"{Endpoints.BooksEndpoint}/{BookId}");
+                await _client.DeleteAsync($"{Endpoints.BooksEndpoint}/{Id}");
                 await OnInitializedAsync();
             }
         }
