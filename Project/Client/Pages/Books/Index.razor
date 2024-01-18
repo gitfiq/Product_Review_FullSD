@@ -1,7 +1,9 @@
 ﻿@page "/books/"
 @inject HttpClient _client
 @inject IJSRuntime js
-@attribute [Authorize]  
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 
 <h3 class="card-title">Manage Books</h3>
 <br />
@@ -25,6 +27,7 @@ else
     <table class="table table-responsive">
         <thead>
             <tr>
+                <th>Book Image</th>
                 <th>Title</th>
                 <th>Rating</th>
                 <th>Publish Year</th>
@@ -37,8 +40,26 @@ else
             @foreach (var Book in Books)
             {
                 <tr>
+                    <td class="book-image-td" style="width: 500px;">
+                        @if (Book.Image != null)
+                        {
+                            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" style="width: 60%; height: 60%;" alt="Book Image" />
+                        }
+                        else
+                        {
+                            <img src="https://popularonline.com.sg/cdn/shop/files/ExpressS2EngExamPrac9789815133011.jpg?v=1689325289" style="width: 60%; height: 60%;" alt="Book Image">
+                        }
+                    </td>
                     <td>@Book.Title</td>
-                    <td>@Book.BookRating</td>
+                    <td>@if (Book.BookRating != null)
+                        {
+                            @Book.BookRating
+                        }
+                        else
+                        {
+                            <text>0</text>
+                        }
+                    </td>
                     <td>@Book.PublishYear</td>
                     <th>@Book.Subject</th>
                     <th>@Book.SchoolLevel</th>
@@ -64,6 +85,7 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
     }
 
@@ -79,5 +101,10 @@ else
                 await OnInitializedAsync();
             }
         }
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }

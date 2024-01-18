@@ -2,62 +2,75 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group">
-        <label>First Name: </label>
-        <div>
-            <InputText @bind-Value="@staff.FirstName" class="form-control" />
-            <ValidationMessage For="@(() => staff.FirstName)" />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>First Name: </label>
+            <div>
+                <InputText @bind-Value="@staff.FirstName" class="form-control" />
+                <ValidationMessage For="@(() => staff.FirstName)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>Last Name: </label>
-        <div>
-            <InputText @bind-Value="@staff.LastName" class="form-control" />
-            <ValidationMessage For="@(() => staff.LastName)" />
+        <div class="form-group">
+            <label>Last Name: </label>
+            <div>
+                <InputText @bind-Value="@staff.LastName" class="form-control" />
+                <ValidationMessage For="@(() => staff.LastName)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>Email Address: </label>
-        <div>
-            <InputText @bind-Value="@staff.EmailAddress" class="form-control" />
-            <ValidationMessage For="@(() => staff.EmailAddress)" />
+        <div class="form-group">
+            <label>Email Address: </label>
+            <div>
+                <InputText @bind-Value="@staff.EmailAddress" class="form-control" />
+                <ValidationMessage For="@(() => staff.EmailAddress)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>Contact Information: </label>
-        <div>
-            <InputText @bind-Value="@staff.ContactInfo" class="form-control" />
-            <ValidationMessage For="@(() => staff.ContactInfo)" />
+        <div class="form-group">
+            <label>Contact Information: </label>
+            <div>
+                <InputText @bind-Value="@staff.ContactInfo" class="form-control" />
+                <ValidationMessage For="@(() => staff.ContactInfo)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>Staff Username: </label>
-        <div>
-            <InputText @bind-Value="@staff.Username" class="form-control" />
-            <ValidationMessage For="@(() => staff.Username)" />
+        <div class="form-group">
+            <label>Staff Username: </label>
+            <div>
+                <InputText @bind-Value="@staff.Username" class="form-control" />
+                <ValidationMessage For="@(() => staff.Username)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>Password: </label>
-        <div>
-            <InputText @bind-Value="@staff.Password" class="form-control" />
-            <ValidationMessage For="@(() => staff.Password)" />
+        <div class="form-group">
+            <label>Password: </label>
+            <div>
+                <InputText @bind-Value="@staff.Password" class="form-control" />
+                <ValidationMessage For="@(() => staff.Password)" />
+            </div>
         </div>
-    </div>
-    <br /> <br />
+        <br />
+        <br />
+    </fieldset>
 
-    <button type="submit" class="btn btn-success btn-block">
-        @ButtonText
-    </button>
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    
     <BackToList Target="staffs" />
 </EditForm>
 
 @code {
+    [Parameter] public bool Disabled { get; set; } = false;
     [Parameter] public Staff? staff { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set;  }

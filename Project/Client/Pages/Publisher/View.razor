@@ -1,0 +1,16 @@
+﻿@page "/publishers/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View Publishers</h3>
+
+<FormComponent publisher="publisher" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Publisher? publisher = new Publisher();
+    protected async override Task OnParametersSetAsync()
+    {
+        publisher = await _client.GetFromJsonAsync<Publisher>($"{Endpoints.PublishersEndpoint}/{id}");
+    }
+}

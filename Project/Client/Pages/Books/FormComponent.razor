@@ -4,86 +4,107 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group">
-        <label>Title: </label>
-        <div>
-            <InputText @bind-Value="@book.Title" class="form-control" />
-            <ValidationMessage For="@(() => book.Title)" />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Title: </label>
+            <div>
+                <InputText @bind-Value="@book.Title" class="form-control" />
+                <ValidationMessage For="@(() => book.Title)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>Book Description: </label>
-        <div>
-            <InputTextArea @bind-Value="@book.Description" class="form-control" />
-            <ValidationMessage For="@(() => book.Description)" />
+        <div class="form-group">
+            <label>Book Description: </label>
+            <div>
+                <InputTextArea @bind-Value="@book.Description" class="form-control" />
+                <ValidationMessage For="@(() => book.Description)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>Publish Year: </label>
-        <div>
-            <InputNumber @bind-Value="@book.PublishYear" class="form-control" />
-            <ValidationMessage For="@(() => book.PublishYear)" />
+        <div class="form-group">
+            <label>Publish Year: </label>
+            <div>
+                <InputNumber @bind-Value="@book.PublishYear" class="form-control" />
+                <ValidationMessage For="@(() => book.PublishYear)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>Edition: </label>
-        <div>
-            <InputText @bind-Value="@book.Edition" class="form-control" />
-            <ValidationMessage For="@(() => book.Edition)" />
+        <div class="form-group">
+            <label>Edition: </label>
+            <div>
+                <InputText @bind-Value="@book.Edition" class="form-control" />
+                <ValidationMessage For="@(() => book.Edition)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>Subject: </label>
-        <div>
-            <InputText @bind-Value="@book.Subject" class="form-control" />
-            <ValidationMessage For="@(() => book.Subject)" />
+        <div class="form-group">
+            <label>Subject: </label>
+            <div>
+                <InputText @bind-Value="@book.Subject" class="form-control" />
+                <ValidationMessage For="@(() => book.Subject)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>School Level: </label>
-        <div>
-            <InputText @bind-Value="@book.SchoolLevel" class="form-control" />
-            <ValidationMessage For="@(() => book.SchoolLevel)" />
+        <div class="form-group">
+            <label>School Level: </label>
+            <div>
+                <InputText @bind-Value="@book.SchoolLevel" class="form-control" />
+                <ValidationMessage For="@(() => book.SchoolLevel)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="form-group">
-        <label>Number Of Pages: </label>
-        <div>
-            <InputNumber @bind-Value="@book.NumberOfPages" class="form-control" />
-            <ValidationMessage For="@(() => book.NumberOfPages)" />
+        <div class="form-group">
+            <label>Number Of Pages: </label>
+            <div>
+                <InputNumber @bind-Value="@book.NumberOfPages" class="form-control" />
+                <ValidationMessage For="@(() => book.NumberOfPages)" />
+            </div>
         </div>
-    </div>
+        <br />
 
-    <div class="forn-group">
-        <label>Publisher: </label>
-        <div>
-            <InputSelect @bind-Value="book.PublisherID" class="form-control">
-                <option value="">--Select Publisher--</option>
-                @if (Publishers != null)
-                {
-                    foreach (var publisher in Publishers)
+        <div class="forn-group">
+            <label>Publisher: </label>
+            <div>
+                <InputSelect @bind-Value="book.PublisherID" class="form-control">
+                    <option value="">--Select Publisher--</option>
+                    @if (Publishers != null)
                     {
-                        <option value="@publisher.Id">@publisher.PublisherName</option>
+                        foreach (var publisher in Publishers)
+                        {
+                            <option value="@publisher.PublisherId">@publisher.PublisherName</option>
+                        }
                     }
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => book.PublisherID)" />
+                </InputSelect>
+                <ValidationMessage For="@(() => book.PublisherID)" />
+            </div>
         </div>
-    </div>
-    <br /> <br />
+        <br />
 
-    <button type="submit" class="btn btn-success btn-block">
-        @ButtonText
-    </button>
+        <div class="form-group">
+            <label>Book Image:</label>
+            <InputFile OnChange="@OnFileSelected" accept=".png,.jpeg,.jpg" />
+            <ValidationMessage For="@(() => book.Image)" />
+        </div>
+        <br />
+        <br />
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
     <BackToList Target="books" />
 </EditForm>
 @code {
+    [Parameter] public bool Disabled { get; set; } = false;
     [Parameter] public Book? book { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
@@ -93,5 +114,34 @@
     protected async override Task OnInitializedAsync()
     {
         Publishers = await _client.GetFromJsonAsync<List<Publisher>>($"{Endpoints.PublishersEndpoint}");
+    }
+
+    private async Task OnFileSelected(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            var allowedExtensions = new[] { ".png", ".jpeg", ".jpg" };
+            if (!allowedExtensions.Contains(Path.GetExtension(e.File.Name).ToLowerInvariant()))
+            {
+                // Display error message: "Invalid image format. Please upload a PNG, JPEG, or JPG file."
+                Console.WriteLine("Error reading file extension");
+                return;
+            }
+
+            using (var stream = new MemoryStream())
+            {
+                await e.File.OpenReadStream().CopyToAsync(stream);
+                book.Image = stream.ToArray();
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle errors 
+            await InvokeAsync(() =>
+            {
+                // Display error message to the user
+                Console.WriteLine("Error reading file: " + ex.Message);
+            });
+        }
     }
 }

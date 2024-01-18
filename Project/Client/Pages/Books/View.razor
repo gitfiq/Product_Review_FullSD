@@ -1,0 +1,16 @@
+﻿@page "/books/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>View Books</h3>
+
+<FormComponent book="book" Disabled="true" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Book? book = new Book();
+    protected async override Task OnParametersSetAsync()
+    {
+        book = await _client.GetFromJsonAsync<Book>($"{Endpoints.BooksEndpoint}/{id}");
+    }
+}
