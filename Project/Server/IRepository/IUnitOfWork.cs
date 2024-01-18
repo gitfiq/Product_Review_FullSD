@@ -16,5 +16,7 @@ namespace Project.Server.IRepository
         IGenericRepository<BookAuthorDetail> BookAuthorDetails { get; }
         IGenericRepository<Review> Reviews { get; }
         IGenericRepository<Publisher> Publishers { get; }
+        IGenericRepository<AppUser> AppUsers { get; }
+        IGenericRepository<Author> Authors { get; }
     }
 }

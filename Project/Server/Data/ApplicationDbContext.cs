@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Project.Server.Configuration.Entities;
 using Project.Server.Configurations.Entities;
 using Project.Server.Models;
 using Project.Shared.Domain;

@@ -37,7 +37,7 @@ namespace Project.Server.Controllers
         public async Task<IActionResult> GetStaff(int id)
         {
 
-            var staff = await _unitOfWork.Staffs.Get(q => q.StaffID == id);
+            var staff = await _unitOfWork.Staffs.Get(q => q.Id == id);
 
             if (staff == null)
             {
@@ -52,7 +52,7 @@ namespace Project.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStaff(int id, Staff staff)
         {
-            if (id != staff.StaffID)
+            if (id != staff.Id)
             {
                 return BadRequest();
             }
@@ -88,14 +88,14 @@ namespace Project.Server.Controllers
             await _unitOfWork.Staffs.Insert(staff);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetStaff", new { id = staff.StaffID }, staff);
+            return CreatedAtAction("GetStaff", new { id = staff.Id }, staff);
         }
 
         // DELETE: api/Staffs/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStaff(int id)
         {
-            var staff = await _unitOfWork.Staffs.Get(q => q.StaffID == id);
+            var staff = await _unitOfWork.Staffs.Get(q => q.Id == id);
 
             if (staff == null)
             {
@@ -110,7 +110,7 @@ namespace Project.Server.Controllers
 
         private async Task<bool> StaffExists(int id)
         {
-            var staff = await _unitOfWork.Staffs.Get(q => q.StaffID == id);
+            var staff = await _unitOfWork.Staffs.Get(q => q.Id == id);
             return staff != null;
         }
     }

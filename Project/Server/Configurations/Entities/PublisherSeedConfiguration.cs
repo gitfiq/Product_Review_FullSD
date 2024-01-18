@@ -12,7 +12,7 @@ namespace Project.Server.Configurations.Entities
             builder.HasData(
                 new Publisher
                 {
-                    PublisherId = 1,
+                    Id = 1,
                     PublisherName = "Educational Publishing House",
                     ContactInfo = "64629603",
                     EmailAddress = "eph@popularworld.com",

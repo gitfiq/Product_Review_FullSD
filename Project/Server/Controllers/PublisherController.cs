@@ -37,7 +37,7 @@ namespace Project.Server.Controllers
         public async Task<IActionResult> GetPublisher(int id)
         {
 
-            var publisher = await _unitOfWork.Publishers.Get(q => q.PublisherId == id);
+            var publisher = await _unitOfWork.Publishers.Get(q => q.Id == id);
 
             if (publisher == null)
             {
@@ -52,7 +52,7 @@ namespace Project.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPublisher(int id, Publisher publisher)
         {
-            if (id != publisher.PublisherId)
+            if (id != publisher.Id)
             {
                 return BadRequest();
             }
@@ -88,7 +88,7 @@ namespace Project.Server.Controllers
             await _unitOfWork.Publishers.Insert(publisher);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetPublisher", new { id = publisher.PublisherId }, publisher);
+            return CreatedAtAction("GetPublisher", new { id = publisher.Id }, publisher);
         }
 
         // DELETE: api/Publishers/5
@@ -96,7 +96,7 @@ namespace Project.Server.Controllers
         public async Task<IActionResult> DeletePublisher(int id)
         {
 
-            var publisher = await _unitOfWork.Publishers.Get(q => q.PublisherId == id);
+            var publisher = await _unitOfWork.Publishers.Get(q => q.Id == id);
 
             if (publisher == null)
             {
@@ -111,7 +111,7 @@ namespace Project.Server.Controllers
 
         private async Task<bool> PublisherExists(int id)
         {
-            var publisher = await _unitOfWork.Publishers.Get(q => q.PublisherId == id);
+            var publisher = await _unitOfWork.Publishers.Get(q => q.Id == id);
             return publisher != null;
         }
     }

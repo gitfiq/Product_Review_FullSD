@@ -47,7 +47,6 @@ namespace Project.Server.Repository
             => _recommendations ??= new GenericRepository<Recommendation>(_context);
         public IGenericRepository<Publisher> Publishers
             => _publishers ??= new GenericRepository<Publisher>(_context);
-
         public IGenericRepository<BookAuthorDetail> BookAuthorDetails
             => _bookAuthorDetails ??= new GenericRepository<BookAuthorDetail>(_context);
         public void Dispose()

@@ -36,7 +36,7 @@ namespace Project.Server.Controllers
         public async Task<IActionResult> GetBook(int id)
         {
 
-            var book = await _unitOfWork.Books.Get(q => q.BookId == id);
+            var book = await _unitOfWork.Books.Get(q => q.Id == id);
 
             if (book == null)
             {
@@ -51,7 +51,7 @@ namespace Project.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBook(int id, Book book)
         {
-            if (id != book.BookId)
+            if (id != book.Id)
             {
                 return BadRequest();
             }
@@ -87,14 +87,14 @@ namespace Project.Server.Controllers
             await _unitOfWork.Books.Insert(book);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetBook", new { id = book.BookId }, book);
+            return CreatedAtAction("GetBook", new { id = book.Id }, book);
         }
 
         // DELETE: api/Books/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {
-            var book = await _unitOfWork.Books.Get(q => q.BookId == id);
+            var book = await _unitOfWork.Books.Get(q => q.Id == id);
 
             if (book == null)
             {
@@ -108,7 +108,7 @@ namespace Project.Server.Controllers
 
         private async Task<bool> BookExists(int id)
         {
-            var book = await _unitOfWork.Books.Get(q => q.BookId == id);
+            var book = await _unitOfWork.Books.Get(q => q.Id == id);
             return book != null;
         }
     }

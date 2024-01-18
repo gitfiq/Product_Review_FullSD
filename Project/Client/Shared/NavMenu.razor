@@ -4,9 +4,11 @@
     <div class="container-fluid">
         <div class="d-flex flex-row">
             <a class="navbar-brand" href="">Project</a>
+            
             <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
                 <ul class="navbar-nav mb-0 close">
                     <li class="nav-item px-3">
@@ -14,78 +16,31 @@
                             <span class="oi oi-home" aria-hidden="true"></span> Home
                         </NavLink>
                     </li>
-
-                    <!--Drop down menu-->
                     <!--
                     <li class="nav-item dropdown px-3">
-                        <NavLink class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </NavLink>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <NavLink class="dropdown-item" href="#">Math</NavLink>
-                            </li>
-                            <li>
-                                <NavLink class="dropdown-item" href="#">Science</NavLink>
-                            </li>
-                            <li>
-                                <NavLink class="dropdown-item" href="#">English</NavLink>
-                            </li>
-                            <li>
-                                <NavLink class="dropdown-item" href="authors">Authors</NavLink>
-                            </li>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="oi oi-menu" aria-hidden="true"></span> Dropdown
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Option 1</a></li>
+                            <li><a class="dropdown-item" href="#">Option 2</a></li>
+                            <li><a class="dropdown-item" href="#">Option 3</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="authors">
-                            <span class="oi oi-list-rich" aria-hidden="true"></span> Authors
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="appUsers">
-                            <span class="oi oi-list-rich" aria-hidden="true"></span> App Users
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="books">
-                            <span class="oi oi-list-rich" aria-hidden="true"></span> Books
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="reviews">
-                            <span class="oi oi-list-rich" aria-hidden="true"></span> Reviews
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="bookAuthorDetails">
-                            <span class="oi oi-list-rich" aria-hidden="true"></span> Book Author Details
-                        </NavLink>
-                    </li>
                     -->
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="staffs">
-                            <span class="oi oi-person" aria-hidden="true"></span> Manage Staffs
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="publishers">
-                            <span class="oi oi-person" aria-hidden="true"></span> Manage Publishers
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="recommendations">
-                            <span class="oi oi-person" aria-hidden="true"></span> Manage Recommendations
-                        </NavLink>
-                    </li>
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="books">
-                            <span class="oi oi-person" aria-hidden="true"></span> Manage Books
-                        </NavLink>
+                    <li>
+                        <!--
+                        <button type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown button
+                        </button>-->
+                        <div>
+                            <a href="#">Action</a>
+                            <a href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
                     </li>
                 </ul>
             </div>
-
-
         </div>
         <div class="d-flex flex-row-reverse">
             <LoginDisplay />
