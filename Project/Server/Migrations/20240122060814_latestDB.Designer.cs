@@ -12,8 +12,8 @@ using Project.Server.Data;
 namespace Project.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240118014324_18jan")]
-    partial class _18jan
+    [Migration("20240122060814_latestDB")]
+    partial class latestDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -399,7 +399,7 @@ namespace Project.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "105ca188-c2e1-401a-b753-bb6ceefadddf",
+                            ConcurrencyStamp = "5782aabc-9969-4739-886b-d0831382f770",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -407,9 +407,9 @@ namespace Project.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPHOEbEsgu0PA6o9kcG6BZIjI/E9C85UZoXLN3D4xsl3/r7Jv3BLBO357eQ12Pso0w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN/E+l+01l+LaL/1I6FRxJHLctBaZMlMpjvFhElm/LmChVXkLAVb24ZncrNBW8X3tQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "610fe2f8-feec-40fa-ba43-2ef5f778104d",
+                            SecurityStamp = "7a634825-ee13-4bf0-8e09-9cb7242c866c",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -578,9 +578,6 @@ namespace Project.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("BookImage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("BookRating")
                         .HasColumnType("float");
 
@@ -598,6 +595,9 @@ namespace Project.Server.Migrations
 
                     b.Property<string>("Edition")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(MAX)");
 
                     b.Property<int?>("NumberOfPages")
                         .HasColumnType("int");
@@ -678,24 +678,6 @@ namespace Project.Server.Migrations
                     b.HasIndex("BookID");
 
                     b.ToTable("BookAuthorDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AuthorID = 4,
-                            BookID = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AuthorID = 3,
-                            BookID = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.Publisher", b =>
@@ -744,8 +726,8 @@ namespace Project.Server.Migrations
                             Address = "15 Serangoon North Avenue 5, Singapore 554360",
                             ContactInfo = "64629603",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8847),
-                            DateUpdated = new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8849),
+                            DateCreated = new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(997),
+                            DateUpdated = new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(997),
                             EmailAddress = "eph@popularworld.com",
                             PublisherName = "Educational Publishing House",
                             UpdatedBy = "System",
@@ -823,6 +805,9 @@ namespace Project.Server.Migrations
                     b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("StaffID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -838,6 +823,8 @@ namespace Project.Server.Migrations
 
                     b.HasIndex("BookID");
 
+                    b.HasIndex("StaffID");
+
                     b.ToTable("Reviews");
 
                     b.HasData(
@@ -849,6 +836,7 @@ namespace Project.Server.Migrations
                             Content = "This book has changed my life, and I would highly recommend this to anyone who is in school.",
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StaffID = 0,
                             Title = "I love this book",
                             UserRating = 5.0
                         });
@@ -902,8 +890,8 @@ namespace Project.Server.Migrations
                             Id = 1,
                             ContactInfo = "87907564",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8519),
-                            DateUpdated = new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8533),
+                            DateCreated = new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(790),
+                            DateUpdated = new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(800),
                             EmailAddress = "admin1@blazor.com",
                             FirstName = "Sam",
                             LastName = "Wick",
@@ -1021,9 +1009,17 @@ namespace Project.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Project.Shared.Domain.Staff", "Staff")
+                        .WithMany()
+                        .HasForeignKey("StaffID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("AppUser");
 
                     b.Navigation("Book");
+
+                    b.Navigation("Staff");
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.Book", b =>

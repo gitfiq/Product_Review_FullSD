@@ -71,7 +71,7 @@
                 {
                     @foreach (var Book in Books)
                     {
-                        @if (Book.BookId == Recommendation.BookID)
+                        @if (Book.Id == Recommendation.BookID)
                         {
                             <tr>
                                 <td class="image">
@@ -89,13 +89,13 @@
                                 <td>@(Recommendation.Date.Date.ToString("dd/MM/yyyy"))</td>
                                 <td>@Recommendation.StaffRating</td>
                                 <td>
-                                    <a href="/recommendations/view/@Recommendation.RecommendationId" class="btn btn-primary">
+                                    <a href="/recommendations/view/@Recommendation.Id" class="btn btn-primary">
                                         <span class="oi oi-book"></span>
                                     </a>
-                                    <a href="/recommendations/edit/@Recommendation.RecommendationId" class="btn btn-warning">
+                                    <a href="/recommendations/edit/@Recommendation.Id" class="btn btn-warning">
                                         <span class="oi oi-pencil"></span>
                                     </a>
-                                    <button class="btn btn-danger" @onclick="@(() => Delete(Recommendation.RecommendationId))">
+                                    <button class="btn btn-danger" @onclick="@(() => Delete(Recommendation.Id))">
                                         <span class="oi oi-trash"></span>
                                     </button>
                                 </td>
@@ -126,7 +126,7 @@
     }
 
 
-    async Task Delete(int RecommendationId)
+    async Task Delete(int Id)
     {
         if (Recommendations != null)
         {

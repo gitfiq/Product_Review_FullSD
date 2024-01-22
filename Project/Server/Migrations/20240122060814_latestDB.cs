@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class _18jan : Migration
+    public partial class latestDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -317,7 +317,7 @@ namespace Project.Server.Migrations
                     Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SchoolLevel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumberOfPages = table.Column<int>(type: "int", nullable: true),
-                    BookImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<byte[]>(type: "varbinary(MAX)", nullable: true),
                     PublisherID = table.Column<int>(type: "int", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -406,6 +406,7 @@ namespace Project.Server.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AppUserID = table.Column<int>(type: "int", nullable: false),
                     BookID = table.Column<int>(type: "int", nullable: false),
+                    StaffID = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -424,6 +425,12 @@ namespace Project.Server.Migrations
                         name: "FK_Reviews_Books_BookID",
                         column: x => x.BookID,
                         principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Staffs_StaffID",
+                        column: x => x.StaffID,
+                        principalTable: "Staffs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -449,7 +456,7 @@ namespace Project.Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "105ca188-c2e1-401a-b753-bb6ceefadddf", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEPHOEbEsgu0PA6o9kcG6BZIjI/E9C85UZoXLN3D4xsl3/r7Jv3BLBO357eQ12Pso0w==", null, false, "610fe2f8-feec-40fa-ba43-2ef5f778104d", false, "admin@localhost.com" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "5782aabc-9969-4739-886b-d0831382f770", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEN/E+l+01l+LaL/1I6FRxJHLctBaZMlMpjvFhElm/LmChVXkLAVb24ZncrNBW8X3tQ==", null, false, "7a634825-ee13-4bf0-8e09-9cb7242c866c", false, "admin@localhost.com" });
 
             migrationBuilder.InsertData(
                 table: "Authors",
@@ -464,22 +471,22 @@ namespace Project.Server.Migrations
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "BookImage", "BookRating", "CreatedBy", "DateCreated", "DateUpdated", "Description", "Edition", "NumberOfPages", "PublishYear", "PublisherID", "SchoolLevel", "Subject", "Title", "UpdatedBy" },
+                columns: new[] { "Id", "BookRating", "CreatedBy", "DateCreated", "DateUpdated", "Description", "Edition", "Image", "NumberOfPages", "PublishYear", "PublisherID", "SchoolLevel", "Subject", "Title", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, null, 0.0, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, null, null, null, null, "Harry Potter", null },
-                    { 2, null, 0.0, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, null, null, null, null, "Lord Of The Rings", null }
+                    { 1, 0.0, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, null, null, null, null, null, "Harry Potter", null },
+                    { 2, 0.0, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, null, null, null, null, null, "Lord Of The Rings", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Publishers",
                 columns: new[] { "Id", "Address", "ContactInfo", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "PublisherName", "UpdatedBy", "WebsiteLink" },
-                values: new object[] { 1, "15 Serangoon North Avenue 5, Singapore 554360", "64629603", "System", new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8847), new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8849), "eph@popularworld.com", "Educational Publishing House", "System", "https://www.eph.com.sg/" });
+                values: new object[] { 1, "15 Serangoon North Avenue 5, Singapore 554360", "64629603", "System", new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(997), new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(997), "eph@popularworld.com", "Educational Publishing House", "System", "https://www.eph.com.sg/" });
 
             migrationBuilder.InsertData(
                 table: "Staffs",
                 columns: new[] { "Id", "ContactInfo", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "FirstName", "LastName", "Password", "UpdatedBy", "Username" },
-                values: new object[] { 1, "87907564", "System", new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8519), new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8533), "admin1@blazor.com", "Sam", "Wick", "Abc123!", "System", "admin1" });
+                values: new object[] { 1, "87907564", "System", new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(790), new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(800), "admin1@blazor.com", "Sam", "Wick", "Abc123!", "System", "admin1" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -487,18 +494,9 @@ namespace Project.Server.Migrations
                 values: new object[] { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3781efa7-66dc-47f0-860f-e506d04102e4" });
 
             migrationBuilder.InsertData(
-                table: "BookAuthorDetails",
-                columns: new[] { "Id", "AuthorID", "BookID", "CreatedBy", "DateCreated", "DateUpdated", "UpdatedBy" },
-                values: new object[,]
-                {
-                    { 1, 4, 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
-                    { 2, 3, 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Reviews",
-                columns: new[] { "Id", "AppUserID", "BookID", "Content", "CreatedBy", "DateCreated", "DateUpdated", "Title", "UpdatedBy", "UserRating" },
-                values: new object[] { 1, 1, 1, "This book has changed my life, and I would highly recommend this to anyone who is in school.", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "I love this book", null, 5.0 });
+                columns: new[] { "Id", "AppUserID", "BookID", "Content", "CreatedBy", "DateCreated", "DateUpdated", "StaffID", "Title", "UpdatedBy", "UserRating" },
+                values: new object[] { 1, 1, 1, "This book has changed my life, and I would highly recommend this to anyone who is in school.", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "I love this book", null, 5.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -609,6 +607,11 @@ namespace Project.Server.Migrations
                 name: "IX_Reviews_BookID",
                 table: "Reviews",
                 column: "BookID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_StaffID",
+                table: "Reviews",
+                column: "StaffID");
         }
 
         /// <inheritdoc />
@@ -657,13 +660,13 @@ namespace Project.Server.Migrations
                 name: "Authors");
 
             migrationBuilder.DropTable(
-                name: "Staffs");
-
-            migrationBuilder.DropTable(
                 name: "AppUsers");
 
             migrationBuilder.DropTable(
                 name: "Books");
+
+            migrationBuilder.DropTable(
+                name: "Staffs");
 
             migrationBuilder.DropTable(
                 name: "Publishers");

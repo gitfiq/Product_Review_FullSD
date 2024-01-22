@@ -28,7 +28,7 @@ namespace Project.Server.Controllers
         public async Task<IActionResult> GetRecommendations()
         {
 
-            var recommendations = await _unitOfWork.Recommendations.GetAll();
+            var recommendations = await _unitOfWork.Recommendations.GetAll(includes: q => q.Include(x => x.Staff).Include(x => x.Book));
             return Ok(recommendations);
         }
 

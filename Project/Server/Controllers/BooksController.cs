@@ -27,7 +27,7 @@ namespace Project.Server.Controllers
         public async Task<IActionResult> GetBooks()
         {
 
-            var books = await _unitOfWork.Books.GetAll();
+            var books = await _unitOfWork.Books.GetAll(includes: q => q.Include(x => x.Publisher));
             return Ok(books);
         }
 

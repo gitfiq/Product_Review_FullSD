@@ -26,6 +26,7 @@ namespace Project.Server.Data
         public DbSet<Author> Authors { get; set; }
         public DbSet<BookAuthorDetail> BookAuthorDetails { get; set; }
         public DbSet<Review> Reviews { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

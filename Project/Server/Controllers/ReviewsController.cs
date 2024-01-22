@@ -20,7 +20,7 @@ namespace Project.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetReviews()
         {
-            var reviews = await _unitOfWork.Reviews.GetAll(includes: q => q.Include(x => x.AppUser).Include(x => x.Book));
+            var reviews = await _unitOfWork.Reviews.GetAll(includes: q => q.Include(x => x.AppUser).Include(x => x.Book).Include(x => x.Staff));
 
             return Ok(reviews);
         }

@@ -17,7 +17,8 @@ namespace Project.Server.Configuration.Entities
                     Title = "I love this book",
                     Content = "This book has changed my life, and I would highly recommend this to anyone who is in school.",
                     AppUserID = 1,
-                    BookID = 1
+                    BookID = 1,
+                    StaffID = 1,
                 }
             );
         }
