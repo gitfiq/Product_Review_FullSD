@@ -13,12 +13,11 @@ namespace Project.Server.Configuration.Entities
                 new Review
                 {
                     Id = 1,
-                    UserRating = 5.0,
+                    UserRating = 5,
                     Title = "I love this book",
                     Content = "This book has changed my life, and I would highly recommend this to anyone who is in school.",
                     AppUserID = 1,
-                    BookID = 1,
-                    StaffID = 1,
+                    BookID = 1
                 }
             );
         }

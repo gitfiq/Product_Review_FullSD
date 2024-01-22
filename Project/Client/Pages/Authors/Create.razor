@@ -3,47 +3,11 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Create New Author</h3>
+<h2 class="card-title">Add New Author</h2>
 <hr />
 <br />
 
-<EditForm Model="@author" OnValidSubmit="CreateAuthor">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>First Name: </label>
-        <div>
-            <InputText @bind-Value="@author.FirstName" class="form-control" />
-            <ValidationMessage For="@(() => author.FirstName)" />
-        </div>
-        <label>Last Name: </label>
-        <div>
-            <InputText @bind-Value="@author.LastName" class="form-control" />
-            <ValidationMessage For="@(() => author.LastName)" />
-        </div>
-        <label>Biography: </label>
-        <div>
-            <InputText @bind-Value="@author.Biography" class="form-control" />
-            <ValidationMessage For="@(() => author.Biography)" />
-        </div>
-        <label>Email Address: </label>
-        <div>
-            <InputText @bind-Value="@author.EmailAddress" class="form-control" />
-            <ValidationMessage For="@(() => author.EmailAddress)" />
-        </div>
-        <label>Contact Information: </label>
-        <div>
-            <InputText @bind-Value="@author.ContactInfo" class="form-control" />
-            <ValidationMessage For="@(() => author.ContactInfo)" />
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-success btn-block">
-        Create Author
-    </button>
-
-</EditForm>
+<FormComponent ButtonText="Add Author" author="author" OnValidSubmit="@CreateAuthor" />
 
 
 @code {

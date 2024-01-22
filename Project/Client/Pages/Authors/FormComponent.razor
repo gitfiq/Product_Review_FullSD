@@ -1,6 +1,7 @@
 ﻿<EditForm Model = "@author" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
+
     <fieldset disabled="@Disabled">
         <div class="form-group">
             <label>First Name: </label>
@@ -8,34 +9,54 @@
                 <InputText @bind-Value="@author.FirstName" class="form-control" />
                 <ValidationMessage For="@(() => author.FirstName)" />
             </div>
+        </div>
+        <br />
+
+        <div class="form-group">
             <label>Last Name: </label>
             <div>
                 <InputText @bind-Value="@author.LastName" class="form-control" />
                 <ValidationMessage For="@(() => author.LastName)" />
             </div>
+        </div>
+        <br />
+
+
+        <div class="form-group">
             <label>Biography: </label>
             <div>
                 <InputText @bind-Value="@author.Biography" class="form-control" />
                 <ValidationMessage For="@(() => author.Biography)" />
             </div>
+        </div>
+        <br />
+
+        <div class="form-group">
             <label>Email Address: </label>
             <div>
                 <InputText @bind-Value="@author.EmailAddress" class="form-control" />
                 <ValidationMessage For="@(() => author.EmailAddress)" />
             </div>
+        </div>
+        <br />
+
+        <div class="form-group">
             <label>Contact Information: </label>
             <div>
                 <InputText @bind-Value="@author.ContactInfo" class="form-control" />
                 <ValidationMessage For="@(() => author.ContactInfo)" />
             </div>
         </div>
+        <br />
+        <br />
     </fieldset>
+
     @if(!Disabled){
         <button type="submit" class="btn btn-success btn-block">
             @ButtonText
         </button>
     }
-    <br />
+
     <BackToList Target="authors" />
 </EditForm>
 

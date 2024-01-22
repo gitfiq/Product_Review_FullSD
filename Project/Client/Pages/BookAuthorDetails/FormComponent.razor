@@ -3,24 +3,27 @@
 <EditForm Model = "@bookAuthorDetail" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
+
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <div class="form-group">
-                <label>Book: </label>
-                <div>
-                    <InputSelect @bind-Value="bookAuthorDetail.BookID" class="form-control">
-                        <option value="">-- Select Book --</option>
-                        @if (Books != null)
+            <label>Book: </label>
+            <div>
+                <InputSelect @bind-Value="bookAuthorDetail.BookID" class="form-control">
+                    <option value="">-- Select Book --</option>
+                    @if (Books != null)
+                    {
+                        foreach (var book in Books)
                         {
-                            foreach (var book in Books)
-                            {
-                                <option value="@book.Id">@book.Title</option>
-                            }
+                            <option value="@book.Id">@book.Title</option>
                         }
-                    </InputSelect>
-                    <ValidationMessage For="@(() => bookAuthorDetail.BookID)" />
-                </div>
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => bookAuthorDetail.BookID)" />
             </div>
+        </div>
+        <br />
+
+        <div class="form-group">
             <label>Author: </label>
             <div>
                 <InputSelect @bind-Value="bookAuthorDetail.AuthorID" class="form-control">
@@ -36,13 +39,16 @@
                 <ValidationMessage For="@(() => bookAuthorDetail.Author)" />
             </div>
         </div>
+        <br />
+        <br />
     </fieldset>
+
     @if(!Disabled){
         <button type="submit" class="btn btn-success btn-block">
             @ButtonText
         </button>
     }
-    <br />
+
     <BackToList Target="reviews" />
 </EditForm>
 

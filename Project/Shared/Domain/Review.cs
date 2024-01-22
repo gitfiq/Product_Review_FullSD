@@ -9,7 +9,7 @@ namespace Project.Shared.Domain
 {
     public class Review : BaseDomainModel
     {
-        public double UserRating { get; set; }
+        public int UserRating { get; set; }
 
         public string? Title { get; set; }
 
@@ -22,10 +22,6 @@ namespace Project.Shared.Domain
         public virtual Book? Book { get; set; }
 
         public int BookID { get; set; }
-
-        public virtual Staff? Staff { get; set; }
-
-        public int StaffID { get; set; }
 
     }
 }

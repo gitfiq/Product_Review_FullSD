@@ -2,13 +2,29 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]  
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<head>
+    <style>
+
+        .btnCreate { background-color: #00008B; color: #E1D9D1; width: 300px; }
+        .btnCreate:hover { color: white; }
+
+    </style>
+</head>
+ 
 
 <h3 class="card-title">Reviews</h3>
-<a href="/reviews/create" class="btn btn-secondary">
+<br />
+
+
+<a href="/reviews/create" class="btn btnCreate">
     <span class="oi oi-plus"></span>
     Add New Review
 </a>
-
+<br />
+<br />
 <br />
 
 @if (Reviews == null)
@@ -17,7 +33,7 @@
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-responsive" id="reviewsTable">
         <thead>
             <tr>
                 <th>Title</th>
@@ -25,6 +41,7 @@ else
                 <th>Rating</th>
                 <th>User</th>
                 <th>Book</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -58,7 +75,13 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#reviewsTable");
     }
 
     async Task Delete(int reviewId)
@@ -73,5 +96,11 @@ else
                 await OnInitializedAsync();
             }
         }
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#reviewsTable");
+        _interceptor.DisposeEvent();
     }
 }
