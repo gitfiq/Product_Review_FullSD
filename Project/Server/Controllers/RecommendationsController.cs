@@ -37,7 +37,7 @@ namespace Project.Server.Controllers
         public async Task<IActionResult> GetRecommendation(int id)
         {
 
-            var recommendation = await _unitOfWork.Recommendations.Get(q => q.RecommendationId == id);
+            var recommendation = await _unitOfWork.Recommendations.Get(q => q.Id == id);
 
             if (recommendation == null)
             {
@@ -52,7 +52,7 @@ namespace Project.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRecommendation(int id, Recommendation recommendation)
         {
-            if (id != recommendation.RecommendationId)
+            if (id != recommendation.Id)
             {
                 return BadRequest();
             }
@@ -88,14 +88,14 @@ namespace Project.Server.Controllers
             await _unitOfWork.Recommendations.Insert(recommendation);
             await _unitOfWork.Save(HttpContext);
 
-            return CreatedAtAction("GetRecommendation", new { id = recommendation.RecommendationId }, recommendation);
+            return CreatedAtAction("GetRecommendation", new { id = recommendation.Id }, recommendation);
         }
 
         // DELETE: api/Recommendations/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRecommendation(int id)
         {
-            var recommendation = await _unitOfWork.Recommendations.Get(q => q.RecommendationId == id);
+            var recommendation = await _unitOfWork.Recommendations.Get(q => q.Id == id);
 
             if (recommendation == null)
             {
@@ -110,7 +110,7 @@ namespace Project.Server.Controllers
 
         private async Task<bool> RecommendationExists(int id)
         {
-            var recommendation = await _unitOfWork.Recommendations.Get(q => q.RecommendationId == id);
+            var recommendation = await _unitOfWork.Recommendations.Get(q => q.Id == id);
             return recommendation != null;
         }
     }

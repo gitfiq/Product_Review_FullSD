@@ -32,43 +32,40 @@
         </div>
         <br />
 
-        <div class="forn-group">
-            <label>Staff: </label>
-            <div>
-                <InputSelect @bind-Value="recommendation.StaffID" class="form-control">
-                    <option value="">--Select Staff--</option>
-                    @if (Staffs != null)
+    <div class="forn-group">
+        <label>Staff: </label>
+        <div>
+            <InputSelect @bind-Value="recommendation.StaffID" class="form-control">
+                <option value="">--Select Staff--</option>
+                @if (Staffs != null)
+                {
+                    foreach (var staff in Staffs)
                     {
-                        foreach (var staff in Staffs)
-                        {
-                            <option value="@staff.StaffID">@staff.FirstName @staff.LastName</option>
-                        }
+                        <option value="@staff.Id">@staff.FirstName @staff.LastName</option>
                     }
-                </InputSelect>
-                <ValidationMessage For="@(() => recommendation.StaffID)" />
-            </div>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => recommendation.StaffID)" />
         </div>
-        <br />
+    </div>
 
-        <div class="forn-group">
-            <label>Book: </label>
-            <div>
-                <InputSelect @bind-Value="recommendation.BookID" class="form-control">
-                    <option value="">--Select Book--</option>
-                    @if (Books != null)
+    <div class="forn-group">
+        <label>Book: </label>
+        <div>
+            <InputSelect @bind-Value="recommendation.BookID" class="form-control">
+                <option value="">--Select Book--</option>
+                @if (Books != null)
+                {
+                    foreach (var book in Books)
                     {
-                        foreach (var book in Books)
-                        {
-                            <option value="@book.BookId">@book.Title</option>
-                        }
+                        <option value="@book.Id">@book.Title</option>
                     }
-                </InputSelect>
-                <ValidationMessage For="@(() => recommendation.BookID)" />
-            </div>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => recommendation.BookID)" />
         </div>
-        <br />
-        <br />
-    </fieldset>
+    </div>
+    <br /> <br />
 
     @if (!Disabled)
     {

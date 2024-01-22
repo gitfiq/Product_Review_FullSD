@@ -130,11 +130,11 @@
     {
         if (Recommendations != null)
         {
-            var Recommendation = Recommendations.First(q => q.RecommendationId == RecommendationId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Recommendation.RecommendationId}?");
+            var Recommendation = Recommendations.First(q => q.Id == Id);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Recommendation.Id}?");
             if (confirm)
             {
-                await _client.DeleteAsync($"{Endpoints.RecommendationsEndpoint}/{RecommendationId}");
+                await _client.DeleteAsync($"{Endpoints.RecommendationsEndpoint}/{Id}");
                 await OnInitializedAsync();
             }
         }

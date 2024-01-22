@@ -12,8 +12,8 @@ using Project.Server.Data;
 namespace Project.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240115035118_seedDB")]
-    partial class seedDB
+    [Migration("20240118014324_18jan")]
+    partial class _18jan
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -399,7 +399,7 @@ namespace Project.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "596100e1-b613-428a-8823-40b75182379d",
+                            ConcurrencyStamp = "105ca188-c2e1-401a-b753-bb6ceefadddf",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -407,27 +407,191 @@ namespace Project.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJry1RSSwjJGuGAv+O/2YoLyNFkp0hBim25oCjBNGp04n/VgJk8kxD+jVQQpnDPxNg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPHOEbEsgu0PA6o9kcG6BZIjI/E9C85UZoXLN3D4xsl3/r7Jv3BLBO357eQ12Pso0w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "53b93810-d2c4-430c-96d6-f440942a33ea",
+                            SecurityStamp = "610fe2f8-feec-40fa-ba43-2ef5f778104d",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
                 });
 
-            modelBuilder.Entity("Project.Shared.Domain.Book", b =>
+            modelBuilder.Entity("Project.Shared.Domain.AppUser", b =>
                 {
-                    b.Property<int>("BookId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "rayleong@bookmail.com",
+                            FirstName = "Ray",
+                            Gender = "Male",
+                            LastName = "Leong",
+                            Password = "password",
+                            Username = "User_Ray"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "afiq@bookmail.com",
+                            FirstName = "Afiq",
+                            Gender = "Male",
+                            LastName = "Afiq",
+                            Password = "password",
+                            Username = "User_Afiq"
+                        });
+                });
+
+            modelBuilder.Entity("Project.Shared.Domain.Author", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Biography")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactInfo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Biography = "Roald Dahl (1916-1990) was a prolific British author renowned for his captivating and whimsical children's literature. Born in Wales, Dahl's diverse career began as a fighter pilot in World War II before he found success as a writer. His imaginative tales, such as \"Charlie and the Chocolate Factory,\" \"Matilda,\" and \"James and the Giant Peach,\" have become timeless classics, celebrated for their dark humor and memorable characters. Dahl's unique storytelling and vivid imagination earned him widespread acclaim, making him one of the most beloved and influential children's authors of the 20th century. His legacy endures, enchanting readers of all ages.",
+                            ContactInfo = "22446688",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "roalddahl@bookmail.com",
+                            FirstName = "Roald",
+                            LastName = "Dahl"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Biography = "George Orwell (1903-1950), born Eric Arthur Blair in India, was a British writer and journalist renowned for his penetrating social and political critiques. Best known for dystopian classics \"Nineteen Eighty-Four\" and \"Animal Farm,\" Orwell delved into the perils of totalitarianism and the abuse of power. A committed democratic socialist, his experiences during the Spanish Civil War and reflections on totalitarian regimes fueled his compelling narratives. Orwell's non-fiction works, including \"Homage to Catalonia\" and \"Down and Out in Paris and London,\" displayed a keen eye for societal injustice. His incisive prose and commitment to truth make Orwell a literary giant whose influence persists globally.",
+                            ContactInfo = "11335577",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "georgeorwell@bookmail.com",
+                            FirstName = "George",
+                            LastName = "Orwell"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Biography = "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ",
+                            ContactInfo = "48591526",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "jrrtolkien@bookmail.com",
+                            FirstName = "J.R.R",
+                            LastName = "Tolkien"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Biography = "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.",
+                            ContactInfo = "35246857",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmailAddress = "jkrowling@bookmail.com",
+                            FirstName = "J.K",
+                            LastName = "Rowling"
+                        });
+                });
+
+            modelBuilder.Entity("Project.Shared.Domain.Book", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BookImage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("BookRating")
-                        .HasColumnType("int");
+                    b.Property<double>("BookRating")
+                        .HasColumnType("float");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -438,10 +602,10 @@ namespace Project.Server.Migrations
                     b.Property<int?>("NumberOfPages")
                         .HasColumnType("int");
 
-                    b.Property<string>("PublishYear")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("PublishYear")
+                        .HasColumnType("int");
 
-                    b.Property<int>("PublisherID")
+                    b.Property<int?>("PublisherID")
                         .HasColumnType("int");
 
                     b.Property<string>("SchoolLevel")
@@ -453,20 +617,94 @@ namespace Project.Server.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BookId");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("PublisherID");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BookRating = 0.0,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Harry Potter"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BookRating = 0.0,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "Lord Of The Rings"
+                        });
+                });
+
+            modelBuilder.Entity("Project.Shared.Domain.BookAuthorDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AuthorID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("BookID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorID");
+
+                    b.HasIndex("BookID");
+
+                    b.ToTable("BookAuthorDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthorID = 4,
+                            BookID = 1,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AuthorID = 3,
+                            BookID = 2,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.Publisher", b =>
                 {
-                    b.Property<int>("PublisherId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PublisherId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -474,43 +712,68 @@ namespace Project.Server.Migrations
                     b.Property<string>("ContactInfo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("EmailAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublisherName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("WebsiteLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PublisherId");
+                    b.HasKey("Id");
 
                     b.ToTable("Publishers");
 
                     b.HasData(
                         new
                         {
-                            PublisherId = 1,
+                            Id = 1,
                             Address = "15 Serangoon North Avenue 5, Singapore 554360",
                             ContactInfo = "64629603",
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8847),
+                            DateUpdated = new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8849),
                             EmailAddress = "eph@popularworld.com",
                             PublisherName = "Educational Publishing House",
+                            UpdatedBy = "System",
                             WebsiteLink = "https://www.eph.com.sg/"
                         });
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.Recommendation", b =>
                 {
-                    b.Property<int>("RecommendationId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecommendationId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BookID")
                         .HasColumnType("int");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -522,7 +785,10 @@ namespace Project.Server.Migrations
                     b.Property<int?>("StaffRating")
                         .HasColumnType("int");
 
-                    b.HasKey("RecommendationId");
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("BookID");
 
@@ -533,32 +799,80 @@ namespace Project.Server.Migrations
 
             modelBuilder.Entity("Project.Shared.Domain.Review", b =>
                 {
-                    b.Property<int>("ReviewID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BookId")
+                    b.Property<int>("AppUserID")
                         .HasColumnType("int");
 
-                    b.HasKey("ReviewID");
+                    b.Property<int>("BookID")
+                        .HasColumnType("int");
 
-                    b.HasIndex("BookId");
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Review");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("UserRating")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserID");
+
+                    b.HasIndex("BookID");
+
+                    b.ToTable("Reviews");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AppUserID = 1,
+                            BookID = 1,
+                            Content = "This book has changed my life, and I would highly recommend this to anyone who is in school.",
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Title = "I love this book",
+                            UserRating = 5.0
+                        });
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.Staff", b =>
                 {
-                    b.Property<int>("StaffID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StaffID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ContactInfo")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
                         .HasColumnType("nvarchar(max)");
@@ -572,22 +886,29 @@ namespace Project.Server.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StaffID");
+                    b.HasKey("Id");
 
                     b.ToTable("Staffs");
 
                     b.HasData(
                         new
                         {
-                            StaffID = 1,
+                            Id = 1,
                             ContactInfo = "87907564",
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8519),
+                            DateUpdated = new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8533),
                             EmailAddress = "admin1@blazor.com",
                             FirstName = "Sam",
                             LastName = "Wick",
                             Password = "Abc123!",
+                            UpdatedBy = "System",
                             Username = "admin1"
                         });
                 });
@@ -647,11 +968,24 @@ namespace Project.Server.Migrations
                 {
                     b.HasOne("Project.Shared.Domain.Publisher", "Publisher")
                         .WithMany()
-                        .HasForeignKey("PublisherID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PublisherID");
 
                     b.Navigation("Publisher");
+                });
+
+            modelBuilder.Entity("Project.Shared.Domain.BookAuthorDetail", b =>
+                {
+                    b.HasOne("Project.Shared.Domain.Author", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorID");
+
+                    b.HasOne("Project.Shared.Domain.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookID");
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.Recommendation", b =>
@@ -675,9 +1009,21 @@ namespace Project.Server.Migrations
 
             modelBuilder.Entity("Project.Shared.Domain.Review", b =>
                 {
-                    b.HasOne("Project.Shared.Domain.Book", null)
+                    b.HasOne("Project.Shared.Domain.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project.Shared.Domain.Book", "Book")
                         .WithMany("Reviews")
-                        .HasForeignKey("BookId");
+                        .HasForeignKey("BookID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.Book", b =>

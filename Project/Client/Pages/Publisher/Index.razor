@@ -51,13 +51,13 @@ else
                     <td>@Publisher.ContactInfo</td>
                     <td>@Publisher.Address</td>
                     <td>
-                        <a href="/publishers/view/@Publisher.PublisherId" class="btn btn-primary">
+                        <a href="/publishers/view/@Publisher.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/publishers/edit/@Publisher.PublisherId" class="btn btn-warning">
+                        <a href="/publishers/edit/@Publisher.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(Publisher.PublisherId))">
+                        <button class="btn btn-danger" @onclick="@(() => Delete(Publisher.Id))">
                             <span class="oi oi-trash"></span>
                         </button>
                     </td>
@@ -86,11 +86,11 @@ else
     {
         if (Publishers != null)
         {
-            var Publisher = Publishers.First(q => q.PublisherId == PublisherId);
+            var Publisher = Publishers.First(q => q.Id == Id);
             var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Publisher.PublisherName}?");
             if (confirm)
             {
-                await _client.DeleteAsync($"{Endpoints.PublishersEndpoint}/{PublisherId}");
+                await _client.DeleteAsync($"{Endpoints.PublishersEndpoint}/{Id}");
                 await OnInitializedAsync();
             }
         }

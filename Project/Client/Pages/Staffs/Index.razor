@@ -52,13 +52,13 @@ else
                     <td>@Staff.ContactInfo</td>
                     <th>@Staff.EmailAddress</th>
                     <td>
-                        <a href="/staffs/view/@Staff.StaffID" class="btn btn-primary">
+                        <a href="/staffs/view/@Staff.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/staffs/edit/@Staff.StaffID" class="btn btn-warning">
+                        <a href="/staffs/edit/@Staff.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(Staff.StaffID))">
+                        <button class="btn btn-danger" @onclick="@(() => Delete(Staff.Id))">
                             <span class="oi oi-trash"></span>
                         </button>
                     </td>
@@ -86,7 +86,7 @@ else
     {
         if (Staffs != null)
         {
-            var Staff = Staffs.First(q => q.StaffID == StaffId);
+            var Staff = Staffs.First(q => q.Id == StaffId);
             var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Staff.Username}?");
             if (confirm)
             {

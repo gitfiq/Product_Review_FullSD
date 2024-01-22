@@ -7,6 +7,7 @@ using Project.Server.Models;
 using Project.Server.IRepository;
 using Project.Server.Repository;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,6 +27,9 @@ builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(op =>op.SerializerSettings.ReferenceLoopHandling =Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();

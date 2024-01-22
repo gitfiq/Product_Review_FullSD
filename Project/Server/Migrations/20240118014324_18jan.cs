@@ -8,11 +8,33 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class seedDB : Migration
+    public partial class _18jan : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AppUsers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUsers", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -52,6 +74,27 @@ namespace Project.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Authors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Biography = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Authors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,35 +158,43 @@ namespace Project.Server.Migrations
                 name: "Publishers",
                 columns: table => new
                 {
-                    PublisherId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PublisherName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WebsiteLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    WebsiteLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Publishers", x => x.PublisherId);
+                    table.PrimaryKey("PK_Publishers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Staffs",
                 columns: table => new
                 {
-                    StaffID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Staffs", x => x.StaffID);
+                    table.PrimaryKey("PK_Staffs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -256,75 +307,134 @@ namespace Project.Server.Migrations
                 name: "Books",
                 columns: table => new
                 {
-                    BookId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BookRating = table.Column<int>(type: "int", nullable: true),
-                    PublishYear = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookRating = table.Column<double>(type: "float", nullable: false),
+                    PublishYear = table.Column<int>(type: "int", nullable: true),
                     Edition = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SchoolLevel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NumberOfPages = table.Column<int>(type: "int", nullable: true),
                     BookImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PublisherID = table.Column<int>(type: "int", nullable: false)
+                    PublisherID = table.Column<int>(type: "int", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.BookId);
+                    table.PrimaryKey("PK_Books", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Books_Publishers_PublisherID",
                         column: x => x.PublisherID,
                         principalTable: "Publishers",
-                        principalColumn: "PublisherId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BookAuthorDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AuthorID = table.Column<int>(type: "int", nullable: true),
+                    BookID = table.Column<int>(type: "int", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookAuthorDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookAuthorDetails_Authors_AuthorID",
+                        column: x => x.AuthorID,
+                        principalTable: "Authors",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_BookAuthorDetails_Books_BookID",
+                        column: x => x.BookID,
+                        principalTable: "Books",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Recommendations",
                 columns: table => new
                 {
-                    RecommendationId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StaffRating = table.Column<int>(type: "int", nullable: true),
                     StaffID = table.Column<int>(type: "int", nullable: false),
-                    BookID = table.Column<int>(type: "int", nullable: false)
+                    BookID = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recommendations", x => x.RecommendationId);
+                    table.PrimaryKey("PK_Recommendations", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Recommendations_Books_BookID",
                         column: x => x.BookID,
                         principalTable: "Books",
-                        principalColumn: "BookId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Recommendations_Staffs_StaffID",
                         column: x => x.StaffID,
                         principalTable: "Staffs",
-                        principalColumn: "StaffID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Review",
+                name: "Reviews",
                 columns: table => new
                 {
-                    ReviewID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BookId = table.Column<int>(type: "int", nullable: true)
+                    UserRating = table.Column<double>(type: "float", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AppUserID = table.Column<int>(type: "int", nullable: false),
+                    BookID = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Review", x => x.ReviewID);
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Review_Books_BookId",
-                        column: x => x.BookId,
+                        name: "FK_Reviews_AppUsers_AppUserID",
+                        column: x => x.AppUserID,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Books_BookID",
+                        column: x => x.BookID,
                         principalTable: "Books",
-                        principalColumn: "BookId");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AppUsers",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "FirstName", "Gender", "LastName", "Password", "UpdatedBy", "Username" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "rayleong@bookmail.com", "Ray", "Male", "Leong", "password", null, "User_Ray" },
+                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "afiq@bookmail.com", "Afiq", "Male", "Afiq", "password", null, "User_Afiq" }
                 });
 
             migrationBuilder.InsertData(
@@ -339,22 +449,56 @@ namespace Project.Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "596100e1-b613-428a-8823-40b75182379d", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEJry1RSSwjJGuGAv+O/2YoLyNFkp0hBim25oCjBNGp04n/VgJk8kxD+jVQQpnDPxNg==", null, false, "53b93810-d2c4-430c-96d6-f440942a33ea", false, "admin@localhost.com" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "105ca188-c2e1-401a-b753-bb6ceefadddf", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEPHOEbEsgu0PA6o9kcG6BZIjI/E9C85UZoXLN3D4xsl3/r7Jv3BLBO357eQ12Pso0w==", null, false, "610fe2f8-feec-40fa-ba43-2ef5f778104d", false, "admin@localhost.com" });
+
+            migrationBuilder.InsertData(
+                table: "Authors",
+                columns: new[] { "Id", "Biography", "ContactInfo", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "FirstName", "LastName", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, "Roald Dahl (1916-1990) was a prolific British author renowned for his captivating and whimsical children's literature. Born in Wales, Dahl's diverse career began as a fighter pilot in World War II before he found success as a writer. His imaginative tales, such as \"Charlie and the Chocolate Factory,\" \"Matilda,\" and \"James and the Giant Peach,\" have become timeless classics, celebrated for their dark humor and memorable characters. Dahl's unique storytelling and vivid imagination earned him widespread acclaim, making him one of the most beloved and influential children's authors of the 20th century. His legacy endures, enchanting readers of all ages.", "22446688", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "roalddahl@bookmail.com", "Roald", "Dahl", null },
+                    { 2, "George Orwell (1903-1950), born Eric Arthur Blair in India, was a British writer and journalist renowned for his penetrating social and political critiques. Best known for dystopian classics \"Nineteen Eighty-Four\" and \"Animal Farm,\" Orwell delved into the perils of totalitarianism and the abuse of power. A committed democratic socialist, his experiences during the Spanish Civil War and reflections on totalitarian regimes fueled his compelling narratives. Orwell's non-fiction works, including \"Homage to Catalonia\" and \"Down and Out in Paris and London,\" displayed a keen eye for societal injustice. His incisive prose and commitment to truth make Orwell a literary giant whose influence persists globally.", "11335577", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "georgeorwell@bookmail.com", "George", "Orwell", null },
+                    { 3, "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ", "48591526", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jrrtolkien@bookmail.com", "J.R.R", "Tolkien", null },
+                    { 4, "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.", "35246857", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jkrowling@bookmail.com", "J.K", "Rowling", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "BookImage", "BookRating", "CreatedBy", "DateCreated", "DateUpdated", "Description", "Edition", "NumberOfPages", "PublishYear", "PublisherID", "SchoolLevel", "Subject", "Title", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, null, 0.0, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, null, null, null, null, "Harry Potter", null },
+                    { 2, null, 0.0, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, null, null, null, null, "Lord Of The Rings", null }
+                });
 
             migrationBuilder.InsertData(
                 table: "Publishers",
-                columns: new[] { "PublisherId", "Address", "ContactInfo", "EmailAddress", "PublisherName", "WebsiteLink" },
-                values: new object[] { 1, "15 Serangoon North Avenue 5, Singapore 554360", "64629603", "eph@popularworld.com", "Educational Publishing House", "https://www.eph.com.sg/" });
+                columns: new[] { "Id", "Address", "ContactInfo", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "PublisherName", "UpdatedBy", "WebsiteLink" },
+                values: new object[] { 1, "15 Serangoon North Avenue 5, Singapore 554360", "64629603", "System", new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8847), new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8849), "eph@popularworld.com", "Educational Publishing House", "System", "https://www.eph.com.sg/" });
 
             migrationBuilder.InsertData(
                 table: "Staffs",
-                columns: new[] { "StaffID", "ContactInfo", "EmailAddress", "FirstName", "LastName", "Password", "Username" },
-                values: new object[] { 1, "87907564", "admin1@blazor.com", "Sam", "Wick", "Abc123!", "admin1" });
+                columns: new[] { "Id", "ContactInfo", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "FirstName", "LastName", "Password", "UpdatedBy", "Username" },
+                values: new object[] { 1, "87907564", "System", new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8519), new DateTime(2024, 1, 18, 9, 43, 23, 756, DateTimeKind.Local).AddTicks(8533), "admin1@blazor.com", "Sam", "Wick", "Abc123!", "System", "admin1" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[] { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3781efa7-66dc-47f0-860f-e506d04102e4" });
+
+            migrationBuilder.InsertData(
+                table: "BookAuthorDetails",
+                columns: new[] { "Id", "AuthorID", "BookID", "CreatedBy", "DateCreated", "DateUpdated", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, 4, 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null },
+                    { 2, 3, 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Reviews",
+                columns: new[] { "Id", "AppUserID", "BookID", "Content", "CreatedBy", "DateCreated", "DateUpdated", "Title", "UpdatedBy", "UserRating" },
+                values: new object[] { 1, 1, 1, "This book has changed my life, and I would highly recommend this to anyone who is in school.", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "I love this book", null, 5.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -394,6 +538,16 @@ namespace Project.Server.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookAuthorDetails_AuthorID",
+                table: "BookAuthorDetails",
+                column: "AuthorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookAuthorDetails_BookID",
+                table: "BookAuthorDetails",
+                column: "BookID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_PublisherID",
@@ -447,9 +601,14 @@ namespace Project.Server.Migrations
                 column: "StaffID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Review_BookId",
-                table: "Review",
-                column: "BookId");
+                name: "IX_Reviews_AppUserID",
+                table: "Reviews",
+                column: "AppUserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_BookID",
+                table: "Reviews",
+                column: "BookID");
         }
 
         /// <inheritdoc />
@@ -471,6 +630,9 @@ namespace Project.Server.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BookAuthorDetails");
+
+            migrationBuilder.DropTable(
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
@@ -483,7 +645,7 @@ namespace Project.Server.Migrations
                 name: "Recommendations");
 
             migrationBuilder.DropTable(
-                name: "Review");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -492,7 +654,13 @@ namespace Project.Server.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Authors");
+
+            migrationBuilder.DropTable(
                 name: "Staffs");
+
+            migrationBuilder.DropTable(
+                name: "AppUsers");
 
             migrationBuilder.DropTable(
                 name: "Books");

@@ -11,7 +11,7 @@ namespace Project.Server.Configurations.Entities
             builder.HasData(
                 new Staff
                 {
-                    StaffID = 1,
+                    Id = 1,
                     Username = "admin1",
                     ContactInfo = "87907564",
                     EmailAddress = "admin1@blazor.com",

@@ -1,0 +1,78 @@
+﻿@page "/authors/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]  
+
+<h3 class="card-title">Authors</h3>
+<a href="/authors/create" class="btn btn-secondary">
+    <span class="oi oi-plus"></span>
+    Add New Author
+</a>
+
+<br />
+
+@if (Authors == null)
+{
+    <div class="alert alert-info">Loading Authors...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Biography</th>
+                <th>Email Address</th>
+                <th>Contact Information</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var author in Authors)
+            {
+                <tr>
+                    <td>@author.FirstName</td>
+                    <td>@author.LastName</td>
+                    <td>@author.Biography</td>
+                    <td>@author.EmailAddress</td>
+                    <td>@author.ContactInfo</td>
+                    <td>
+                        <a href="/authors/view/@author.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/authors/edit/@author.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(author.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Author>? Authors;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Authors = await _client.GetFromJsonAsync<List<Author>>($"{Endpoints.AuthorsEndpoint}");
+    }
+
+    async Task Delete(int authorId)
+    {
+        if (Authors != null)
+        {
+            var author = Authors.First(q => q.Id == authorId);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {author.FirstName} {author.LastName}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.AuthorsEndpoint}/{authorId}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+}

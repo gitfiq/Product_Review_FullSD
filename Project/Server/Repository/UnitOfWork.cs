@@ -16,11 +16,14 @@ namespace Project.Server.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
+        private IGenericRepository<AppUser> _appUsers;
+        private IGenericRepository<Review> _reviews;
+        private IGenericRepository<Author> _authors;
         private IGenericRepository<Recommendation> _recommendations;
         private IGenericRepository<Staff> _staffs;
         private IGenericRepository<Book> _books;
-        private IGenericRepository<Review> _reviews;
         private IGenericRepository<Publisher> _publishers;
+        private IGenericRepository<BookAuthorDetail> _bookAuthorDetails;
 
         private UserManager<ApplicationUser> _userManager;
 
@@ -30,17 +33,22 @@ namespace Project.Server.Repository
             _userManager = userManager;
         }
 
+        public IGenericRepository<AppUser> AppUsers
+            => _appUsers ??= new GenericRepository<AppUser>(_context);
+        public IGenericRepository<Author> Authors
+            => _authors ??= new GenericRepository<Author>(_context);
+        public IGenericRepository<Review> Reviews
+            => _reviews ??= new GenericRepository<Review>(_context);
         public IGenericRepository<Book> Books
             => _books ??= new GenericRepository<Book>(_context);
         public IGenericRepository<Staff> Staffs
             => _staffs ??= new GenericRepository<Staff>(_context);
-        public IGenericRepository<Review> Reviews
-            => _reviews ??= new GenericRepository<Review>(_context);
         public IGenericRepository<Recommendation> Recommendations
             => _recommendations ??= new GenericRepository<Recommendation>(_context);
         public IGenericRepository<Publisher> Publishers
             => _publishers ??= new GenericRepository<Publisher>(_context);
-
+        public IGenericRepository<BookAuthorDetail> BookAuthorDetails
+            => _bookAuthorDetails ??= new GenericRepository<BookAuthorDetail>(_context);
         public void Dispose()
         {
             _context.Dispose();
