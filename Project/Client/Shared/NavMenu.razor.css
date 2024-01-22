@@ -25,59 +25,6 @@
     letter-spacing: 1px;
     padding-bottom: 3px;
 }
-/* The dropdown container */
-.dropdown {
-    float: left;
-    overflow: hidden;
-}
-
-/* Dropdown button */
-.dropdown .dropbtn {
-    font-size: 16px;
-    border: none;
-    outline: none;
-    color: white;
-    padding: 14px 16px;
-    background-color: inherit;
-    font-family: inherit; /* Important for vertical align on mobile phones */
-    margin: 0; /* Important for vertical align on mobile phones */
-}
-
-/* Add a red background color to navbar links on hover */
-.navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: red;
-}
-
-/* Dropdown content (hidden by default) */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-    float: none;
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-}
-
-/* Add a grey background color to dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #ddd;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
 .nav-item ::deep a {
     border-radius: 4px;
     height: 3rem;
@@ -95,6 +42,37 @@
 .nav-item ::deep a:hover {
     background-color: #D8C4B6;
     color: #1d3357;
+}
+
+/*Dropdown styling*/
+.dropdown-div{
+}
+
+.dropdown-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid #007bff; /* Border color */
+    color: #007bff; /* Text color */
+    background-color: #fff; /* Background color */
+    border-radius: 4px; /* Optional: Add rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Optional: Add a smooth transition effect */
+}
+
+/* Hover effect */
+.dropdown-btn:hover {
+    background-color: #007bff; /* Hover background color */
+    color: #fff; /* Hover text color */
+}
+
+/* Active effect */
+.dropdown-btn:active {
+    background-color: #0056b3; /* Active background color */
+    color: #fff; /* Active text color */
 }
 
 @media (min-width: 641px) {

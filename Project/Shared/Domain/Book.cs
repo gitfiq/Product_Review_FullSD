@@ -22,8 +22,6 @@ namespace Project.Shared.Domain
 
         public byte[]? Image { get; set; }
 
-        public int PublisherID { get; set; }
-
         public string? BookImage { get; set; }
         public int? PublisherID { get; set; }
         public virtual Publisher? Publisher { get; set; }

@@ -1,14 +1,69 @@
 ﻿@inject NavigationManager Navigation
+<style>
+    .dropdown-div {
+    }
+
+    .dropdown-btn {
+        display: inline-block;
+        padding: 10px 15px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid #007bff; /* Border color */
+        color: #007bff; /* Text color */
+        background-color: #fff; /* Background color */
+        border-radius: 4px; /* Optional: Add rounded corners */
+        transition: background-color 0.3s ease, color 0.3s ease; /* Optional: Add a smooth transition effect */
+    }
+
+    /* Hover effect */
+    .dropdown-btn:hover {
+        background-color: #007bff; /* Hover background color */
+        color: #fff; /* Hover text color */
+    }
+
+    /* Active effect */
+    .dropdown-btn:active {
+        background-color: #0056b3; /* Active background color */
+        color: #fff; /* Active text color */
+    }
+
+    .dropdown-list{
+        border: 1px solid #007bff; /* Optional: Add border for visual clarity */
+        background-color: #fff;
+    }
+
+    .clickable-ul {
+        list-style: none; /* Remove default list item styling */
+        padding: 0; /* Remove default padding */
+    }
+
+    .clickable-ul li {
+        margin: 0; /* Remove default margin */
+    }
+
+    .clickable-ul li a {
+        display: block; /* Make the link a block element */
+        padding: 10px; /* Add padding for visual clarity and hit area */
+        text-decoration: none; /* Remove default underline */
+        color: #000; /* Set the text color */
+        background-color: #c8c9cf;
+    }
+
+    .clickable-ul li a:hover {
+        background-color: #1e1f3d; /* Optional: Change background color on hover for visual feedback */
+    }
+</style>
 
 <div class="top-row navbar">
     <div class="container-fluid">
-        <div class="d-flex flex-row">
-            <a class="navbar-brand" href="">Project</a>
-            
+        <div class="d-flex">
             <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
                 <ul class="navbar-nav mb-0 close">
                     <li class="nav-item px-3">
@@ -16,38 +71,40 @@
                             <span class="oi oi-home" aria-hidden="true"></span> Home
                         </NavLink>
                     </li>
-                    <!--
-                    <li class="nav-item dropdown px-3">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="oi oi-menu" aria-hidden="true"></span> Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Option 1</a></li>
-                            <li><a class="dropdown-item" href="#">Option 2</a></li>
-                            <li><a class="dropdown-item" href="#">Option 3</a></li>
-                        </ul>
+
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="books">
+                            <span class="oi oi-book" aria-hidden="true"></span> Manage Books
+                        </NavLink>
                     </li>
-                    -->
-                    <li>
-                        <!--
-                        <button type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown button
-                        </button>-->
-                        <div>
-                            <a href="#">Action</a>
-                            <a href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+
+                    <!-- Apply ml-auto to push this div to the right -->
+                    <div class="d-flex ml-auto">
+                        <LoginDisplay />
+                        <div class="dropdown-div">
+                            <button class="dropdown-btn" @onclick="ToggleDropdown">
+                                <span class="oi oi-caret-bottom" aria-hidden="true"></span>Manage CRUD
+                            </button>
+                            @if (showDropdown)
+                            {
+                                <ul class="clickable-ul">
+                                    <li><a href="appUsers">App Users</a></li>
+                                    <li><a href="authors">Authors</a></li>
+                                    <li><a href="books">Books</a></li>
+                                    <li><a href="bookAuthorDetails">Book Author Details</a></li>
+                                    <li><a href="publishers">Publishers</a></li>
+                                    <li><a href="recommendations">Recommendations</a></li>
+                                    <li><a href="reviews">Reviews</a></li>
+                                    <li><a href="staffs">Staff</a></li>
+                                </ul>
+                            }
                         </div>
-                    </li>
+                    </div>
                 </ul>
             </div>
         </div>
-        <div class="d-flex flex-row-reverse">
-            <LoginDisplay />
-        </div>
     </div>
 </div>
-
 
 
 @code {
@@ -62,5 +119,11 @@
     private void BeginLogOut(MouseEventArgs args)
     {
         Navigation.NavigateToLogout("authentication/logout", "/");
+    }
+    private bool showDropdown = false;
+
+    private void ToggleDropdown()
+    {
+        showDropdown = !showDropdown;
     }
 }
