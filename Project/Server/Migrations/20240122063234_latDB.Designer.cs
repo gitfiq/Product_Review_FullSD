@@ -12,8 +12,8 @@ using Project.Server.Data;
 namespace Project.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240122060814_latestDB")]
-    partial class latestDB
+    [Migration("20240122063234_latDB")]
+    partial class latDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -399,7 +399,7 @@ namespace Project.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5782aabc-9969-4739-886b-d0831382f770",
+                            ConcurrencyStamp = "92f9fecb-4329-4e2a-b2a4-f687b7ad454f",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -407,9 +407,9 @@ namespace Project.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEN/E+l+01l+LaL/1I6FRxJHLctBaZMlMpjvFhElm/LmChVXkLAVb24ZncrNBW8X3tQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIOZzEJzo3/IhtL1YiDxqPUTqsIKXKuAxFsso3CCsDLVlR5Zpu6qqImD0HRqr+/dJQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7a634825-ee13-4bf0-8e09-9cb7242c866c",
+                            SecurityStamp = "d5a16d39-9c45-4de9-9a51-152b0928b9f7",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -726,8 +726,8 @@ namespace Project.Server.Migrations
                             Address = "15 Serangoon North Avenue 5, Singapore 554360",
                             ContactInfo = "64629603",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(997),
-                            DateUpdated = new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(997),
+                            DateCreated = new DateTime(2024, 1, 22, 14, 32, 33, 879, DateTimeKind.Local).AddTicks(9280),
+                            DateUpdated = new DateTime(2024, 1, 22, 14, 32, 33, 879, DateTimeKind.Local).AddTicks(9280),
                             EmailAddress = "eph@popularworld.com",
                             PublisherName = "Educational Publishing House",
                             UpdatedBy = "System",
@@ -836,7 +836,7 @@ namespace Project.Server.Migrations
                             Content = "This book has changed my life, and I would highly recommend this to anyone who is in school.",
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            StaffID = 0,
+                            StaffID = 1,
                             Title = "I love this book",
                             UserRating = 5.0
                         });
@@ -890,8 +890,8 @@ namespace Project.Server.Migrations
                             Id = 1,
                             ContactInfo = "87907564",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(790),
-                            DateUpdated = new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(800),
+                            DateCreated = new DateTime(2024, 1, 22, 14, 32, 33, 879, DateTimeKind.Local).AddTicks(9120),
+                            DateUpdated = new DateTime(2024, 1, 22, 14, 32, 33, 879, DateTimeKind.Local).AddTicks(9129),
                             EmailAddress = "admin1@blazor.com",
                             FirstName = "Sam",
                             LastName = "Wick",
@@ -1010,7 +1010,7 @@ namespace Project.Server.Migrations
                         .IsRequired();
 
                     b.HasOne("Project.Shared.Domain.Staff", "Staff")
-                        .WithMany()
+                        .WithMany("Reviews")
                         .HasForeignKey("StaffID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1026,6 +1026,11 @@ namespace Project.Server.Migrations
                 {
                     b.Navigation("Recommendations");
 
+                    b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("Project.Shared.Domain.Staff", b =>
+                {
                     b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
