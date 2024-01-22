@@ -5,15 +5,28 @@
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
 
+<head>
+    <style>
+        .btnCreate { background-color: #00008B; color: #E1D9D1; width: 300px; }
+        .btnCreate:hover { color: white; }
+
+        .image { width: 250px; }
+
+        img { width: 100%; height: 100%; object-fit: contain; border-radius: 15px;}
+
+    </style>
+</head>
+
+
 <h3 class="card-title">Manage Books</h3>
 <br />
-<br />
 
 
-<a href="/books/create" class="btn btn-primary">
+<a href="/books/create" class="btn btnCreate">
     <span class="oi oi-plus"></span>
     Add New Book
 </a>
+<br />
 <br />
 <br />
 
@@ -39,14 +52,14 @@ else
             @foreach (var Book in Books)
             {
                 <tr>
-                    <td class="book-image-td" style="width: 500px;">
+                    <td class="image">
                         @if (Book.Image != null)
                         {
-                            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" style="width: 60%; height: 60%;" alt="Book Image" />
+                            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" alt="Book Image" />
                         }
                         else
                         {
-                            <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" style="width: 60%; height: 60%;" alt="Book Image">
+                            <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image">
                         }
                     </td>
                     <td>@Book.Title</td>

@@ -8,17 +8,44 @@
 
 <PageTitle>Home</PageTitle>
 
+<head>
+    <style>
+        .container { display: flex; flex-direction: column; }
+
+        .hello { text-align: center; }
+
+        hr {
+            width: 80%; /* Shortens the line to half the page width */
+            margin: 0 auto; /* Centers the line horizontally */
+            border: 0; /* Removes the default border for styling flexibility */
+            border-top: 3px solid #D8C4B6;
+        }
+
+        .btnCreate { background-color: #00008B; color: #E1D9D1; width: 300px; }
+        .btnCreate:hover { color: white; }
+
+        .Description { width: 350px; }
+
+        .image { width: 250px; }
+
+        img { width: 100%; height: 100%; object-fit: contain; border-radius: 15px;}
+
+    </style>
+</head>
+
 <div class="landing-page container">
-    <h1 class="hello">Hello, world!</h1>
+    <h1 class="hello">Hello, world!</h1> <br />
+    <h2 class="hello"> Welcome to Book Review RA</h2>
     <br /> <hr /> <br />
 
-    <h3 class="card-title">Staff's' Recommendations</h3>
+    <h3 class="card-title">Staff's Recommendations</h3>
     <br />
 
-    <a href="/recommendations/create" class="btn btn-primary">
+    <a href="/recommendations/create" class="btn btnCreate">
         <span class="oi oi-plus"></span>
         Add New Recommendation
     </a>
+    <br />
     <br />
     <br />
 
@@ -47,18 +74,18 @@
                         @if (Book.BookId == Recommendation.BookID)
                         {
                             <tr>
-                                <td>
+                                <td class="image">
                                     @if (Book.Image != null)
                                     {
-                                        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" style="width: 60%; height: 60%;" alt="Book Image" />
+                                        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" alt="Book Image" />
                                     }
                                     else
                                     {
-                                        <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" style="width: 60%; height: 60%;" alt="Book Image">
+                                        <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image">
                                     }
                                 </td>
                                 <td>@Book.Title</td>
-                                <td style="width: 600px;">@Recommendation.Description</td>
+                                <td class="Description">@Recommendation.Description</td>
                                 <td>@(Recommendation.Date.Date.ToString("dd/MM/yyyy"))</td>
                                 <td>@Recommendation.StaffRating</td>
                                 <td>

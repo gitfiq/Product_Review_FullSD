@@ -5,14 +5,24 @@
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
 
+<head>
+    <style>
+
+        .btnCreate { background-color: #00008B; color: #E1D9D1; width: 300px; }
+        .btnCreate:hover { color: white; }
+
+    </style>
+</head>
+
+
 <h3 class="card-title">Manage Publisher</h3>
 <br />
-<br />
 
-<a href="/publishers/create" class="btn btn-primary">
+<a href="/publishers/create" class="btn btnCreate">
     <span class="oi oi-plus"></span>
     Add New Publisher
 </a>
+<br />
 <br />
 <br />
 

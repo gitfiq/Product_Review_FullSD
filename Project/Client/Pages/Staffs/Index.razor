@@ -5,13 +5,25 @@
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
 
-<h3 class="card-title">Manage Staff</h3> <br /><br />
+
+<head>
+    <style>
+
+        .btnCreate { background-color: #00008B; color: #E1D9D1; width: 300px; }
+        .btnCreate:hover { color: white; }
+
+    </style>
+</head>
 
 
-<a href="/staffs/create" class="btn btn-primary">
+<h3 class="card-title">Manage Staff</h3> <br />
+
+
+<a href="/staffs/create" class="btn btnCreate">
     <span class="oi oi-plus"></span>
     Add New Staff
 </a>
+<br />
 <br />
 <br />
 
