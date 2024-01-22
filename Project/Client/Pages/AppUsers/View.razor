@@ -1,8 +1,11 @@
 ﻿@page "/appUsers/view/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
-<h3>View AppUsers</h3>
+
+<h2 class="card-title">View App Users</h2>
+
 <FormComponent appUser="appUser" Disabled="true" />
+
 @code {
     [Parameter] public int id { get; set; }
     AppUser? appUser = new AppUser();

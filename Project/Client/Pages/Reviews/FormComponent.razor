@@ -3,41 +3,54 @@
 <EditForm Model = "@review" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
+
     <fieldset disabled="@Disabled">
         <div class="form-group">
-            <div class="form-group">
-                <label>Book: </label>
-                <div>
-                    <InputSelect @bind-Value="review.BookID" class="form-control">
-                        <option value="">-- Select Book --</option>
-                        @if (Books != null)
+            <label>Book: </label>
+            <div>
+                <InputSelect @bind-Value="review.BookID" class="form-control">
+                    <option value="">-- Select Book --</option>
+                    @if (Books != null)
+                    {
+                        foreach (var book in Books)
                         {
-                            foreach (var book in Books)
-                            {
-                                <option value="@book.Id">@book.Title</option>
-                            }
+                            <option value="@book.Id">@book.Title</option>
                         }
-                    </InputSelect>
-                    <ValidationMessage For="@(() => review.BookID)" />
-                </div>
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => review.BookID)" />
             </div>
+        </div>
+        <br />
 
+        <div class="form-group">
             <label>Review Rating: </label>
             <div>
                 <InputNumber @bind-Value="@review.UserRating" class="form-control" />
                 <ValidationMessage For="@(() => review.UserRating)" />
             </div>
+        </div>
+        <br />
 
+        <div class="form-group">
             <label>Review Title: </label>
             <div>
                 <InputText @bind-Value="@review.Title" class="form-control" />
                 <ValidationMessage For="@(() => review.Title)" />
             </div>
+        </div>
+        <br />
+
+        <div class="form-group">
             <label>Review Content: </label>
             <div>
                 <InputText @bind-Value="@review.Content" class="form-control" />
                 <ValidationMessage For="@(() => review.Content)" />
             </div>
+        </div>
+        <br />
+
+        <div class="form-group">
             <label>User: </label>
             <div>
                 <InputSelect @bind-Value="review.AppUserID" class="form-control">
@@ -53,13 +66,16 @@
                 <ValidationMessage For="@(() => review.AppUserID)" />
             </div>
         </div>
+        <br />
+        <br />
     </fieldset>
+
     @if(!Disabled){
         <button type="submit" class="btn btn-success btn-block">
             @ButtonText
         </button>
     }
-    <br />
+
     <BackToList Target="reviews" />
 </EditForm>
 

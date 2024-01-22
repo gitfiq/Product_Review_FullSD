@@ -3,49 +3,11 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3 class="card-title">Create New BookAuthorDetail</h3>
+<h2 class="card-title">Create New BookAuthorDetail</h2>
 <hr />
 <br />
 
-<EditForm Model="@bookAuthorDetail" OnValidSubmit="CreateBookAuthorDetail">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>Book: </label>
-            <div>
-                <InputSelect @bind-Value="bookAuthorDetail.BookID" class="form-control">
-                    <option value="">-- Select Book --</option>
-                    @if (Books != null)
-                    {
-                        foreach (var book in Books)
-                        {
-                            <option value="@book.Id">@book.Title</option>
-                        }
-                    }
-                </InputSelect>
-                <ValidationMessage For="@(() => bookAuthorDetail.BookID)" />
-            </div>
-        </div>
-        <label>Author: </label>
-            <div>
-                <InputSelect @bind-Value="bookAuthorDetail.AuthorID" class="form-control">
-                    <option value="">-- Select Author--</option>
-                    @if (Authors != null)
-                    {
-                        foreach (var author in Authors)
-                        {
-                            <option value="@author.Id">@author.FirstName @author.FirstName</option>
-                        }
-                    }
-                </InputSelect>
-                <ValidationMessage For="@(() => bookAuthorDetail.Author)" />
-            </div>
-    <button type="submit" class="btn btn-success btn-block">
-        Create BookAuthorDetail
-    </button>
-
-</EditForm>
+<FormComponent ButtonText="Add BookAuthorDetail" bookAuthorDetail="bookAuthorDetail" OnValidSubmit="@CreateBookAuthorDetail" />
 
 
 @code {

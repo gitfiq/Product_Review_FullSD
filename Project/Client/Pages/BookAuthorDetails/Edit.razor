@@ -2,20 +2,22 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h3>Edit BookAuthorDetail</h3>
+<h2 class="card-title">Edit Book Author Detail</h2>
+
 <FormComponent ButtonText="Update" OnValidSubmit="EditBookAuthorDetail" bookAuthorDetail="bookAuthorDetail" />
 
 @code {
     [Parameter] public int id { get; set; }
     BookAuthorDetail? bookAuthorDetail = new BookAuthorDetail();
+
     protected async override Task OnParametersSetAsync()
     {
         bookAuthorDetail = await _client.GetFromJsonAsync<BookAuthorDetail>($"{Endpoints.BookAuthorDetailsEndpoint}/{id}");
     }
+
     async Task EditBookAuthorDetail()
     {
         await _client.PutAsJsonAsync($"{Endpoints.BookAuthorDetailsEndpoint}/{id}", bookAuthorDetail);
-
         _navManager.NavigateTo("/bookAuthorDetails/");
     }
 }

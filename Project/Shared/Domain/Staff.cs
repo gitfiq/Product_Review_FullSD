@@ -20,7 +20,6 @@ namespace Project.Shared.Domain
 
         public string? LastName { get; set;}
 
-        public virtual List<Review>? Reviews { get; set; }
-
+        public virtual List<Recommendation>? Recommendations { get; set; }
     }
 }

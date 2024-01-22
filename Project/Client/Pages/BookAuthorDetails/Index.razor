@@ -1,14 +1,30 @@
 ﻿@page "/bookAuthorDetails/"
 @inject HttpClient _client
 @inject IJSRuntime js
-@attribute [Authorize]  
+@attribute [Authorize] 
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<head>
+    <style>
+
+        .btnCreate { background-color: #00008B; color: #E1D9D1; width: 300px; }
+        .btnCreate:hover { color: white; }
+
+    </style>
+</head>
+
 
 <h3 class="card-title">BookAuthorDetails</h3>
-<a href="/bookAuthorDetails/create" class="btn btn-secondary">
+<br />
+
+
+<a href="/bookAuthorDetails/create" class="btn btnCreate">
     <span class="oi oi-plus"></span>
     Add New BookAuthorDetails
 </a>
-
+<br />
+<br />
 <br />
 
 @if (BookAuthorDetailss == null)
@@ -17,12 +33,13 @@
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-responsive" id="bookauthordetailsTable">
         <thead>
             <tr>
                 <th>Book Title</th>
                 <th>Author First Name</th>
                 <th>Author Last Name</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -54,7 +71,13 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         BookAuthorDetailss = await _client.GetFromJsonAsync<List<BookAuthorDetail>>($"{Endpoints.BookAuthorDetailsEndpoint}");
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#bookauthordetailsTable");
     }
 
     async Task Delete(int bookAuthorDetailsId)
@@ -62,12 +85,18 @@ else
         if (BookAuthorDetailss != null)
         {
             var bookAuthorDetails = BookAuthorDetailss.First(q => q.Id == bookAuthorDetailsId);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {bookAuthorDetails.Book.Title}?");
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete author detail for{bookAuthorDetails.Book.Title}?");
             if (confirm)
             {
                 await _client.DeleteAsync($"{Endpoints.BookAuthorDetailsEndpoint}/{bookAuthorDetailsId}");
                 await OnInitializedAsync();
             }
         }
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#bookauthordetailsTable");
+        _interceptor.DisposeEvent();
     }
 }

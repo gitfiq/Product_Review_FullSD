@@ -2,13 +2,29 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]  
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<head>
+    <style>
+
+        .btnCreate { background-color: #00008B; color: #E1D9D1; width: 300px; }
+        .btnCreate:hover { color: white; }
+
+    </style>
+</head>
+
 
 <h3 class="card-title">App Users</h3>
-<a href="/appUsers/create" class="btn btn-secondary">
+<br />
+
+
+<a href="/appUsers/create" class="btn btnCreate">
     <span class="oi oi-plus"></span>
     Add New App User
 </a>
-
+<br />
+<br />
 <br />
 
 @if (AppUsers == null)
@@ -17,7 +33,7 @@
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-responsive" id="appusersTable">
         <thead>
             <tr>
                 <th>First Name</th>
@@ -61,7 +77,13 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         AppUsers = await _client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AppUsersEndpoint}");
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#appusersTable");
     }
 
     async Task Delete(int appUserId)
@@ -76,5 +98,11 @@ else
                 await OnInitializedAsync();
             }
         }
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#appusersTable");
+        _interceptor.DisposeEvent();
     }
 }

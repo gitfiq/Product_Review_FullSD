@@ -2,11 +2,11 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
-<h2 class="card-title"> Add Staff</h2>
+<h2 class="card-title">Add Staff</h2>
 <hr />
 <br />
 
-<FormComponent ButtonText="Create Staff" staff="staff" OnValidSubmit="@CreateStaff" />
+<FormComponent ButtonText="Add Staff" staff="staff" OnValidSubmit="@CreateStaff" />
 
 @code {
     Staff staff = new Staff();
