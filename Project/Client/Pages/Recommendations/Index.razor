@@ -1,69 +1,103 @@
-﻿@page "/recommendations/"
+﻿@page "/"
+@page "/recommendations/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
 
-<h3 class="card-title">Manage Recommendations</h3>
-<br />
-<br />
+<PageTitle>Home</PageTitle>
 
+<div class="landing-page container">
+    <h1 class="hello">Hello, world!</h1>
+    <br /> <hr /> <br />
 
-<a href="/recommendations/create" class="btn btn-primary">
-    <span class="oi oi-plus"></span>
-    Add New Recommendation
-</a>
-<br />
-<br />
+    <h3 class="card-title">Staff's' Recommendations</h3>
+    <br />
 
-@if (Recommendations == null)
-{
-    <div class="alert alert-info">Looding Recommendations....</div>
-}
-else
-{
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Decription</th>
-                <th>Date</th>
-                <th>Staff Rating</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var Recommendation in Recommendations)
-            {
+    <a href="/recommendations/create" class="btn btn-primary">
+        <span class="oi oi-plus"></span>
+        Add New Recommendation
+    </a>
+    <br />
+    <br />
+
+    @if (Recommendations == null)
+    {
+        <div class="alert alert-info">Looding Recommendations....</div>
+    }
+    else
+    {
+        <table class="table table-responsive" id="recommendationsTable">
+            <thead>
                 <tr>
-                    <td style="width: 600px;">@Recommendation.Description</td>
-                    <td>@Recommendation.Date</td>
-                    <td>@Recommendation.StaffRating</td>
-                    <td>
-                        <a href="/recommendations/view/@Recommendation.RecommendationId" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/recommendations/edit/@Recommendation.RecommendationId" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(Recommendation.RecommendationId))">
-                            <span class="oi oi-trash"></span>
-                        </button>
-                    </td>
+                    <th>Book Image</th>
+                    <th>Book Title</th>
+                    <th>Decription</th>
+                    <th>Date</th>
+                    <th>Staff Rating</th>
+                    <th>Action</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (var Recommendation in Recommendations)
+                {
+                    @foreach (var Book in Books)
+                    {
+                        @if (Book.BookId == Recommendation.BookID)
+                        {
+                            <tr>
+                                <td>
+                                    @if (Book.Image != null)
+                                    {
+                                        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" style="width: 60%; height: 60%;" alt="Book Image" />
+                                    }
+                                    else
+                                    {
+                                        <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" style="width: 60%; height: 60%;" alt="Book Image">
+                                    }
+                                </td>
+                                <td>@Book.Title</td>
+                                <td style="width: 600px;">@Recommendation.Description</td>
+                                <td>@(Recommendation.Date.Date.ToString("dd/MM/yyyy"))</td>
+                                <td>@Recommendation.StaffRating</td>
+                                <td>
+                                    <a href="/recommendations/view/@Recommendation.RecommendationId" class="btn btn-primary">
+                                        <span class="oi oi-book"></span>
+                                    </a>
+                                    <a href="/recommendations/edit/@Recommendation.RecommendationId" class="btn btn-warning">
+                                        <span class="oi oi-pencil"></span>
+                                    </a>
+                                    <button class="btn btn-danger" @onclick="@(() => Delete(Recommendation.RecommendationId))">
+                                        <span class="oi oi-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
 
 @code {
     private List<Recommendation>? Recommendations;
+    private List<Book>? Books;
 
     protected async override Task OnInitializedAsync()
     {
         _interceptor.MonitorEvent();
         Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
+        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
     }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#recommendationsTable");
+    }
+
 
     async Task Delete(int RecommendationId)
     {
@@ -81,6 +115,7 @@ else
 
     public void Dispose()
     {
+        js.InvokeVoidAsync("DataTablesDispose", "#recommendationsTable");
         _interceptor.DisposeEvent();
     }
 }

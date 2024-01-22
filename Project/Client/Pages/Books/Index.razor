@@ -23,7 +23,7 @@
 }
 else
 {
-    <table class="table table-responsive">
+    <table class="table table-responsive" id="booksTable">
         <thead>
             <tr>
                 <th>Book Image</th>
@@ -88,6 +88,11 @@ else
         Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
     }
 
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#booksTable");
+    }
+
     async Task Delete(int BookId)
     {
         if (Books != null)
@@ -104,6 +109,7 @@ else
 
     public void Dispose()
     {
+        js.InvokeVoidAsync("DataTablesDispose", "#booksTable");
         _interceptor.DisposeEvent();
     }
 }
