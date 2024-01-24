@@ -1,4 +1,4 @@
-﻿@page "/books/"
+﻿@page "/products/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -18,22 +18,11 @@
 </head>
 
 
-<h3 class="card-title">Manage Books</h3>
-<br />
-
-
-<a href="/books/create" class="btn btnCreate">
-    <span class="oi oi-plus"></span>
-    Add New Book
-</a>
-
-<br />
-<br />
-<br />
+<h3 class="card-title">Manage Products</h3>
 
 @if (Books == null)
 {
-    <div class="alert alert-info">Loading Books...</div>
+    <div class="alert alert-info">Loading Products...</div>
 }
 else
 {
@@ -43,7 +32,6 @@ else
                 <th>Book Image</th>
                 <th>Title</th>
                 <th>Rating</th>
-                <th>Publish Year</th>
                 <th>Publisher</th>
                 <th>Subject</th>
                 <th>School Level</th>
@@ -65,8 +53,7 @@ else
                         }
                     </td>
                     <td>@Book.Title</td>
-                    <td>
-                        @if (Book.BookRating != null)
+                    <td>@if (Book.BookRating != null)
                         {
                             @Book.BookRating
                         }
@@ -75,28 +62,13 @@ else
                             <text>0</text>
                         }
                     </td>
-                    <td>@Book.PublishYear</td>
-                    <td>@if(Book.Publisher != null)
-                    {
-                        @Book.Publisher.PublisherName
-                    }
-                    else
-                    {
-                            <text>NULL</text>
-                    }
-                    </td>
+                    <td>@Book.Publisher.PublisherName</td>
                     <th>@Book.Subject</th>
                     <th>@Book.SchoolLevel</th>
                     <td>
-                        <a href="/books/view/@Book.Id" class="btn btn-primary">
+                        <a href="/products/view/@Book.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/books/edit/@Book.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(() => Delete(Book.Id))">
-                            <span class="oi oi-trash"></span>
-                        </button>
                     </td>
                 </tr>
             }
@@ -116,20 +88,6 @@ else
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         await js.InvokeVoidAsync("AddDataTable", "#booksTable");
-    }
-
-    async Task Delete(int Id)
-    {
-        if (Books != null)
-        {
-            var Book = Books.First(q => q.Id == Id);
-            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Book.Title}?");
-            if (confirm)
-            {
-                await _client.DeleteAsync($"{Endpoints.BooksEndpoint}/{Id}");
-                await OnInitializedAsync();
-            }
-        }
     }
 
     public void Dispose()

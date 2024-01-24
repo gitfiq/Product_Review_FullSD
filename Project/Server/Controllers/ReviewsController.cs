@@ -11,9 +11,9 @@ namespace Project.Server.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public ReviewsController(IUnitOfWork unitOfWOrk)
+        public ReviewsController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWOrk;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Reviews

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class latestDB : Migration
+    public partial class _22jan : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -456,7 +456,7 @@ namespace Project.Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "5782aabc-9969-4739-886b-d0831382f770", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEN/E+l+01l+LaL/1I6FRxJHLctBaZMlMpjvFhElm/LmChVXkLAVb24ZncrNBW8X3tQ==", null, false, "7a634825-ee13-4bf0-8e09-9cb7242c866c", false, "admin@localhost.com" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "13a79818-b8c8-4207-86ef-fb8fe4b33e2d", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEPqQG8tlQigOSDhRsDy6Xck5VqbbnmbZ8Hum68hsFvAF+UOFMIXv02UvM9+jxcftHA==", null, false, "76f42af5-7509-4b09-8d74-6cd6c6259940", false, "admin@localhost.com" });
 
             migrationBuilder.InsertData(
                 table: "Authors",
@@ -481,12 +481,12 @@ namespace Project.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Publishers",
                 columns: new[] { "Id", "Address", "ContactInfo", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "PublisherName", "UpdatedBy", "WebsiteLink" },
-                values: new object[] { 1, "15 Serangoon North Avenue 5, Singapore 554360", "64629603", "System", new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(997), new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(997), "eph@popularworld.com", "Educational Publishing House", "System", "https://www.eph.com.sg/" });
+                values: new object[] { 1, "15 Serangoon North Avenue 5, Singapore 554360", "64629603", "System", new DateTime(2024, 1, 22, 16, 20, 7, 344, DateTimeKind.Local).AddTicks(8674), new DateTime(2024, 1, 22, 16, 20, 7, 344, DateTimeKind.Local).AddTicks(8675), "eph@popularworld.com", "Educational Publishing House", "System", "https://www.eph.com.sg/" });
 
             migrationBuilder.InsertData(
                 table: "Staffs",
                 columns: new[] { "Id", "ContactInfo", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "FirstName", "LastName", "Password", "UpdatedBy", "Username" },
-                values: new object[] { 1, "87907564", "System", new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(790), new DateTime(2024, 1, 22, 14, 8, 14, 373, DateTimeKind.Local).AddTicks(800), "admin1@blazor.com", "Sam", "Wick", "Abc123!", "System", "admin1" });
+                values: new object[] { 1, "87907564", "System", new DateTime(2024, 1, 22, 16, 20, 7, 344, DateTimeKind.Local).AddTicks(8481), new DateTime(2024, 1, 22, 16, 20, 7, 344, DateTimeKind.Local).AddTicks(8494), "admin1@blazor.com", "Sam", "Wick", "Abc123!", "System", "admin1" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -496,7 +496,7 @@ namespace Project.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Reviews",
                 columns: new[] { "Id", "AppUserID", "BookID", "Content", "CreatedBy", "DateCreated", "DateUpdated", "StaffID", "Title", "UpdatedBy", "UserRating" },
-                values: new object[] { 1, 1, 1, "This book has changed my life, and I would highly recommend this to anyone who is in school.", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0, "I love this book", null, 5.0 });
+                values: new object[] { 1, 1, 1, "This book has changed my life, and I would highly recommend this to anyone who is in school.", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "I love this book", null, 5.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
