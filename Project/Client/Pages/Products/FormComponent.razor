@@ -63,7 +63,7 @@
             {
                 @foreach (var Publisher in Publishers)
                 {
-                    @if (Book.PublisherID == Publisher?.Id)
+                    @if (Book.PublisherID == Publisher.Id)
                     {
                         @if (Publisher != null)
                         {
@@ -88,7 +88,7 @@
             </ul>
         </div>
     </div>
-    <!--
+
     <div class="recommendation-container">
         <h1>About this book:</h1>
         <p>
@@ -112,6 +112,10 @@
         </p>
     </div>
     <div class="review-container">
+        <a href="products/create/@book.Id" class="btn btn-secondary">
+            <span class="oi oi-plus"></span>
+            Write Review for this book
+        </a>
         <h1>User Reviews:</h1>
         <p>
             @foreach (var Book in Books)
@@ -133,7 +137,6 @@
             }
         </p>
     </div>
-    -->
 </EditForm>
 @code {
     [Parameter] public bool Disabled { get; set; } = false;
