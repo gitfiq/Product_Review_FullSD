@@ -45,6 +45,11 @@
         background-color: #f4f4f4;
         padding: 20px;
     }
+    .review-item{
+        max-width: 50vw;
+        margin: auto;
+        padding: 20px;
+    }
 </style>
 
 
@@ -76,8 +81,8 @@
                     }
                 }
             }
-            
-            <p>Rating: @book.BookRating</p>
+
+            <p>Rating: @averageRating</p>
             <p>@book.Description</p>
             <h2>Details:</h2>
             <ul>
@@ -117,28 +122,33 @@
             Write Review for this book
         </a>
         <h1>User Reviews:</h1>
-        <p>
-            @foreach (var Book in Books)
+        @foreach (var Book in Books)
+        {
+            @foreach (var Review in Reviews)
             {
-                @foreach (var Review in Reviews)
+                @if (Book.Id == Review?.BookID)
                 {
-                    @if (Book.Id == Review?.BookID)
+                    @if (Review != null)
                     {
-                        @if (Review != null)
-                        {
-                            <h3>@Review.Title</h3>
-                        }
-                        else
-                        {
-                            <p>NULL! Review information not available.</p>
-                        }
+                        <div class="review-item">
+                            <h3><b>@Review.Title</b></h3>
+                            <h5>Rating: @Review.UserRating</h5>
+                            <p>@Review.Content</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>NULL! Review information not available.</p>
                     }
                 }
             }
-        </p>
+        }
     </div>
 </EditForm>
 @code {
+    public double averageRating;
+    public double totalRating = 0;
+    public int totalCount = 0;
     [Parameter] public bool Disabled { get; set; } = false;
     [Parameter] public Book? book { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
@@ -155,5 +165,30 @@
         Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
         Publishers = await _client.GetFromJsonAsync<List<Publisher>>($"{Endpoints.PublishersEndpoint}");
         Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
+        CalculateAverageRating();
+    }
+    private void CalculateAverageRating()
+    {
+        foreach (var review in Reviews)
+        {
+            foreach (var book in Books)
+            {
+                if (book.Id == review.BookID)
+                {
+                    totalRating += review.UserRating;
+                    totalCount++;
+                }
+            }
+
+        }
+
+        if (totalCount > 0)
+        {
+            averageRating = totalRating / totalCount;
+        }
+        else
+        {
+            averageRating = 0; // Handle case where there are no reviews
+        }
     }
 }

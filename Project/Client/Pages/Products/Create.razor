@@ -47,6 +47,20 @@ else
         </InputSelect>
         <ValidationMessage For="@(() => review.AppUserID)" />
     </div>
+    <label>Staff: </label>
+    <div>
+        <InputSelect @bind-Value="review.StaffID" class="form-control">
+            <option value="">-- Select App User --</option>
+            @if (Staffs != null)
+            {
+                foreach (var staff in Staffs)
+                {
+                    <option value="@staff.Id">@staff.FirstName @staff.LastName</option>
+                }
+            }
+        </InputSelect>
+        <ValidationMessage For="@(() => review.StaffID)" />
+    </div>
     <button type="submit" class="btn btn-success btn-block">
         Create Review
     </button>
@@ -61,9 +75,10 @@ else
     Review review = new Review();
 
     private IList<AppUser>? AppUsers;
-
+    private IList<Staff>? Staffs;
     protected async override Task OnInitializedAsync()
     {
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
         AppUsers = await _client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AppUsersEndpoint}");
         book = await _client.GetFromJsonAsync<Book>($"{Endpoints.BooksEndpoint}/{id}");
     }
