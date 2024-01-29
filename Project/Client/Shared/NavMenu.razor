@@ -1,109 +1,163 @@
 ﻿@inject NavigationManager Navigation
-<style>
-    .dropdown-div {
-    }
 
-    .dropdown-btn {
-        display: inline-block;
-        padding: 10px 15px;
-        font-size: 14px;
-        font-weight: bold;
-        text-align: center;
-        text-decoration: none;
-        cursor: pointer;
-        border: 1px solid #007bff; /* Border color */
-        color: #007bff; /* Text color */
-        background-color: #fff; /* Background color */
-        border-radius: 4px; /* Optional: Add rounded corners */
-        transition: background-color 0.3s ease, color 0.3s ease; /* Optional: Add a smooth transition effect */
-    }
+<head>
+    <style>
+        .navBrand {
+            position:absolute;
+            top: 0;
+            display: block; 
+            padding: 15px; 
+            margin-top: 10px;
+            text-decoration: none;
+            color: antiquewhite; 
+            background-color: #213555;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.0rem;
+        }
 
-    /* Hover effect */
-    .dropdown-btn:hover {
-        background-color: #007bff; /* Hover background color */
-        color: #fff; /* Hover text color */
-    }
+        .oi {
+            width: 2rem;
+            font-size: 1.0rem;
+            top: -2px;
+        }
 
-    /* Active effect */
-    .dropdown-btn:active {
-        background-color: #0056b3; /* Active background color */
-        color: #fff; /* Active text color */
-    }
+        .dropdown-btn {
+            display: inline-block;
+            padding: 12px 12px;
+            margin-left: 8px;
+            font-size: 1.0rem;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border: 1px solid #213555; /* Border color */
+            color: antiquewhite; /* Text color */
+            background-color: #213555; /* Background color */
+            border-radius: 10px; /* Add rounded corners */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Add a smooth transition effect */
+        }
 
-    .dropdown-list{
-        border: 1px solid #007bff; /* Optional: Add border for visual clarity */
-        background-color: #fff;
-    }
+            /* Hover effect */
+            .dropdown-btn:hover {
+                background-color: #D8C4B6;
+                color: #1d3357;
+            }
 
-    .clickable-ul {
-        list-style: none; /* Remove default list item styling */
-        padding: 0; /* Remove default padding */
-    }
+            /* Active effect */
+            .dropdown-btn:active {
+                background-color: #D8C4B6;
+                color: #1d3357;
+            }
 
-    .clickable-ul li {
-        margin: 0; /* Remove default margin */
-    }
+        .clickable-ul {
+            list-style: none; /* Remove default list item styling */
+            padding: 0; /* Remove default padding */
+            border: 1px solid #000; 
+            background-color: #213555;
+            border-radius: 10px;
+            margin-left: 8px;
+        }
 
-    .clickable-ul li a {
-        display: block; /* Make the link a block element */
-        padding: 10px; /* Add padding for visual clarity and hit area */
-        text-decoration: none; /* Remove default underline */
-        color: #000; /* Set the text color */
-        background-color: #c8c9cf;
-    }
+            .clickable-ul li {
+                margin: 0; /* Remove default margin */
+            }
 
-    .clickable-ul li a:hover {
-        background-color: #1e1f3d; /* Optional: Change background color on hover for visual feedback */
-    }
-</style>
+                .clickable-ul li .nav-link {
+                    display: block; /* Make the link a block element */
+                    padding: 10px; /* Add padding for visual clarity and hit area */
+                    text-decoration: none; /* Remove default underline */
+                    color: antiquewhite; /* Set the text color */
+                    background-color: #213555;
+                    border-radius: 10px;
+                    font-weight: 600;
+                }
+
+                    .clickable-ul li .nav-link:hover {
+                        background-color: #D8C4B6; /* Change background color on hover for visual feedback */
+                        color: #1d3357;
+                    }
+
+                    .clickable-ul li .nav-link:active {
+                        background-color: #D8C4B6;
+                        color: #213555;
+                    }
+
+    </style>
+</head>
+
 
 <div class="top-row navbar">
     <div class="container-fluid">
         <div class="d-flex">
+            <div class="nav-item px-3">
+                <a class="navBrand" href="">
+                    <span class="oi oi-home" aria-hidden="true"></span> AR Reviews
+                </a>
+            </div>
             <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
+        </div>
 
-            <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-                <ul class="navbar-nav mb-0 close">
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                            <span class="oi oi-home" aria-hidden="true"></span> Home
-                        </NavLink>
-                    </li>
-
-                    <li class="nav-item px-3">
-                        <NavLink class="nav-link" href="books">
-                            <span class="oi oi-book" aria-hidden="true"></span> Manage Books
-                        </NavLink>
-                    </li>
+        <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+            <ul class="navbar-nav mb-0 close">
+                <li>
                     <!-- Apply ml-auto to push this div to the right -->
-                    <div class="d-flex ml-auto">
-                        <LoginDisplay />
+                    <div class="d-flex justify-content-end">
                         <div class="dropdown-div">
                             <button class="dropdown-btn" @onclick="ToggleDropdown">
-                                <span class="oi oi-caret-bottom" aria-hidden="true"></span>Manage CRUD
+                                <span class="oi oi-caret-bottom" aria-hidden="true"></span> Manage CRUD
                             </button>
                             @if (showDropdown)
                             {
                                 <ul class="clickable-ul">
-                                    <li><a href="appUsers">App Users</a></li>
-                                    <li><a href="authors">Authors</a></li>
-                                    <li><a href="books">Books</a></li>
-                                    <li><a href="bookAuthorDetails">Book Author Details</a></li>
-                                    <li><a href="publishers">Publishers</a></li>
-                                    <li><a href="recommendations">Recommendations</a></li>
-                                    <li><a href="reviews">Reviews</a></li>
-                                    <li><a href="staffs">Staff</a></li>
+                                    <li>
+                                        <NavLink class="nav-link" href="appUsers" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                            App Users
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink class="nav-link" href="authors" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                            Authors
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink class="nav-link" href="books" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                            Books
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink class="nav-link" href="bookAuthorDetails" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                            Book Author Details
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink class="nav-link" href="publishers" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                            Publishers
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink class="nav-link" href="staffs" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                            Staffs
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink class="nav-link" href="reviews" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                            Reviews
+                                        </NavLink>
+                                    </li>
                                 </ul>
                             }
                         </div>
+                        <LoginDisplay />
                     </div>
-                </ul>
-            </div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
+
 
 
 @code {
@@ -119,6 +173,7 @@
     {
         Navigation.NavigateToLogout("authentication/logout", "/");
     }
+
     private bool showDropdown = false;
 
     private void ToggleDropdown()
