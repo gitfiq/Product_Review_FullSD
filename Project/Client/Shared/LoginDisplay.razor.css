@@ -7,14 +7,16 @@
 
 .nav-item {
     font-size: 1.0rem;
-    font-weight: 600;
     letter-spacing: 1px;
-    padding-bottom: 3px;
+    padding: 3px 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Optional: Add a smooth transition effect */
 }
 
 
     .nav-item ::deep a {
-        border-radius: 5px;
+        border-radius: 10px;
         height: 3rem;
         display: flex;
         align-items: center;
