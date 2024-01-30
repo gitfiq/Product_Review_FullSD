@@ -41,17 +41,16 @@
             overflow: hidden;
             background-color: #f9f9f9;
             width: 250px; /* Set fixed width */
-            height: 500px; /* Set a fixed height for the card */
+            height: 600px; /* Set a fixed height for the card */
             display: flex; /* Use flexbox for card layout */
             flex-direction: column; /* Arrange child elements vertically */
         }
 
-        .card img {
-            width: 250px;
-            height: 350px; /* Let the height adjust dynamically */
-            object-fit: contain; 
-            border-radius: 10px 10px 0 0;
-        }
+            .card img {
+                width: 250px;
+                height: 350px; /* Let the height adjust dynamically */
+                object-fit: contain;
+            }
 
         .card-body {
             padding: 15px;
@@ -64,13 +63,14 @@
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 10px;
+            color: #000; /* Default color */
+            transition: color 0.3s; /* Smooth color transition */
+            cursor: pointer; /* Change cursor to pointer on hover */
         }
 
-        .card-rating {
-            font-size: 16px;
-            color: #ffd700; /* Gold color */
-            margin-bottom: 10px;
-        }
+            .card-title:hover {
+                color: #ff7f00; /* Orange color on hover */
+            }
 
         .card-publisher {
             font-size: 14px;
@@ -102,6 +102,7 @@
             --percent: calc(var(--rating) / 5 * 100%);
             display: inline-block;
             font-size: var(--star-size);
+            color: #ffd700;
             line-height: 1;
         }
 
@@ -136,13 +137,17 @@
             @foreach (var Book in Books)
             {
                 <div class="card">
-                    <img src="@(Book.Image != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(Book.Image)}" : "https://islandpress.org/sites/default/files/default_book_cover_2015.jpg")" alt="Book Image" />
+                    <a href="/products/view/@Book.Id">
+                        <!-- Wrap the img with an anchor tag -->
+                        <img src="@(Book.Image != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(Book.Image)}" : "https://islandpress.org/sites/default/files/default_book_cover_2015.jpg")" alt="Book Image" />
+                    </a>
                     <div class="card-body">
-                        <div class="card-title"><a href="/products/view/@Book.Id">@Book.Title</a></div>
+                        <div class="card-title">@Book.Title</div>
+                        <div class="card-publisher">@Book.Publisher.PublisherName</div>
                         <div class="Stars" style="--rating: @CalculateAverageRating(Book.Id);" aria-label="rating">
                             @CalculateAverageRating(Book.Id)
                         </div>
-                        <div class="card-publisher">@Book.Publisher.PublisherName</div>
+                        <div>@Book.Edition</div>
                     </div>
                 </div>
             }
