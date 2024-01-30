@@ -1,6 +1,16 @@
 ﻿@inject HttpClient _client
 
 <style>
+    /*Rating*/
+    .rating-container {
+        display: flex; 
+
+    }
+    /* Remaining CSS for star rating */
+    .star-rating {
+        color: #ffc107;
+    }
+
     /*Products*/
     .product-container {
         display: flex;
@@ -46,9 +56,31 @@
         padding: 20px;
     }
     .review-item{
-        max-width: 50vw;
+        max-width: 70vw;
         margin: auto;
         padding: 20px;
+    }
+
+    :root {
+        --star-size: 20px;
+        --star-color: #fff;
+        --star-background: #fc0;
+    }
+
+    .Stars {
+        --percent: calc(var(--rating) / 5 * 100%);
+        display: inline-block;
+        font-size: var(--star-size);
+        font-family: Times;
+        line-height: 1;
+    }
+
+    .Stars::before {
+        content: "★★★★★";
+        letter-spacing: 3px;
+        background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 </style>
 
@@ -57,32 +89,48 @@
     <BackToList Target="products" />
     
     <div class="product-container">
-
         <div class="product-image">
-            <img src="@(book.Image != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(book.Image)}" : "path/to/default/image.jpg")" alt="Book Image" />
+            @if (book != null){
+                @if (book.Image != null)
+                {
+                    <img src="@(book.Image != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(book.Image)}" : "path/to/default/image.jpg")" alt="Book Image" />
+
+                }
+                else
+                {
+                    <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image">
+                }
+            }
+            else
+            {
+                <p>books is null</p>
+            }
         </div>
         <div class="product-details">
             <h1>@book.Title</h1>
             <h2>@book.Edition</h2>
-            @foreach (var Book in Books)
+
+            @if (Books != null && Publishers != null)
             {
                 @foreach (var Publisher in Publishers)
                 {
-                    @if (Book.PublisherID == Publisher.Id)
+                    @if(Publisher.Id == book.PublisherID)
                     {
-                        @if (Publisher != null)
-                        {
-                            <h3>@Publisher.PublisherName</h3>
-                        }
-                        else
-                        {
-                            <p>NULL! Publisher information not available.</p>
-                        }
+                        <h3>@Publisher.PublisherName</h3>
+                    }
+                    else
+                    {
+                        <h3>No publisher found</h3>
                     }
                 }
             }
 
-            <p>Rating: @averageRating</p>
+            <div class="rating-container">
+                <div class="Stars" style="--rating: @averageRating;" aria-label="rating">
+                    @averageRating
+                </div>
+            </div>
+
             <p>@book.Description</p>
             <h2>Details:</h2>
             <ul>
@@ -92,29 +140,33 @@
                 <li>Number Of Pages: @book.NumberOfPages</li>
             </ul>
         </div>
+        -
     </div>
-
     <div class="recommendation-container">
         <h1>About this book:</h1>
-        <p>
+        @if (Books != null)
+        {
             @foreach (var Book in Books)
             {
-                @foreach (var Recommendation in Recommendations)
+                @if (Recommendations != null)
                 {
-                    @if (Book.Id == Recommendation?.BookID)
+                    @foreach (var Recommendation in Recommendations)
                     {
-                        @if (Recommendation != null)
+                        @if (Book.Id == Recommendation?.BookID)
                         {
-                            <p>@Recommendation.Description <b>-@Recommendation.Staff.FirstName @Recommendation.Staff.LastName; @Recommendation.DateUpdated</b></p>
-                        }
-                        else
-                        {
-                            <p>NULL! Publisher information not available.</p>
+                            @if (Recommendation != null && Recommendation.Staff != null)
+                            {
+                                <p>@Recommendation.Description <b>-@Recommendation.Staff.FirstName @Recommendation.Staff.LastName; @Recommendation.DateUpdated</b></p>
+                            }
+                            else
+                            {
+                                <p>NULL! Publisher information not available.</p>
+                            }
                         }
                     }
                 }
             }
-        </p>
+        }
     </div>
     <div class="review-container">
         <a href="products/create/@book.Id" class="btn btn-secondary">
@@ -122,26 +174,57 @@
             Write Review for this book
         </a>
         <h1>User Reviews:</h1>
-        @foreach (var Book in Books)
+        @if (Books != null)
         {
-            @foreach (var Review in Reviews)
+            @foreach (var Book in Books)
             {
-                @if (Book.Id == Review?.BookID)
+                @if (Reviews != null)
                 {
-                    @if (Review != null)
+                    @foreach (var Review in Reviews)
                     {
-                        <div class="review-item">
-                            <h3><b>@Review.Title</b></h3>
-                            <h5>Rating: @Review.UserRating</h5>
-                            <p>@Review.Content</p>
-                        </div>
+                        @if (Book.Id == Review?.BookID)
+                        {
+                            @if (Review != null)
+                            {
+                                <div class="review-item">
+                                    <h3><b>@Review.Title</b></h3>
+                                    <div class="rating-container">
+                                        <p>Rating: @Review.UserRating </p>
+                                        <div class="star-rating">
+                                            @for (int i = 0; i < 5; i++)
+                                            {
+                                                @if (Review.UserRating >= i + 1)
+                                                {
+                                                    <span>&#9733;</span> <!-- Filled star character -->
+                                                }
+                                                else
+                                                {
+                                                    <span>&#9734;</span> <!-- Empty star character -->
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <p>@Review.Content</p>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>NULL! Review information not available.</p>
+                            }
+                        }
                     }
-                    else
-                    {
-                        <p>NULL! Review information not available.</p>
-                    }
+
                 }
+                else
+                {
+                    <p>Reviews is null</p>
+                }
+
             }
+        }
+        else
+        {
+            <p>Books is null!</p>
         }
     </div>
 </EditForm>
@@ -185,6 +268,7 @@
         if (totalCount > 0)
         {
             averageRating = totalRating / totalCount;
+            averageRating = Math.Round(averageRating,1);
         }
         else
         {

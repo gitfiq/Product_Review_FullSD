@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Project.Server.Models;
 using Project.Server.IRepository;
 using Project.Server.Repository;
+using Microsoft.Extensions.Logging;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +36,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
+
+app.Logger.LogInformation("Application starting...");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

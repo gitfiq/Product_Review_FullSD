@@ -1,0 +1,39 @@
+﻿@code {
+    [Parameter]
+    public double AverageRating { get; set; }
+
+    private int FullStars => (int)AverageRating;
+    private double FractionalStar => AverageRating - FullStars;
+    private int NumberOfFractionalStars => (int)Math.Ceiling(FractionalStar * 10); // Calculate the number of fractional stars (0 to 10)
+
+    private string GetFractionalStarStyle()
+    {
+        return $"width: {FractionalStar * 100}%"; // Dynamically set the width of the fractional star
+    }
+}
+
+<div class="star-rating">
+    @for (int i = 0; i < FullStars; i++)
+    {
+        <span class="star full-star">&#9733;</span>
+    }
+    @if (NumberOfFractionalStars > 0)
+    {
+        <span class="star" style="@GetFractionalStarStyle()">&#9733;</span>
+    }
+</div>
+
+<style>
+    .star-rating {
+        font-size: 24px;
+    }
+
+    .star {
+        color: gold;
+        display: inline-block;
+    }
+
+    .full-star {
+        width: 20px; /* Adjust as needed */
+    }
+</style>
