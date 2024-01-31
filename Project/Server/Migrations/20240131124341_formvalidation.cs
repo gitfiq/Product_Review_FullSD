@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Project.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class EntityChanges : Migration
+    public partial class formvalidation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,12 +19,12 @@ namespace Project.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -82,11 +82,11 @@ namespace Project.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Biography = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Biography = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -160,10 +160,10 @@ namespace Project.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PublisherName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PublisherName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WebsiteLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -181,12 +181,12 @@ namespace Project.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -309,16 +309,16 @@ namespace Project.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     BookRating = table.Column<double>(type: "float", nullable: false),
-                    PublishYear = table.Column<int>(type: "int", nullable: true),
+                    PublishYear = table.Column<int>(type: "int", nullable: false),
                     Edition = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SchoolLevel = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumberOfPages = table.Column<int>(type: "int", nullable: true),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SchoolLevel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumberOfPages = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<byte[]>(type: "varbinary(MAX)", nullable: true),
-                    PublisherID = table.Column<int>(type: "int", nullable: true),
+                    PublisherID = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -331,7 +331,8 @@ namespace Project.Server.Migrations
                         name: "FK_Books_Publishers_PublisherID",
                         column: x => x.PublisherID,
                         principalTable: "Publishers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -340,8 +341,8 @@ namespace Project.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AuthorID = table.Column<int>(type: "int", nullable: true),
-                    BookID = table.Column<int>(type: "int", nullable: true),
+                    AuthorID = table.Column<int>(type: "int", nullable: false),
+                    BookID = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -354,12 +355,14 @@ namespace Project.Server.Migrations
                         name: "FK_BookAuthorDetails_Authors_AuthorID",
                         column: x => x.AuthorID,
                         principalTable: "Authors",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_BookAuthorDetails_Books_BookID",
                         column: x => x.BookID,
                         principalTable: "Books",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -368,9 +371,9 @@ namespace Project.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StaffRating = table.Column<int>(type: "int", nullable: true),
+                    StaffRating = table.Column<double>(type: "float", nullable: false),
                     StaffID = table.Column<int>(type: "int", nullable: false),
                     BookID = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -401,9 +404,9 @@ namespace Project.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserRating = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserRating = table.Column<double>(type: "float", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AppUserID = table.Column<int>(type: "int", nullable: false),
                     BookID = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -433,8 +436,8 @@ namespace Project.Server.Migrations
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "FirstName", "Gender", "LastName", "Password", "UpdatedBy", "Username" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "rayleong@bookmail.com", "Ray", "Male", "Leong", "password", null, "User_Ray" },
-                    { 2, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "afiq@bookmail.com", "Afiq", "Male", "Afiq", "password", null, "User_Afiq" }
+                    { 1, "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5060), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5076), "rayleong@bookmail.com", "Ray", "Male", "Leong", "password", "System", "User_Ray" },
+                    { 2, "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5080), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5081), "afiq@bookmail.com", "Ahmad", "Male", "Afiq", "password", "System", "User_Afiq" }
                 });
 
             migrationBuilder.InsertData(
@@ -449,37 +452,28 @@ namespace Project.Server.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "128a3aaf-68ed-4081-af92-5cca1774ecc0", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEDCf6iwT3/JHP4ja9+pgWGbYdQTX2R3QV0EJxF31J2sjpeZkdHZwOmsX5GeQ9oahcg==", null, false, "28f3466f-c4d5-405e-b17b-49bde5b1c5e1", false, "admin@localhost.com" });
+                values: new object[] { "3781efa7-66dc-47f0-860f-e506d04102e4", 0, "6cbeaab7-1c82-4acf-94ed-82ba72e45008", "admin@localhost.com", false, "Admin", "User", false, null, "ADMIN@LOCALHOST.COM", "ADMIN@LOCALHOST.COM", "AQAAAAIAAYagAAAAEDw1TXeAZfTn7sPtKi8jdlxcVIF3XGeuSxjmeG/HohhjQRjkaxMYNQ1tsGQMNd/kbg==", null, false, "40697f30-bab7-4e73-8b1a-7626b27974a0", false, "admin@localhost.com" });
 
             migrationBuilder.InsertData(
                 table: "Authors",
                 columns: new[] { "Id", "Biography", "ContactInfo", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "FirstName", "LastName", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "Roald Dahl (1916-1990) was a prolific British author renowned for his captivating and whimsical children's literature. Born in Wales, Dahl's diverse career began as a fighter pilot in World War II before he found success as a writer. His imaginative tales, such as \"Charlie and the Chocolate Factory,\" \"Matilda,\" and \"James and the Giant Peach,\" have become timeless classics, celebrated for their dark humor and memorable characters. Dahl's unique storytelling and vivid imagination earned him widespread acclaim, making him one of the most beloved and influential children's authors of the 20th century. His legacy endures, enchanting readers of all ages.", "22446688", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "roalddahl@bookmail.com", "Roald", "Dahl", null },
-                    { 2, "George Orwell (1903-1950), born Eric Arthur Blair in India, was a British writer and journalist renowned for his penetrating social and political critiques. Best known for dystopian classics \"Nineteen Eighty-Four\" and \"Animal Farm,\" Orwell delved into the perils of totalitarianism and the abuse of power. A committed democratic socialist, his experiences during the Spanish Civil War and reflections on totalitarian regimes fueled his compelling narratives. Orwell's non-fiction works, including \"Homage to Catalonia\" and \"Down and Out in Paris and London,\" displayed a keen eye for societal injustice. His incisive prose and commitment to truth make Orwell a literary giant whose influence persists globally.", "11335577", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "georgeorwell@bookmail.com", "George", "Orwell", null },
-                    { 3, "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ", "48591526", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jrrtolkien@bookmail.com", "J.R.R", "Tolkien", null },
-                    { 4, "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.", "35246857", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "jkrowling@bookmail.com", "J.K", "Rowling", null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Books",
-                columns: new[] { "Id", "BookRating", "CreatedBy", "DateCreated", "DateUpdated", "Description", "Edition", "Image", "NumberOfPages", "PublishYear", "PublisherID", "SchoolLevel", "Subject", "Title", "UpdatedBy" },
-                values: new object[,]
-                {
-                    { 1, 0.0, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, null, null, null, null, null, "Harry Potter", null },
-                    { 2, 0.0, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, null, null, null, null, null, null, null, "Lord Of The Rings", null }
+                    { 1, "Roald Dahl (1916-1990) was a prolific British author renowned for his captivating and whimsical children's literature. Born in Wales, Dahl's diverse career began as a fighter pilot in World War II before he found success as a writer. His imaginative tales, such as \"Charlie and the Chocolate Factory,\" \"Matilda,\" and \"James and the Giant Peach,\" have become timeless classics, celebrated for their dark humor and memorable characters. Dahl's unique storytelling and vivid imagination earned him widespread acclaim, making him one of the most beloved and influential children's authors of the 20th century. His legacy endures, enchanting readers of all ages.", "22446688", "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5495), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5496), "roalddahl@bookmail.com", "Roald", "Dahl", "System" },
+                    { 2, "George Orwell (1903-1950), born Eric Arthur Blair in India, was a British writer and journalist renowned for his penetrating social and political critiques. Best known for dystopian classics \"Nineteen Eighty-Four\" and \"Animal Farm,\" Orwell delved into the perils of totalitarianism and the abuse of power. A committed democratic socialist, his experiences during the Spanish Civil War and reflections on totalitarian regimes fueled his compelling narratives. Orwell's non-fiction works, including \"Homage to Catalonia\" and \"Down and Out in Paris and London,\" displayed a keen eye for societal injustice. His incisive prose and commitment to truth make Orwell a literary giant whose influence persists globally.", "11335577", "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5499), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5500), "georgeorwell@bookmail.com", "George", "Orwell", "System" },
+                    { 3, "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ", "48591526", "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5502), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5502), "jrrtolkien@bookmail.com", "J.R.R", "Tolkien", "System" },
+                    { 4, "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.", "35246857", "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5504), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5505), "jkrowling@bookmail.com", "J.K", "Rowling", "System" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Publishers",
                 columns: new[] { "Id", "Address", "ContactInfo", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "PublisherName", "UpdatedBy", "WebsiteLink" },
-                values: new object[] { 1, "15 Serangoon North Avenue 5, Singapore 554360", "64629603", "System", new DateTime(2024, 1, 22, 16, 42, 21, 816, DateTimeKind.Local).AddTicks(5275), new DateTime(2024, 1, 22, 16, 42, 21, 816, DateTimeKind.Local).AddTicks(5275), "eph@popularworld.com", "Educational Publishing House", "System", "https://www.eph.com.sg/" });
+                values: new object[] { 1, "15 Serangoon North Avenue 5, Singapore 554360", "64629603", "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6824), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6825), "eph@popularworld.com", "Educational Publishing House", "System", "https://www.eph.com.sg/" });
 
             migrationBuilder.InsertData(
                 table: "Staffs",
                 columns: new[] { "Id", "ContactInfo", "CreatedBy", "DateCreated", "DateUpdated", "EmailAddress", "FirstName", "LastName", "Password", "UpdatedBy", "Username" },
-                values: new object[] { 1, "87907564", "System", new DateTime(2024, 1, 22, 16, 42, 21, 816, DateTimeKind.Local).AddTicks(5105), new DateTime(2024, 1, 22, 16, 42, 21, 816, DateTimeKind.Local).AddTicks(5116), "admin1@blazor.com", "Sam", "Wick", "Abc123!", "System", "admin1" });
+                values: new object[] { 1, "87907564", "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6640), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6641), "admin1@blazor.com", "Sam", "Wick", "Abc123!", "System", "admin1" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -487,9 +481,28 @@ namespace Project.Server.Migrations
                 values: new object[] { "ad2bcf0c-20db-474f-8407-5a6b159518ba", "3781efa7-66dc-47f0-860f-e506d04102e4" });
 
             migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "BookRating", "CreatedBy", "DateCreated", "DateUpdated", "Description", "Edition", "Image", "NumberOfPages", "PublishYear", "PublisherID", "SchoolLevel", "Subject", "Title", "UpdatedBy" },
+                values: new object[,]
+                {
+                    { 1, 0.0, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This book is about magic and monsters", "1", null, 200, 2014, 1, "Primary 5", "English", "Harry Potter", null },
+                    { 2, 5.0, null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "This book is about monsters and dwarves and humans and other things", "1", null, 250, 2015, 1, "Secondary 1", "English", "Lord Of The Rings", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "BookAuthorDetails",
+                columns: new[] { "Id", "AuthorID", "BookID", "CreatedBy", "DateCreated", "DateUpdated", "UpdatedBy" },
+                values: new object[] { 1, 1, 1, "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6239), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6240), "System" });
+
+            migrationBuilder.InsertData(
+                table: "Recommendations",
+                columns: new[] { "Id", "BookID", "CreatedBy", "Date", "DateCreated", "DateUpdated", "Description", "StaffID", "StaffRating", "UpdatedBy" },
+                values: new object[] { 1, 1, "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6438), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6439), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6440), "this book is very lovely and I recommended it to whoever is interested in math", 1, 5.0, "System" });
+
+            migrationBuilder.InsertData(
                 table: "Reviews",
                 columns: new[] { "Id", "AppUserID", "BookID", "Content", "CreatedBy", "DateCreated", "DateUpdated", "Title", "UpdatedBy", "UserRating" },
-                values: new object[] { 1, 1, 1, "This book has changed my life, and I would highly recommend this to anyone who is in school.", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "I love this book", null, 5 });
+                values: new object[] { 1, 1, 1, "This book has changed my life, and I would highly recommend this to anyone who is in school.", "System", new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5961), new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5962), "I love this book", "System", 4.0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

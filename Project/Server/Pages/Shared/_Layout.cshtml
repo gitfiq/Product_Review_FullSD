@@ -20,10 +20,35 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/Identity/css/site.css" asp-append-version="true" />
     </environment>
+
+    <style>
+        body {
+            background-color: antiquewhite;
+        }
+
+        .navcolor {
+            background-color: #FFF0DB;
+            border-end-start-radius: 10px;
+            border-end-end-radius: 10px;
+        }
+
+        .navbar-light .navbar-brand {
+            color: #213555;
+        }
+
+        .footer {
+            overflow: hidden;
+        }
+
+        .footercolor {
+            color: #213555;
+        }
+    </style>
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 navcolor">
             <div class="container">
                 <a class="navbar-brand" href="~/">Book Review</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -55,8 +80,8 @@
             @RenderBody()
         </main>
     </div>
-    <footer class="footer border-top pl-3 text-muted">
-        <div class="container">
+    <footer class="footer border-top pl-3">
+        <div class="container footercolor">
             &copy; 2023 - Book Review
             @{
                 var foundPrivacy = Url.Page("/Privacy", new { area = "" });

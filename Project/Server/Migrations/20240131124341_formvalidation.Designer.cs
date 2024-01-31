@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Server.Data;
 
@@ -11,9 +12,11 @@ using Project.Server.Data;
 namespace Project.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240131124341_formvalidation")]
+    partial class formvalidation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -396,7 +399,7 @@ namespace Project.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "af36d876-688b-4d88-ae83-afe53c802bec",
+                            ConcurrencyStamp = "6cbeaab7-1c82-4acf-94ed-82ba72e45008",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -404,9 +407,9 @@ namespace Project.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAJgwz7KTbZl6uMiTmRpmGm8LuChYBWKwqH9f62L1wxWJbKVsk+DczeX1V3Nh1afuQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDw1TXeAZfTn7sPtKi8jdlxcVIF3XGeuSxjmeG/HohhjQRjkaxMYNQ1tsGQMNd/kbg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b6ad4dcb-4a79-49cc-a926-78e028a90634",
+                            SecurityStamp = "40697f30-bab7-4e73-8b1a-7626b27974a0",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -468,8 +471,8 @@ namespace Project.Server.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8382),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8409),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5060),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5076),
                             EmailAddress = "rayleong@bookmail.com",
                             FirstName = "Ray",
                             Gender = "Male",
@@ -482,8 +485,8 @@ namespace Project.Server.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8422),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8423),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5080),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5081),
                             EmailAddress = "afiq@bookmail.com",
                             FirstName = "Ahmad",
                             Gender = "Male",
@@ -547,8 +550,8 @@ namespace Project.Server.Migrations
                             Biography = "Roald Dahl (1916-1990) was a prolific British author renowned for his captivating and whimsical children's literature. Born in Wales, Dahl's diverse career began as a fighter pilot in World War II before he found success as a writer. His imaginative tales, such as \"Charlie and the Chocolate Factory,\" \"Matilda,\" and \"James and the Giant Peach,\" have become timeless classics, celebrated for their dark humor and memorable characters. Dahl's unique storytelling and vivid imagination earned him widespread acclaim, making him one of the most beloved and influential children's authors of the 20th century. His legacy endures, enchanting readers of all ages.",
                             ContactInfo = "22446688",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9145),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9148),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5495),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5496),
                             EmailAddress = "roalddahl@bookmail.com",
                             FirstName = "Roald",
                             LastName = "Dahl",
@@ -560,8 +563,8 @@ namespace Project.Server.Migrations
                             Biography = "George Orwell (1903-1950), born Eric Arthur Blair in India, was a British writer and journalist renowned for his penetrating social and political critiques. Best known for dystopian classics \"Nineteen Eighty-Four\" and \"Animal Farm,\" Orwell delved into the perils of totalitarianism and the abuse of power. A committed democratic socialist, his experiences during the Spanish Civil War and reflections on totalitarian regimes fueled his compelling narratives. Orwell's non-fiction works, including \"Homage to Catalonia\" and \"Down and Out in Paris and London,\" displayed a keen eye for societal injustice. His incisive prose and commitment to truth make Orwell a literary giant whose influence persists globally.",
                             ContactInfo = "11335577",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9153),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9155),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5499),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5500),
                             EmailAddress = "georgeorwell@bookmail.com",
                             FirstName = "George",
                             LastName = "Orwell",
@@ -573,8 +576,8 @@ namespace Project.Server.Migrations
                             Biography = "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ",
                             ContactInfo = "48591526",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9159),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9160),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5502),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5502),
                             EmailAddress = "jrrtolkien@bookmail.com",
                             FirstName = "J.R.R",
                             LastName = "Tolkien",
@@ -586,8 +589,8 @@ namespace Project.Server.Migrations
                             Biography = "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.",
                             ContactInfo = "35246857",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9165),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9166),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5504),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5505),
                             EmailAddress = "jkrowling@bookmail.com",
                             FirstName = "J.K",
                             LastName = "Rowling",
@@ -735,8 +738,8 @@ namespace Project.Server.Migrations
                             AuthorID = 1,
                             BookID = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1048),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1049),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6239),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6240),
                             UpdatedBy = "System"
                         });
                 });
@@ -792,8 +795,8 @@ namespace Project.Server.Migrations
                             Address = "15 Serangoon North Avenue 5, Singapore 554360",
                             ContactInfo = "64629603",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(2304),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(2306),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6824),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6825),
                             EmailAddress = "eph@popularworld.com",
                             PublisherName = "Educational Publishing House",
                             UpdatedBy = "System",
@@ -809,8 +812,7 @@ namespace Project.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BookID")
-                        .IsRequired()
+                    b.Property<int>("BookID")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -830,8 +832,7 @@ namespace Project.Server.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int?>("StaffID")
-                        .IsRequired()
+                    b.Property<int>("StaffID")
                         .HasColumnType("int");
 
                     b.Property<double?>("StaffRating")
@@ -855,9 +856,9 @@ namespace Project.Server.Migrations
                             Id = 1,
                             BookID = 1,
                             CreatedBy = "System",
-                            Date = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1488),
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1492),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1493),
+                            Date = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6438),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6439),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6440),
                             Description = "this book is very lovely and I recommended it to whoever is interested in math",
                             StaffID = 1,
                             StaffRating = 5.0,
@@ -873,12 +874,10 @@ namespace Project.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AppUserID")
-                        .IsRequired()
+                    b.Property<int>("AppUserID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BookID")
-                        .IsRequired()
+                    b.Property<int>("BookID")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -920,8 +919,8 @@ namespace Project.Server.Migrations
                             BookID = 1,
                             Content = "This book has changed my life, and I would highly recommend this to anyone who is in school.",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(595),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(597),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5961),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(5962),
                             Title = "I love this book",
                             UpdatedBy = "System",
                             UserRating = 4.0
@@ -985,8 +984,8 @@ namespace Project.Server.Migrations
                             Id = 1,
                             ContactInfo = "87907564",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1899),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1902),
+                            DateCreated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6640),
+                            DateUpdated = new DateTime(2024, 1, 31, 20, 43, 41, 519, DateTimeKind.Local).AddTicks(6641),
                             EmailAddress = "admin1@blazor.com",
                             FirstName = "Sam",
                             LastName = "Wick",
