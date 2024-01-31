@@ -1,0 +1,74 @@
+﻿@page "/"
+<head>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .title-page {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            width: 100%;
+            height: 800px; /* Adjust the height as needed */
+            background-color: #0000;
+            background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ),url('https://images.unsplash.com/photo-1579370318443-8da816457e3d?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden; /* Ensure content doesn't overflow */
+            position: relative; /* Ensure z-index works */
+        }
+
+        .content {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin: 0 !important;
+            z-index: 2; /* Ensure the content is above the overlay */
+            position: relative; /* Ensure z-index works */
+        }
+
+        .center-content {
+            text-align: center;
+        }
+
+            .center-content h1 {
+                margin-bottom: 20px;
+            }
+
+            .center-content button {
+                padding: 10px 20px;
+                background-color: #fff;
+                color: #000;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body>
+    <div class="title-page">
+        <div class="center-content">
+            <h1>Welcome to RA Book Reviews!</h1>
+            <a href="/products/" class="btn btn-secondary">
+                <span class="grommet-icons--catalog-option"></span>
+                View Catalog
+            </a>
+        </div>
+    </div>
+</body>
+
+
+
+
+
+@code {
+
+}

@@ -174,52 +174,35 @@
             Write Review for this book
         </a>
         <h1>User Reviews:</h1>
-        @if (Books != null)
+        @if (Books != null && Reviews != null)
         {
-            @foreach (var Book in Books)
+            @foreach (var Review in Reviews)
             {
-                @if (Reviews != null)
+                @if (book.Id == Review.BookID)
                 {
-                    @foreach (var Review in Reviews)
-                    {
-                        @if (Book.Id == Review?.BookID)
-                        {
-                            @if (Review != null)
-                            {
-                                <div class="review-item">
-                                    <h3><b>@Review.Title</b></h3>
-                                    <div class="rating-container">
-                                        <p>Rating: @Review.UserRating </p>
-                                        <div class="star-rating">
-                                            @for (int i = 0; i < 5; i++)
-                                            {
-                                                @if (Review.UserRating >= i + 1)
-                                                {
-                                                    <span>&#9733;</span> <!-- Filled star character -->
-                                                }
-                                                else
-                                                {
-                                                    <span>&#9734;</span> <!-- Empty star character -->
-                                                }
-                                            }
-                                        </div>
-                                    </div>
-                                    <p>@Review.Content</p>
-                                </div>
-                            }
-                            else
-                            {
-                                <p>NULL! Review information not available.</p>
-                            }
-                        }
-                    }
-
+                    
+                    <div class="review-item">
+                        <h3><b>@Review.Title</b></h3>
+                        <div class="rating-container">
+                            <p>Rating: @Review.UserRating </p>
+                            <div class="star-rating">
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    @if (Review.UserRating >= i + 1)
+                                    {
+                                        <span>&#9733;</span> <!-- Filled star character -->
+                                    }
+                                    else
+                                    {
+                                        <span>&#9734;</span> <!-- Empty star character -->
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <p>@Review.Content</p>
+                    </div>
+                            
                 }
-                else
-                {
-                    <p>Reviews is null</p>
-                }
-
             }
         }
         else
@@ -254,15 +237,11 @@
     {
         foreach (var review in Reviews)
         {
-            foreach (var book in Books)
+            if (book.Id == review.BookID)
             {
-                if (book.Id == review.BookID)
-                {
-                    totalRating += review.UserRating;
-                    totalCount++;
-                }
+                totalRating += review.UserRating;
+                totalCount++;
             }
-
         }
 
         if (totalCount > 0)
