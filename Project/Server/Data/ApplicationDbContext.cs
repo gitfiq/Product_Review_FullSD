@@ -34,6 +34,8 @@ namespace Project.Server.Data
             builder.ApplyConfiguration(new AuthorSeedConfiguration());
             builder.ApplyConfiguration(new BookSeedConfiguration());
             builder.ApplyConfiguration(new ReviewSeedConfiguration());
+            builder.ApplyConfiguration(new BookAuthorDetailSeedConfiguration());
+            builder.ApplyConfiguration(new RecommendationSeedConfiguration());
 
             builder.ApplyConfiguration(new StaffSeedConfiguration());
             builder.ApplyConfiguration(new PublisherSeedConfiguration());

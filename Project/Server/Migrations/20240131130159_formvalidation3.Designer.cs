@@ -12,8 +12,8 @@ using Project.Server.Data;
 namespace Project.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240122084221_EntityChanges")]
-    partial class EntityChanges
+    [Migration("20240131130159_formvalidation3")]
+    partial class formvalidation3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -399,7 +399,7 @@ namespace Project.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "128a3aaf-68ed-4081-af92-5cca1774ecc0",
+                            ConcurrencyStamp = "af36d876-688b-4d88-ae83-afe53c802bec",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -407,9 +407,9 @@ namespace Project.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDCf6iwT3/JHP4ja9+pgWGbYdQTX2R3QV0EJxF31J2sjpeZkdHZwOmsX5GeQ9oahcg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAJgwz7KTbZl6uMiTmRpmGm8LuChYBWKwqH9f62L1wxWJbKVsk+DczeX1V3Nh1afuQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "28f3466f-c4d5-405e-b17b-49bde5b1c5e1",
+                            SecurityStamp = "b6ad4dcb-4a79-49cc-a926-78e028a90634",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -433,25 +433,34 @@ namespace Project.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -461,25 +470,29 @@ namespace Project.Server.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8382),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8409),
                             EmailAddress = "rayleong@bookmail.com",
                             FirstName = "Ray",
                             Gender = "Male",
                             LastName = "Leong",
                             Password = "password",
+                            UpdatedBy = "System",
                             Username = "User_Ray"
                         },
                         new
                         {
                             Id = 2,
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8422),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8423),
                             EmailAddress = "afiq@bookmail.com",
-                            FirstName = "Afiq",
+                            FirstName = "Ahmad",
                             Gender = "Male",
                             LastName = "Afiq",
                             Password = "password",
+                            UpdatedBy = "System",
                             Username = "User_Afiq"
                         });
                 });
@@ -493,9 +506,11 @@ namespace Project.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Biography")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactInfo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -508,13 +523,18 @@ namespace Project.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -529,44 +549,52 @@ namespace Project.Server.Migrations
                             Id = 1,
                             Biography = "Roald Dahl (1916-1990) was a prolific British author renowned for his captivating and whimsical children's literature. Born in Wales, Dahl's diverse career began as a fighter pilot in World War II before he found success as a writer. His imaginative tales, such as \"Charlie and the Chocolate Factory,\" \"Matilda,\" and \"James and the Giant Peach,\" have become timeless classics, celebrated for their dark humor and memorable characters. Dahl's unique storytelling and vivid imagination earned him widespread acclaim, making him one of the most beloved and influential children's authors of the 20th century. His legacy endures, enchanting readers of all ages.",
                             ContactInfo = "22446688",
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9145),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9148),
                             EmailAddress = "roalddahl@bookmail.com",
                             FirstName = "Roald",
-                            LastName = "Dahl"
+                            LastName = "Dahl",
+                            UpdatedBy = "System"
                         },
                         new
                         {
                             Id = 2,
                             Biography = "George Orwell (1903-1950), born Eric Arthur Blair in India, was a British writer and journalist renowned for his penetrating social and political critiques. Best known for dystopian classics \"Nineteen Eighty-Four\" and \"Animal Farm,\" Orwell delved into the perils of totalitarianism and the abuse of power. A committed democratic socialist, his experiences during the Spanish Civil War and reflections on totalitarian regimes fueled his compelling narratives. Orwell's non-fiction works, including \"Homage to Catalonia\" and \"Down and Out in Paris and London,\" displayed a keen eye for societal injustice. His incisive prose and commitment to truth make Orwell a literary giant whose influence persists globally.",
                             ContactInfo = "11335577",
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9153),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9155),
                             EmailAddress = "georgeorwell@bookmail.com",
                             FirstName = "George",
-                            LastName = "Orwell"
+                            LastName = "Orwell",
+                            UpdatedBy = "System"
                         },
                         new
                         {
                             Id = 3,
                             Biography = "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ",
                             ContactInfo = "48591526",
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9159),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9160),
                             EmailAddress = "jrrtolkien@bookmail.com",
                             FirstName = "J.R.R",
-                            LastName = "Tolkien"
+                            LastName = "Tolkien",
+                            UpdatedBy = "System"
                         },
                         new
                         {
                             Id = 4,
                             Biography = "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.",
                             ContactInfo = "35246857",
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9165),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9166),
                             EmailAddress = "jkrowling@bookmail.com",
                             FirstName = "J.K",
-                            LastName = "Rowling"
+                            LastName = "Rowling",
+                            UpdatedBy = "System"
                         });
                 });
 
@@ -591,7 +619,9 @@ namespace Project.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Edition")
                         .HasColumnType("nvarchar(max)");
@@ -600,21 +630,27 @@ namespace Project.Server.Migrations
                         .HasColumnType("varbinary(MAX)");
 
                     b.Property<int?>("NumberOfPages")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("PublishYear")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("PublisherID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("SchoolLevel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subject")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
@@ -633,14 +669,28 @@ namespace Project.Server.Migrations
                             BookRating = 0.0,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "This book is about magic and monsters",
+                            Edition = "1",
+                            NumberOfPages = 200,
+                            PublishYear = 2014,
+                            PublisherID = 1,
+                            SchoolLevel = "Primary 5",
+                            Subject = "English",
                             Title = "Harry Potter"
                         },
                         new
                         {
                             Id = 2,
-                            BookRating = 0.0,
+                            BookRating = 5.0,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "This book is about monsters and dwarves and humans and other things",
+                            Edition = "1",
+                            NumberOfPages = 250,
+                            PublishYear = 2015,
+                            PublisherID = 1,
+                            SchoolLevel = "Secondary 1",
+                            Subject = "English",
                             Title = "Lord Of The Rings"
                         });
                 });
@@ -654,9 +704,11 @@ namespace Project.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AuthorID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("BookID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -678,6 +730,18 @@ namespace Project.Server.Migrations
                     b.HasIndex("BookID");
 
                     b.ToTable("BookAuthorDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AuthorID = 1,
+                            BookID = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1048),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1049),
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.Publisher", b =>
@@ -689,9 +753,11 @@ namespace Project.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactInfo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -704,10 +770,13 @@ namespace Project.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublisherName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -726,8 +795,8 @@ namespace Project.Server.Migrations
                             Address = "15 Serangoon North Avenue 5, Singapore 554360",
                             ContactInfo = "64629603",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 22, 16, 42, 21, 816, DateTimeKind.Local).AddTicks(5275),
-                            DateUpdated = new DateTime(2024, 1, 22, 16, 42, 21, 816, DateTimeKind.Local).AddTicks(5275),
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(2304),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(2306),
                             EmailAddress = "eph@popularworld.com",
                             PublisherName = "Educational Publishing House",
                             UpdatedBy = "System",
@@ -743,7 +812,8 @@ namespace Project.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BookID")
+                    b.Property<int?>("BookID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -759,13 +829,17 @@ namespace Project.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("StaffID")
+                    b.Property<int?>("StaffID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int?>("StaffRating")
-                        .HasColumnType("int");
+                    b.Property<double?>("StaffRating")
+                        .IsRequired()
+                        .HasColumnType("float");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -777,6 +851,21 @@ namespace Project.Server.Migrations
                     b.HasIndex("StaffID");
 
                     b.ToTable("Recommendations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BookID = 1,
+                            CreatedBy = "System",
+                            Date = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1488),
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1492),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1493),
+                            Description = "this book is very lovely and I recommended it to whoever is interested in math",
+                            StaffID = 1,
+                            StaffRating = 5.0,
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("Project.Shared.Domain.Review", b =>
@@ -787,13 +876,16 @@ namespace Project.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AppUserID")
+                    b.Property<int?>("AppUserID")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("BookID")
+                    b.Property<int?>("BookID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -806,13 +898,14 @@ namespace Project.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserRating")
-                        .HasColumnType("int");
+                    b.Property<double>("UserRating")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -829,10 +922,12 @@ namespace Project.Server.Migrations
                             AppUserID = 1,
                             BookID = 1,
                             Content = "This book has changed my life, and I would highly recommend this to anyone who is in school.",
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(595),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(597),
                             Title = "I love this book",
-                            UserRating = 5
+                            UpdatedBy = "System",
+                            UserRating = 4.0
                         });
                 });
 
@@ -845,6 +940,7 @@ namespace Project.Server.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ContactInfo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -857,22 +953,30 @@ namespace Project.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -884,8 +988,8 @@ namespace Project.Server.Migrations
                             Id = 1,
                             ContactInfo = "87907564",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 22, 16, 42, 21, 816, DateTimeKind.Local).AddTicks(5105),
-                            DateUpdated = new DateTime(2024, 1, 22, 16, 42, 21, 816, DateTimeKind.Local).AddTicks(5116),
+                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1899),
+                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1902),
                             EmailAddress = "admin1@blazor.com",
                             FirstName = "Sam",
                             LastName = "Wick",
@@ -950,7 +1054,9 @@ namespace Project.Server.Migrations
                 {
                     b.HasOne("Project.Shared.Domain.Publisher", "Publisher")
                         .WithMany()
-                        .HasForeignKey("PublisherID");
+                        .HasForeignKey("PublisherID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Publisher");
                 });
@@ -959,11 +1065,15 @@ namespace Project.Server.Migrations
                 {
                     b.HasOne("Project.Shared.Domain.Author", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorID");
+                        .HasForeignKey("AuthorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Project.Shared.Domain.Book", "Book")
                         .WithMany()
-                        .HasForeignKey("BookID");
+                        .HasForeignKey("BookID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Author");
 
