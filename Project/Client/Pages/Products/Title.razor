@@ -1,4 +1,7 @@
 ﻿@page "/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
 <head>
     <style>
         body, html {
@@ -12,23 +15,33 @@
             position: relative;
             width: 100%;
             height: 800px; /* Adjust the height as needed */
-            background-color: #0000;
-            background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ),url('https://images.unsplash.com/photo-1579370318443-8da816457e3d?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             text-align: center;
             overflow: hidden; /* Ensure content doesn't overflow */
-            position: relative; /* Ensure z-index works */
+            position: relative;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ), url('https://images.unsplash.com/photo-1579370318443-8da816457e3d?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: blur(5px); /* Apply blur effect */
+            z-index: 1; /* Ensure the background stays behind the content */
         }
 
         .content {
             padding-left: 0 !important;
             padding-right: 0 !important;
+            padding-top: 0 !important;
             margin: 0 !important;
             z-index: 2; /* Ensure the content is above the overlay */
             position: relative; /* Ensure z-index works */
@@ -36,10 +49,23 @@
 
         .center-content {
             text-align: center;
+            padding: 20px; /* Add some padding to make the text readable */
+            position: relative; /* Ensure z-index works */
+            z-index: 2; /* Ensure the content is above the background image */
         }
 
             .center-content h1 {
+                font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to h1 */
+                font-size: 50px;
+                color: #F3B95F;
                 margin-bottom: 20px;
+            }
+
+            .center-content h2 {
+                font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to h2 */
+                font-size: 24px;
+                color: #ccc;
+                margin-top: 10px;
             }
 
             .center-content button {
@@ -51,24 +77,100 @@
                 font-size: 16px;
                 cursor: pointer;
             }
+        /*Recommendation Page*/
+        .recommendation-page{
+            background-color: #327ba8;
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body @keydown="HandleKeyDown">
     <div class="title-page">
+        <div class="background-image"></div> <!-- Background image container -->
         <div class="center-content">
             <h1>Welcome to RA Book Reviews!</h1>
+            <h2>The best place to find your next read</h2> <!-- Subheading -->
             <a href="/products/" class="btn btn-secondary">
                 <span class="grommet-icons--catalog-option"></span>
                 View Catalog
             </a>
         </div>
     </div>
+    <div class="recommendation-page">
+        <h1>Our Editor's Picks:</h1>
+        <table class="table table-responsive" id="recommendationsTable">
+            <thead>
+                <tr>
+                    <th>Book Image</th>
+                    <th>Book Title</th>
+                    <th>Decription</th>
+                    <th>Date</th>
+                    <th>Staff Rating</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Recommendation in Recommendations)
+                {
+                    @foreach (var Book in Books)
+                    {
+                        @if (Book.Id == Recommendation.BookID)
+                        {
+                            <tr>
+                                <td class="image">
+                                    @if (Book.Image != null)
+                                    {
+                                        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" alt="Book Image" />
+                                    }
+                                    else
+                                    {
+                                        <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image">
+                                    }
+                                </td>
+                                <td>@Book.Title</td>
+                                <td class="Description">@Recommendation.Description</td>
+                                <td>@(Recommendation.Date.Date.ToString("dd/MM/yyyy"))</td>
+                                <td>@Recommendation.StaffRating</td>
+                                <td>
+                                    <a href="/recommendations/view/@Recommendation.Id" class="btn btn-primary">
+                                        <span class="oi oi-book"></span>
+                                    </a>
+                                    <a href="/recommendations/edit/@Recommendation.Id" class="btn btn-warning">
+                                        <span class="oi oi-pencil"></span>
+                                    </a>
+                                    <button class="btn btn-danger" @onclick="@(() => Delete(Recommendation.Id))">
+                                        <span class="oi oi-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
 </body>
 
-
-
-
-
 @code {
+    private List<Book>? Books;
+    private List<Review>? Reviews;
+    private List<Recommendation>? Recommendations;
+    protected async override Task OnInitializedAsync()
+    {
+        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
+        Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
+        Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
+    }
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
+        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
+    }
 
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#recommendationsTable");
+    }
 }
