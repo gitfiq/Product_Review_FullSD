@@ -2,8 +2,14 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<PageTitle>Home</PageTitle>
+
 <head>
     <style>
+        /*Title*/
         body, html {
             margin: 0;
             padding: 0;
@@ -14,7 +20,7 @@
             padding: 0;
             position: relative;
             width: 100%;
-            height: 800px; /* Adjust the height as needed */
+            height: 100vh; /* Adjust the height as needed */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -77,14 +83,81 @@
                 font-size: 16px;
                 cursor: pointer;
             }
-        /*Recommendation Page*/
-        .recommendation-page{
-            background-color: #327ba8;
+
+        /*Intro*/
+        .intro-paragraph {
+            max-width: 50%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            font-size: 25px;
+            line-height: 2;
         }
+
+        /*Recommendations*/
+        :root {
+            --star-size: 20px;
+            --star-color: #fff;
+            --star-background: #fc0;
+        }
+
+        .Stars {
+            --percent: calc(var(--rating) / 5 * 100%);
+            display: inline-block;
+            font-size: var(--star-size);
+            font-family: Times;
+            line-height: 1;
+        }
+
+            .Stars::before {
+                content: "★★★★★";
+                letter-spacing: 3px;
+                background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        .recommendation-page {
+            justify-content:center;
+            align-content: center;
+        }
+
+        .recommendation-container {
+            display: flex;
+            max-width: 75vw; /* Adjust the maximum width as needed */
+            height: 80vh;
+            margin: 20px auto; /* Center the container horizontally and add margin around it */
+            padding: 20px;
+            background-color: #97f57f;
+            overflow:hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        .recommendation-image {
+            flex:3;
+            justify-content:center;
+        }
+
+            .recommendation-image img {
+                width: auto;
+                height: 75vh;
+            }
+
+        .recommendation-details {
+            flex: 4; /* Take up half the space */
+            padding: 10px;
+            font-size: 25px; /* Adjust the font size as needed */
+        }
+
+            .recommendation-details-p-container{
+                height:40vh;
+                overflow: hidden;
+                text-overflow:ellipsis;
+            }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body @keydown="HandleKeyDown">
+
+<div>
     <div class="title-page">
         <div class="background-image"></div> <!-- Background image container -->
         <div class="center-content">
@@ -96,81 +169,92 @@
             </a>
         </div>
     </div>
+    <p class="intro-paragraph">
+        <b>Are you on the hunt for your next captivating read after finishing a book? Look no further!</b>
+        <br />
+        <br/>
+        At RA Book Reviews, our team of seasoned editors meticulously curates a selection of the finest literary works to guide you towards your next favorite masterpiece.
+        <br />
+        <br />
+        But that's not all. With a vibrant community of over 1,000 avid readers, each sharing their unique insights and perspectives, you'll have the opportunity to engage in lively discussions, share your thoughts, and gain valuable insights into each book. 
+        <br/>
+        Whether you're seeking to explore new genres, dive deeper into familiar topics, or discover hidden literary gems, our platform is your gateway to a world of literary exploration and discovery
+    </p>
+    <hr/>
     <div class="recommendation-page">
-        <h1>Our Editor's Picks:</h1>
-        <table class="table table-responsive" id="recommendationsTable">
-            <thead>
-                <tr>
-                    <th>Book Image</th>
-                    <th>Book Title</th>
-                    <th>Decription</th>
-                    <th>Date</th>
-                    <th>Staff Rating</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
+        <h1>Our Latest Picks:</h1>
+        @if (Recommendations == null)
+        {
+            <div class="alert alert-info">Loading Recommendations....</div>
+        }
+        else
+        {
+            @if (Recommendations != null && Books != null && Staffs != null)
+            {
                 @foreach (var Recommendation in Recommendations)
                 {
                     @foreach (var Book in Books)
                     {
-                        @if (Book.Id == Recommendation.BookID)
+                        @foreach (var Staff in Staffs)
                         {
-                            <tr>
-                                <td class="image">
-                                    @if (Book.Image != null)
-                                    {
-                                        <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" alt="Book Image" />
-                                    }
-                                    else
-                                    {
-                                        <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image">
-                                    }
-                                </td>
-                                <td>@Book.Title</td>
-                                <td class="Description">@Recommendation.Description</td>
-                                <td>@(Recommendation.Date.Date.ToString("dd/MM/yyyy"))</td>
-                                <td>@Recommendation.StaffRating</td>
-                                <td>
-                                    <a href="/recommendations/view/@Recommendation.Id" class="btn btn-primary">
-                                        <span class="oi oi-book"></span>
-                                    </a>
-                                    <a href="/recommendations/edit/@Recommendation.Id" class="btn btn-warning">
-                                        <span class="oi oi-pencil"></span>
-                                    </a>
-                                    <button class="btn btn-danger" @onclick="@(() => Delete(Recommendation.Id))">
-                                        <span class="oi oi-trash"></span>
-                                    </button>
-                                </td>
-                            </tr>
+                            @if (Book.Id == Recommendation.BookID && Recommendation.StaffID == Staff.Id && Recommendation.Staff != null)
+                            {
+                                <div class="recommendation-container">
+                                    <div class="recommendation-image">
+                                        @if (Book.Image != null)
+                                        {
+                                            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" alt="Book Image" />
+                                        }
+                                        else
+                                        {
+                                            <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image">
+                                        }
+                                    </div>
+                                    <div class="recommendation-details">
+                                        <h1><b>@Book.Title</b></h1>
+                                        <div class="Stars" style="--rating: @Recommendation.StaffRating;" aria-label="rating">
+                                            @Recommendation.StaffRating
+                                        </div>
+                                        <h2>Written by @Recommendation.Staff.FirstName @Recommendation.Staff.LastName; @(Recommendation.Date.Date.ToString("dd/MM/yyyy"))</h2>
+                                        <div class="recommendation-details-p-container"><p>@Recommendation.Description</p></div>
+                                        <a href="/products/view/@Book.Id" class="btn btn-primary">
+                                            View Book
+                                        </a>
+                                    </div>
+                                </div>
+                            }
                         }
                     }
                 }
-            </tbody>
-        </table>
+            }
+        }
     </div>
+</div>
 
-</body>
 
 @code {
-    private List<Book>? Books;
-    private List<Review>? Reviews;
     private List<Recommendation>? Recommendations;
-    protected async override Task OnInitializedAsync()
-    {
-        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
-        Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
-        Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
-    }
+    private List<Book>? Books;
+    private List<Staff>? Staffs;
+
     protected async override Task OnInitializedAsync()
     {
         _interceptor.MonitorEvent();
         Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
+        Recommendations = Recommendations.OrderByDescending(r => r.Date).ToList();
+        Recommendations = Recommendations.Take(3).ToList();
         Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         await js.InvokeVoidAsync("AddDataTable", "#recommendationsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#recommendationsTable");
+        _interceptor.DisposeEvent();
     }
 }

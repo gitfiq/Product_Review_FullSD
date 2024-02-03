@@ -146,26 +146,24 @@
         <h1>About this book:</h1>
         @if (Books != null)
         {
-            @foreach (var Book in Books)
+            @if (Recommendations != null)
             {
-                @if (Recommendations != null)
+                @foreach (var Recommendation in Recommendations)
                 {
-                    @foreach (var Recommendation in Recommendations)
+                    @if (book.Id == Recommendation?.BookID)
                     {
-                        @if (Book.Id == Recommendation?.BookID)
+                        @if (Recommendation != null && Recommendation.Staff != null)
                         {
-                            @if (Recommendation != null && Recommendation.Staff != null)
-                            {
-                                <p>@Recommendation.Description <b>-@Recommendation.Staff.FirstName @Recommendation.Staff.LastName; @Recommendation.DateUpdated</b></p>
-                            }
-                            else
-                            {
-                                <p>NULL! Publisher information not available.</p>
-                            }
+                            <p>@Recommendation.Description <b>-@Recommendation.Staff.FirstName @Recommendation.Staff.LastName; @Recommendation.DateUpdated</b></p>
+                        }
+                        else
+                        {
+                            <p>NULL! Publisher information not available.</p>
                         }
                     }
                 }
             }
+            
         }
     </div>
     <div class="review-container">
