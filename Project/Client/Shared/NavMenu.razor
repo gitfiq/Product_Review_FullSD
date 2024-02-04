@@ -106,45 +106,70 @@
                     <!-- Apply ml-auto to push this div to the right -->
                     <div class="d-flex justify-content-end">
                         <div class="dropdown-div">
-                            <button class="dropdown-btn" @onclick="ToggleDropdown">
-                                <span class="oi oi-caret-bottom" aria-hidden="true"></span> Manage CRUD
+                            <button class="dropdown-btn" @onclick="ToggleDropdownUser">
+                                <span class="oi oi-caret-bottom" aria-hidden="true"></span> User Dropdown
                             </button>
-                            @if (showDropdown)
+                            @if (showDropdownUser)
                             {
                                 <ul class="clickable-ul">
                                     <li>
-                                        <NavLink class="nav-link" href="appUsers" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                        <NavLink class="nav-link" href="products" @onclick="ToggleDropdownUser" Match="NavLinkMatch.All">
+                                            Catalog
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink class="nav-link" href="staffratings" @onclick="ToggleDropdownUser" Match="NavLinkMatch.All">
+                                            Recommendations
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            }
+                        </div>
+                        <div class="dropdown-div">
+                            <button class="dropdown-btn" @onclick="ToggleDropdownAdmin">
+                                <span class="oi oi-caret-bottom" aria-hidden="true"></span> Admin Dropdown
+                            </button>
+                            @if (showDropdownAdmin)
+                            {
+                                <ul class="clickable-ul">
+                                    <li>
+                                        <NavLink class="nav-link" href="appUsers" @onclick="ToggleDropdownAdmin" Match="NavLinkMatch.All">
                                             App Users
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink class="nav-link" href="authors" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                        <NavLink class="nav-link" href="authors" @onclick="ToggleDropdownAdmin" Match="NavLinkMatch.All">
                                             Authors
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink class="nav-link" href="books" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                        <NavLink class="nav-link" href="books" @onclick="ToggleDropdownAdmin" Match="NavLinkMatch.All">
                                             Books
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink class="nav-link" href="bookAuthorDetails" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                        <NavLink class="nav-link" href="bookAuthorDetails" @onclick="ToggleDropdownAdmin" Match="NavLinkMatch.All">
                                             Book Author Details
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink class="nav-link" href="publishers" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                        <NavLink class="nav-link" href="publishers" @onclick="ToggleDropdownAdmin" Match="NavLinkMatch.All">
                                             Publishers
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink class="nav-link" href="staffs" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                        <NavLink class="nav-link" href="staffs" @onclick="ToggleDropdownAdmin" Match="NavLinkMatch.All">
                                             Staffs
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink class="nav-link" href="reviews" @onclick="ToggleDropdown" Match="NavLinkMatch.All">
+                                        <NavLink class="nav-link" href="reviews" @onclick="ToggleDropdownAdmin" Match="NavLinkMatch.All">
                                             Reviews
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink class="nav-link" href="recommendations" @onclick="ToggleDropdownAdmin" Match="NavLinkMatch.All">
+                                            Recommendation
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -174,10 +199,17 @@
         Navigation.NavigateToLogout("authentication/logout", "/");
     }
 
-    private bool showDropdown = false;
+    private bool showDropdownAdmin = false;
 
-    private void ToggleDropdown()
+    private void ToggleDropdownAdmin()
     {
-        showDropdown = !showDropdown;
+        showDropdownAdmin = !showDropdownAdmin;
+    }
+
+    private bool showDropdownUser = false;
+
+    private void ToggleDropdownUser()
+    {
+        showDropdownUser = !showDropdownUser;
     }
 }

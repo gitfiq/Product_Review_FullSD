@@ -1,0 +1,266 @@
+﻿@page "/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<PageTitle>Home</PageTitle>
+
+<head>
+    <style>
+        /*Title*/
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .title-page {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Adjust the height as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden; /* Ensure content doesn't overflow */
+            position: relative;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ), url('https://images.unsplash.com/photo-1579370318443-8da816457e3d?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: blur(5px); /* Apply blur effect */
+            z-index: 1; /* Ensure the background stays behind the content */
+            animation: fadeIn 2s;
+        }
+
+        @@keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opactiy: 100%;
+            }
+        }
+
+
+        .content {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            padding-top: 0 !important;
+            margin: 0 !important;
+            z-index: 2; /* Ensure the content is above the overlay */
+            position: relative; /* Ensure z-index works */
+        }
+
+        .center-content {
+            text-align: center;
+            padding: 20px; /* Add some padding to make the text readable */
+            position: relative; /* Ensure z-index works */
+            z-index: 2; /* Ensure the content is above the background image */
+        }
+
+            .center-content h1 {
+                font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to h1 */
+                font-size: 50px;
+                color: #F3B95F;
+                margin-bottom: 20px;
+            }
+
+            .center-content h2 {
+                font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to h2 */
+                font-size: 24px;
+                color: #ccc;
+                margin-top: 10px;
+            }
+
+            .center-content button {
+                padding: 10px 20px;
+                background-color: #fff;
+                color: #000;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+        /*Intro*/
+        .intro-paragraph {
+            max-width: 70%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            font-size: 25px;
+            line-height: 2;
+        }
+
+        .section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-image {
+            width: 20vw; /* Adjust the size as needed */
+            height: 20vw; /* Adjust the size as needed */
+            border-radius: 10px;
+            margin-right: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+        }
+
+        .section-content {
+            flex: 1;
+        }
+
+        .text-container {
+            padding: 20px;
+        }
+
+        .catalog-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ), url('https://images.unsplash.com/photo-1507738978512-35798112892c?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: blur(5px); /* Apply blur effect */
+            z-index: 1; /* Ensure the background stays behind the content */
+        }
+
+        .catalog-content {
+            text-align: center;
+            padding: 20px; /* Add some padding to make the text readable */
+            position: relative; /* Ensure z-index works */
+            z-index: 2; /* Ensure the content is above the background image */
+        }
+
+            .catalog-content h1 {
+                font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to h1 */
+                font-size: 50px;
+                color: #000000;
+                margin-bottom: 20px;
+            }
+
+            .catalog-content h2 {
+                font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to h2 */
+                font-size: 24px;
+                color: #ccc;
+                margin-top: 10px;
+            }
+
+            .catalog-content button {
+                padding: 10px 20px;
+                background-color: #fff;
+                color: #000;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+
+        .btnCreate {
+            background-color: #213555;
+            color: #E1D9D1;
+            width: 300px;
+        }
+
+            .btnCreate:hover {
+                color: white;
+            }
+
+    </style>
+</head>
+
+<div>
+    <div class="title-page">
+        <div class="background-image"></div> <!-- Background image container -->
+        <div class="center-content">
+            <h1>Welcome to RA Book Reviews!</h1>
+            <h2>The best place for book lovers</h2> <!-- Subheading -->
+            <br />
+            <a href="/staffratings/" class="btn btnCreate">
+                <span class="grommet-icons--catalog-option"></span>
+                Find your next read
+            </a>
+        </div>
+    </div>
+
+    <div class="text-container">
+        <div class="intro-paragraph">
+            <div class="section">
+                <img src="https://images.unsplash.com/photo-1614849963640-9cc74b2a826f?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 1" class="section-image">
+                <div class="section-content">
+                    <b>Are you on the hunt for your next captivating read after finishing a book? </b>
+                    <br />
+                    Look no further! Welcome to RA Book Reviews, the best place to find your next literary adventure.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-content">
+                    At RA Book Reviews, our team of seasoned editors meticulously curates a selection of the finest literary works. With years of experience, they guide you towards your next favorite masterpiece.
+                </div>
+                <img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 2" class="section-image">
+            </div>
+
+            <div class="section">
+                <img src="https://plus.unsplash.com/premium_photo-1664300897489-fd98eee64faf?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 3" class="section-image">
+                <div class="section-content">
+                    But that's not all. With a vibrant community of over 1,000 avid readers, each sharing their unique insights and perspectives, you'll have the opportunity to engage in lively discussions, share your thoughts, and gain valuable insights into each book.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-content">
+                    Whether you're seeking to explore new genres, dive deeper into familiar topics, or discover hidden literary gems, our platform is your gateway to a world of literary exploration and discovery. Join us today and be a part of our growing community!
+                </div>
+                <img src="https://images.unsplash.com/photo-1576689560324-1b8748a830be?q=80&w=2680&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 4" class="section-image">
+            </div>
+        </div>
+    </div>
+
+    <div class="title-page">
+        <div class="catalog-image"></div> <!-- Background image container -->
+        <div class="catalog-content">
+            <h1>Explore our full catalog</h1>
+            <a href="/products/" class="btn btnCreate">
+                <span class="grommet-icons--catalog-option"></span>
+                View Catalog
+            </a>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#recommendationsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#recommendationsTable");
+        _interceptor.DisposeEvent();
+    }
+}

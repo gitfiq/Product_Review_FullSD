@@ -23,14 +23,13 @@ namespace Project.Shared.Domain
         public string? Content { get; set; }
 
 
-        [Required(ErrorMessage = "AppUserID is required")]
         public virtual AppUser? AppUser { get; set; }
+        [Required(ErrorMessage = "AppUserID is required")]
         public int? AppUserID { get; set; }
 
 
-        [Required(ErrorMessage = "BookID is required")]
         public virtual Book? Book { get; set; }
-
+        [Required(ErrorMessage = "BookID is required")]
         public int? BookID { get; set; }
 
     }
