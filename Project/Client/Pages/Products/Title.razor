@@ -1,4 +1,4 @@
-﻿@page "/title"
+﻿@page "/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -86,7 +86,7 @@
 
         /*Intro*/
         .intro-paragraph {
-            max-width: 50%;
+            max-width: 70%;
             margin: 0 auto;
             text-align: center;
             padding: 20px;
@@ -101,8 +101,8 @@
         }
 
         .section-image {
-            width: 100px; /* Adjust the size as needed */
-            height: 100px; /* Adjust the size as needed */
+            width: 20vw; /* Adjust the size as needed */
+            height: 20vw; /* Adjust the size as needed */
             border-radius: 10px;
             margin-right: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
@@ -121,7 +121,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 50%;
             background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ), url('https://images.unsplash.com/photo-1507738978512-35798112892c?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-repeat: no-repeat;
@@ -180,24 +180,26 @@
             <div class="section">
                 <img src="https://images.unsplash.com/photo-1614849963640-9cc74b2a826f?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 1" class="section-image">
                 <div class="section-content">
-                    <b>1. Introduction to the App:</b> Are you on the hunt for your next captivating read after finishing a book? Look no further! Welcome to RA Book Reviews, the best place to find your next literary adventure.
+                    <b>Are you on the hunt for your next captivating read after finishing a book? </b>
+                    <br />
+                    Look no further! Welcome to RA Book Reviews, the best place to find your next literary adventure.
                 </div>
             </div>
             <div class="section">
                 <div class="section-content">
-                    <b>2. Team of Veteran Editors:</b> At RA Book Reviews, our team of seasoned editors meticulously curates a selection of the finest literary works. With years of experience, they guide you towards your next favorite masterpiece.
+                    At RA Book Reviews, our team of seasoned editors meticulously curates a selection of the finest literary works. With years of experience, they guide you towards your next favorite masterpiece.
                 </div>
                 <img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 2" class="section-image">
             </div>
             <div class="section">
                 <img src="https://plus.unsplash.com/premium_photo-1664300897489-fd98eee64faf?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 3" class="section-image">
                 <div class="section-content">
-                    <b>3. Vibrant Community:</b> But that's not all. With a vibrant community of over 1,000 avid readers, each sharing their unique insights and perspectives, you'll have the opportunity to engage in lively discussions, share your thoughts, and gain valuable insights into each book.
+                    But that's not all. With a vibrant community of over 1,000 avid readers, each sharing their unique insights and perspectives, you'll have the opportunity to engage in lively discussions, share your thoughts, and gain valuable insights into each book.
                 </div>
             </div>
             <div class="section">
                 <div class="section-content">
-                    <b>4. Join the Community:</b> Whether you're seeking to explore new genres, dive deeper into familiar topics, or discover hidden literary gems, our platform is your gateway to a world of literary exploration and discovery. Join us today and be a part of our growing community!
+                   Whether you're seeking to explore new genres, dive deeper into familiar topics, or discover hidden literary gems, our platform is your gateway to a world of literary exploration and discovery. Join us today and be a part of our growing community!
                 </div>
                 <img src="https://images.unsplash.com/photo-1576689560324-1b8748a830be?q=80&w=2680&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 4" class="section-image">
             </div>
