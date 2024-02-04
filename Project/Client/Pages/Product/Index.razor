@@ -1,0 +1,415 @@
+﻿@page "/products/"
+@using System.Diagnostics
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<head>
+    <style>
+        /*Title Page*/
+        /*Catalog*/
+        .flexbox {
+            display: flex;
+            height: 100%; /* Make the flexbox fill the height of the parent container */
+        }
+
+        .left-division {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            position: sticky;
+            top: 10vh;
+            height: 80vh; /* Adjust the height to fit the viewport */
+            width: 15vw;
+            background-color: #E8C872;
+            border-radius: 10px;
+        }
+
+        .divider {
+            width: 1px; /* Width of the divider line */
+            background-color: #ddd; /* Color of the divider line */
+            margin: 0 20px; /* Adjust the margin to control the gap */
+        }
+
+        .grid-container {
+            flex: 5;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(250px, 1fr));
+            gap: 12px;
+            justify-content: start;
+            padding-right: 10px; /* Add padding to prevent content from hiding behind scrollbar */
+        }
+
+        .card {
+            border: 1px solid #637A9F;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #C9D7DD;
+            width: 250px; /* Set fixed width */
+            height: 600px; /* Set a fixed height for the card */
+            display: flex; /* Use flexbox for card layout */
+            flex-direction: column; /* Arrange child elements vertically */
+        }
+
+            .card img {
+                width: 250px;
+                height: 350px; /* Let the height adjust dynamically */
+                object-fit: contain;
+            }
+
+        .card-body {
+            padding: 15px;
+            flex: 1; /* Occupy remaining space */
+            display: flex; /* Use flexbox for body layout */
+            flex-direction: column; /* Arrange child elements vertically */
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #000; /* Default color */
+            transition: color 0.3s; /* Smooth color transition */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+
+            .card-title:hover {
+                color: #ff7f00; /* Orange color on hover */
+            }
+
+        .title-link {
+            color: #000;
+            text-decoration: none;
+        }
+
+            .title-link:hover {
+                color: #ff7f00;
+            }
+
+        .card-publisher {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .card-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #00008b;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+            .card-link:hover {
+                background-color: #0040ff;
+            }
+
+        /* Search bar styles */
+        form {
+            position: relative;
+            width: 14vw;
+            border-radius: 10px;
+        }
+
+            form input {
+                width: 100%;
+                padding-right: 20px;
+                box-sizing: border-box;
+            }
+
+                form input:placeholder-shown + button {
+                    opacity: 0;
+                    pointer-events: none;
+                }
+
+            form button {
+                position: absolute;
+                border: none;
+                display: block;
+                width: 15px;
+                height: 15px;
+                line-height: 16px;
+                font-size: 12px;
+                border-radius: 50%;
+                top: 0;
+                bottom: 0;
+                right: 5px;
+                margin: auto;
+                background: #ddd;
+                padding: 0;
+                outline: none;
+                cursor: pointer;
+                transition: 0.1s;
+            }
+
+        .filter-item {
+            flex: 1;
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+        /*Stars*/
+        :root {
+            --star-size: 20px;
+            --star-color: #fff;
+            --star-background: #fc0;
+        }
+
+        .Stars {
+            --percent: calc(var(--rating) / 5 * 100%);
+            display: inline-block;
+            font-size: 16px;
+            color: #6499E9;
+            line-height: 1;
+        }
+
+            .Stars::before {
+                content: "★★★★★";
+                letter-spacing: 3px;
+                background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+    </style>
+</head>
+
+<div class="flexbox">
+
+    <div class="left-division">
+        <h1><b>Catalog</b></h1>
+
+        <div class="filter-item">
+            <h4>Search Name of Book:</h4>
+            <form>
+                <input type="text" placeholder="Search books" @oninput="SearchBooks" />
+                <button type="reset" @onclick="ClearSearch">&times;</button>
+            </form>
+        </div>
+
+        <div class="filter-item">
+            <h4>Sort By:</h4>
+            <select class="form-control" @onchange="SortBooks">
+                <option value="ratingDescending">Highest to Lowest Rating</option>
+                <option value="ratingAscending">Lowest to Highest Rating</option>
+                <option value="reviewCountDescending">Most to Least Reviews</option>
+                <option value="reviewCountAscending">Least to Most Reviews</option>
+            </select>
+        </div>
+
+        <div class="filter-item">
+            <h4>Customer Reviews</h4>
+            <div>
+                <input type="radio" name="ratingFilter" @onclick="() => FilterByRating(4)" />
+                <div class="Stars" style="--rating: 4;" aria-label="rating">& up</div>
+                <br />
+                <input type="radio" name="ratingFilter" @onclick="() => FilterByRating(3)" />
+                <div class="Stars" style="--rating: 3;" aria-label="rating">& up</div>
+                <br />
+                <input type="radio" name="ratingFilter" @onclick="() => FilterByRating(2)" />
+                <div class="Stars" style="--rating: 2;" aria-label="rating">& up</div>
+                <br />
+                <input type="radio" name="ratingFilter" @onclick="() => FilterByRating(1)" />
+                <div class="Stars" style="--rating: 1;" aria-label="rating">& up</div>
+                <br />
+                <input type="radio" name="ratingFilter" @onclick="() => FilterByRating(0)" />
+                <div class="Stars" style="--rating: 0;" aria-label="rating">& up</div>
+            </div>
+        </div>
+        <div class="filter-item">
+            <h4>Filter by Subject</h4>
+            <select class="form-control" @onchange="FilterBySubject">
+                <option value="">All Subjects</option>
+                @foreach (var subject in GetDistinctSubjects())
+                {
+                    <option value="@subject">@subject</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="divider"></div> <!-- Divider line -->
+    <div class="grid-container">
+
+        <!-- Right grid display -->
+        @if (FilteredBooks == null)
+        {
+            <div class="alert alert-info">Loading Catalog...</div>
+        }
+        else
+        {
+            @foreach (var Book in FilteredBooks)
+            {
+                <div class="card">
+                    <a href="/products/view/@Book.Id">
+                        <!-- Wrap the img with an anchor tag -->
+                        <img src="@(Book.Image != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(Book.Image)}" : "https://islandpress.org/sites/default/files/default_book_cover_2015.jpg")" alt="Book Image" />
+                    </a>
+                    <div class="card-body">
+                        <div class="card-title"><a href="/products/view/@Book.Id" class="title-link">@Book.Title</a></div>
+                        <div class="card-publisher">by <a href="/publishers/view/@Book.Publisher.Id">@Book.Publisher.PublisherName</a></div>
+                        <div>@Book.Subject</div>
+                        <div class="Stars" style="--rating: @CalculateAverageRating(Book.Id);" aria-label="rating">
+                            @CalculateAverageRating(Book.Id)
+                        </div>
+                        <div><i>(@GetReviewCount(Book.Id) reviews)</i></div>
+                    </div>
+
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    private List<Book>? Books;
+    private List<Review>? Reviews;
+    private List<Book>? FilteredBooks;
+    private string searchTerm = "";
+    private int minRatingFilter = 1;
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
+        Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
+        FilteredBooks = Books;
+    }
+
+    public double CalculateAverageRating(int bookId)
+    {
+        double totalRating = 0;
+        int totalCount = 0;
+
+        if (Reviews != null)
+        {
+            foreach (var review in Reviews)
+            {
+                if (review.BookID == bookId)
+                {
+                    totalRating += review.UserRating;
+                    totalCount++;
+                }
+            }
+
+            if (totalCount > 0)
+            {
+                double averageRating = totalRating / totalCount;
+                return Math.Round(averageRating, 1); // Round to one decimal place
+            }
+        }
+
+        return 0; // If no reviews or no reviews for the specified book
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+    }
+
+    private void SearchBooks(ChangeEventArgs e)
+    {
+        if (e != null && e.Value != null)
+        {
+            string searchTerm = e.Value.ToString().ToLower(); // Convert search term to lowercase for case-insensitive search
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // Filter books based on search term
+                FilteredBooks = Books.Where(book => book.Title.ToLower().Contains(searchTerm)).ToList();
+            }
+            else
+            {
+                // If search term is empty, display all books
+                FilteredBooks = Books;
+            }
+        }
+        else
+        {
+            // If ChangeEventArgs is null or its Value is null, reset the search
+            FilteredBooks = Books;
+        }
+    }
+
+    private void ClearSearch()
+    {
+        searchTerm = ""; // Clear the search term
+        SearchBooks(null); // Trigger the search with null value to reset
+    }
+
+    private void FilterByRating(int minRating)
+    {
+        minRatingFilter = minRating;
+        ApplyRatingFilter();
+    }
+
+    private void ApplyRatingFilter()
+    {
+        if (Books != null)
+        {
+            // Filter books based on the minimum rating
+            FilteredBooks = Books.Where(book => CalculateAverageRating(book.Id) >= minRatingFilter).ToList();
+        }
+    }
+
+    private List<string> GetDistinctSubjects()
+    {
+        if (Books != null)
+        {
+            return Books.Select(book => book.Subject).Distinct().ToList();
+        }
+        return new List<string>();
+    }
+
+    private void FilterBySubject(ChangeEventArgs e)
+    {
+        string selectedSubject = e.Value?.ToString();
+
+        if (!string.IsNullOrEmpty(selectedSubject))
+        {
+            FilteredBooks = Books.Where(book => book.Subject == selectedSubject).ToList();
+        }
+        else
+        {
+            FilteredBooks = Books;
+        }
+    }
+
+    private void SortBooks(ChangeEventArgs e)
+    {
+        string sortBy = e.Value?.ToString();
+
+        if (!string.IsNullOrEmpty(sortBy))
+        {
+            switch (sortBy)
+            {
+                case "ratingDescending":
+                    FilteredBooks = FilteredBooks.OrderByDescending(book => CalculateAverageRating(book.Id)).ToList();
+                    break;
+                case "ratingAscending":
+                    FilteredBooks = FilteredBooks.OrderBy(book => CalculateAverageRating(book.Id)).ToList();
+                    break;
+                case "reviewCountDescending":
+                    FilteredBooks = FilteredBooks.OrderByDescending(book => GetReviewCount(book.Id)).ToList();
+                    break;
+                case "reviewCountAscending":
+                    FilteredBooks = FilteredBooks.OrderBy(book => GetReviewCount(book.Id)).ToList();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private int GetReviewCount(int bookId)
+    {
+        if (Reviews != null)
+        {
+            return Reviews.Count(review => review.BookID == bookId);
+        }
+        return 0;
+    }
+
+}

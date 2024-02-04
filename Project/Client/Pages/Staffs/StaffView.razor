@@ -1,0 +1,210 @@
+﻿@page "/staffs/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<head>
+    <style>
+        .introduction {
+            text-align: center;
+            font-size: 20px;
+        }
+        /*Stars*/
+        :root {
+            --star-size: 40px;
+            --star-color: #fff;
+            --star-background: #fc0;
+        }
+
+        .Stars {
+            --percent: calc(var(--rating) / 5 * 100%);
+            display: inline-block;
+            font-size: var(--star-size);
+            font-family: Times;
+            line-height: 1;
+        }
+
+            .Stars::before {
+                content: "★★★★★";
+                letter-spacing: 3px;
+                background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+        .recommendation-container {
+            text-align: center;
+            display: flex;
+            margin-left: 10vw;
+            margin-right: 10vw;
+            margin-top: 5vw;
+            height: 50vh;
+            background-color: aliceblue;
+            border: solid;
+            border-color: #637A9F;
+            border-radius: 10px;
+            box-shadow: 10px 5px 5px #B4B4B8;
+            width: 75vw;
+        }
+
+        .recommendation-image {
+            justify-content: flex-start; /* Align items to the start */
+            display: flex; /* Add display: flex for .recommendation-image */
+            align-items: center; /* Center vertically within the container */
+        }
+
+            /* Style for the image if you need */
+            .recommendation-image img {
+                max-height: 100%;
+            }
+
+        .recommendation-details {
+            padding: 10px;
+            font-size: 25px;
+            position: relative;
+            word-break: break-word; /* Break long words */
+            line-height: 1.5; /* Adjust line height for better readability */
+            text-align: left; /* Align text to the left */
+            width: 65vw;
+        }
+
+        .recommendation-text {
+            max-height: 25vh; /* Adjust the max height as needed */
+            overflow: hidden; /* Hide the overflow of the text */
+            text-overflow: ellipsis; /* Display ellipsis when the text overflows */
+        }
+
+        .read-more-link {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            color: #000;
+            padding: 5px 10px;
+            text-decoration: none;
+        }
+
+            .read-more-link:hover {
+                color: #ff7f00;
+            }
+
+        .card-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            height: 7vh;
+            color: #000; /* Default color */
+            transition: color 0.3s; /* Smooth color transition */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            flex-wrap: nowrap;
+            overflow: clip;
+            text-overflow: ellipsis;
+        }
+
+            .card-title:hover {
+                color: #ff7f00; /* Orange color on hover */
+            }
+
+        .title-link {
+            color: #000;
+            text-decoration: none;
+        }
+
+            .title-link: hover {
+                color: #ff7f00;
+                text-decoration: none;
+            }
+
+        .button-navigation {
+            display: flex; /* Arrange buttons horizontally */
+            justify-content: space-evenly; /* Evenly distribute space */
+        }
+    </style>
+</head>
+
+<div class="introduction">
+    @if (staff != null)
+    {
+        <h1>@staff.FirstName @staff.LastName 's Recommendation</h1>
+    }
+    else
+    {
+        <h1>This staff does not exist</h1>
+    }
+</div>
+<div class="recommendation-page">
+    @if (Recommendations == null)
+    {
+        <div class="alert alert-info">Loading Recommendations....</div>
+    }
+    else
+    {
+        @if (Recommendations != null && Books != null && staff != null)
+        {
+            @foreach (var Recommendation in Recommendations)
+            {
+                var Book = Books.FirstOrDefault(book => book.Id == Recommendation.BookID);
+                @if (staff.Id == Recommendation.StaffID)
+                {
+                    <div class="recommendation-container">
+                        <div class="recommendation-image">
+                            @if (Book.Image != null)
+                            {
+                                <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" alt="Book Image" style="height: 100%;" />
+                            }
+                            else
+                            {
+                                <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image" style="height: 100%;">
+                            }
+                        </div>
+                        <div class="recommendation-details">
+                            <div class="card-title"><a href="/products/view/@Book.Id" class="title-link"><h1>@Book.Title</h1></a></div>
+
+                            <div class="Stars" style="--rating: @Recommendation.StaffRating;" aria-label="rating">@Recommendation.StaffRating</div>
+
+                            <h3>Written by <i>@staff.FirstName @staff.LastName</i> on <i>@Recommendation.DateCreated.ToString("dd/MM/yyyy")</i></h3>
+
+                            <p class="recommendation-text">
+                                @Recommendation.Description
+                            </p>
+
+                            <a href="/recommendations/view/@Recommendation.Id" class="read-more-link">Read more</a> <!-- Add a read more link -->
+                        </div>
+                    </div>
+                }
+            }
+            <br />
+            <div class="button-navigation">
+                <button class="btn btn-outline-dark btn-block" @onclick="NavigateToBook">
+                    <span class="oi oi-arrow-left"></span>
+                    Back to Staff List
+                </button>
+            </div>
+            <br />
+        }
+
+    }
+</div>
+
+
+
+
+
+@code {
+    [Parameter] public int id { get; set; }
+    Staff? staff = new Staff();
+
+    private List<Recommendation>? Recommendations;
+    private List<Book>? Books;
+
+    protected async override Task OnParametersSetAsync()
+    {
+        staff = await _client.GetFromJsonAsync<Staff>($"{Endpoints.StaffsEndpoint}/{id}");
+        Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
+        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
+    }
+
+    private async Task NavigateToBook()
+    {
+        _navManager.NavigateTo($"/staffs/");
+    }
+}
+

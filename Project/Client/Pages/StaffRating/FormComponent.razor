@@ -1,0 +1,193 @@
+﻿@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<head>
+    <style>
+        /*Rating*/
+        .rating-container {
+            display: flex;
+        }
+
+        /*Products*/
+        .product-container {
+            display: flex;
+            max-width: 80vw;
+            margin: auto;
+            border-radius: 10px;
+        }
+
+        .product-image {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #ddd;
+            background-color: aliceblue;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        .recommendation-container {
+            flex: 2;
+            padding: 20px;
+            border: 2px solid #ddd;
+            background-color: aliceblue;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        /*Stars*/
+        :root {
+            --star-size: 25px;
+            --star-color: #fff;
+            --star-background: #fc0;
+        }
+
+        .Stars {
+            --percent: calc(var(--rating) / 5 * 100%);
+            display: inline-block;
+            font-size: var(--star-size);
+            color: #6499E9;
+            line-height: 1;
+        }
+
+            .Stars::before {
+                content: "★★★★★";
+                letter-spacing: 3px;
+                background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+        .button-navigation {
+            display: flex; /* Arrange buttons horizontally */
+            justify-content: space-evenly; /* Evenly distribute space */
+        }
+    </style>
+</head>
+
+<EditForm Model="@recommendation" OnValidSubmit="@OnValidSubmit">
+        @if (loading)
+        {
+            <p>Loading data...</p>
+        }
+        else
+        {
+            @if (recommendation != null)
+            {
+                @if (Books != null)
+                {
+                    @if (Staffs != null)
+                    {
+                        <div class="product-container">
+                            <div class="product-image">
+                                @foreach (var Book in Books)
+                                {
+                                    @if (Book?.Id == recommendation.BookID)
+                                    {
+                                        @if (Book.Image != null)
+                                        {
+                                            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" alt="Book Image" />
+
+                                        }
+                                        else
+                                        {
+                                            <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image">
+                                        }
+                                    }
+                                }
+                            </div>
+
+                            <div class="recommendation-container">
+                                @foreach (var Book in Books)
+                                {
+                                    @if (Book?.Id == recommendation.BookID)
+                                    {
+                                        <h2>Book Title: @Book.Title</h2>
+                                    }
+
+                                }
+
+                                @foreach (var Staff in Staffs)
+                                {
+                                    @if (Staff?.Id == recommendation.StaffID)
+                                    {
+                                        <h4>Recommended By: @Staff.FirstName @Staff.LastName</h4>
+                                    }
+
+                                }
+
+                                <h4>Date: @recommendation.Date.ToString("dd/MM/yyyy")</h4>
+                                <br>
+
+                                <div class="rating-container">
+                                    <div class="Stars" style="--rating: @recommendation.StaffRating;" aria-label="rating">
+                                        @recommendation.StaffRating
+                                    </div>
+                                </div>
+                                <br>
+
+                                <h4>Remarks: </h4>
+                                <p>@recommendation.Description</p>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Staff is not available yet...</p>
+                    }
+                }
+                else
+                {
+                    <p>Book Image is not available yet...</p>
+                }
+            }
+            else
+            {
+                <p>Recommendation is not available yet...</p>
+            }
+            <br />
+            <div class="button-navigation">
+                <BackToList Target="products" />
+                <button class="btn btn-outline-dark btn-block" @onclick="NavigateToBook">
+                    <span class="oi oi-arrow-right"></span>
+                    View Book Details</button>
+            </div>
+            <br />
+        }
+</EditForm>
+
+@code {
+    private bool loading = true;
+    [Parameter] public int id { get; set; }
+    [Parameter] public Recommendation? recommendation { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Recommendation>? Recommendations;
+    private IList<Book>? Books;
+    private IList<Staff>? Staffs;
+
+    protected async override Task OnInitializedAsync()
+    {
+        loading = true; // Set loading to true initially
+
+        Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
+        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+
+        loading = false; // Set loading to false after data is fetched
+    }
+
+    private async Task NavigateToBook()
+    {
+        var bookId = recommendation.BookID; 
+        _navManager.NavigateTo($"/products/view/{bookId}");
+    }
+
+}

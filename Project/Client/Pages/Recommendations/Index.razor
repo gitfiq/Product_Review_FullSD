@@ -1,5 +1,4 @@
-﻿@page "/"
-@page "/recommendations/"
+﻿@page "/recommendations/"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -21,7 +20,11 @@
             border-top: 3px solid #D8C4B6;
         }
 
-        .btnCreate { background-color: #00008B; color: #E1D9D1; width: 300px; }
+        .btnCreate {
+            background-color: #213555;
+            color: #E1D9D1;
+            width: 300px;
+        }
         .btnCreate:hover { color: white; }
 
         .Description { width: 350px; }
@@ -35,14 +38,9 @@
 
 
 <div class="landing-page container">
-    <h1 class="hello">Hello, world!</h1> <br />
-    <h2 class="hello"> Welcome to Book Review RA</h2>
-    <br /> <hr /> <br />
-
 
     <h3 class="card-title">Staff's Recommendations</h3>
     <br />
-
 
     <a href="/recommendations/create" class="btn btnCreate">
         <span class="oi oi-plus"></span>
@@ -92,7 +90,7 @@
                                 <td>@(Recommendation.Date.Date.ToString("dd/MM/yyyy"))</td>
                                 <td>@Recommendation.StaffRating</td>
                                 <td>
-                                    <a href="/recommendations/view/@Recommendation.Id" class="btn btn-primary">
+                                    <a href="/staffrating/view/@Recommendation.Id" class="btn btn-primary">
                                         <span class="oi oi-book"></span>
                                     </a>
                                     <a href="/recommendations/edit/@Recommendation.Id" class="btn btn-warning">

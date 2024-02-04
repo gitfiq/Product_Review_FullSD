@@ -1,0 +1,25 @@
+﻿@page "/staffratings/view/{id:int}"
+@using System.Text.Json
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<head>
+    <style>
+        .title {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<h1 class="title">Recommendation</h1> <br />
+
+<FormComponent recommendation="recommendation" id="@id" />
+
+@code {
+    [Parameter] public int id { get; set; }
+    Recommendation? recommendation = new Recommendation();
+    protected async override Task OnParametersSetAsync()
+    {
+        recommendation = await _client.GetFromJsonAsync<Recommendation>($"{Endpoints.RecommendationsEndpoint}/{id}");
+    }
+}
