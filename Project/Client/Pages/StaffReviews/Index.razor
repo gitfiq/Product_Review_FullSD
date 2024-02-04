@@ -1,0 +1,355 @@
+﻿@page "/"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<PageTitle>Staff Reviews</PageTitle>
+
+<head>
+    <style>
+        /*Common*/
+        hr {
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+        }
+        /*Form*/
+        .opening-container{
+            text-align:center;
+            font-size: 20px;
+        }
+        /* Add this CSS to center the form within its container */
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 900px; /* Adjust max-width as needed */
+            margin: 0 auto; /* Center the container horizontally */
+        }
+
+        .form-group {
+            flex: 1; /* Each form-group takes up one-third of the container width */
+            margin: 0 10px; /* Adjust margin between form-groups */
+        }
+
+        .title-banner {
+            text-align: center;
+        }
+
+        .sort-by-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .custom-select {
+            width: 30vw; /* Adjust the width as needed */
+        }
+
+        /*Stars*/
+        :root {
+            --star-size: 40px;
+            --star-color: #fff;
+            --star-background: #fc0;
+        }
+
+        .Stars {
+            --percent: calc(var(--rating) / 5 * 100%);
+            display: inline-block;
+            font-size: var(--star-size);
+            font-family: Times;
+            line-height: 1;
+        }
+
+            .Stars::before {
+                content: "★★★★★";
+                letter-spacing: 3px;
+                background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        /*Recommendations*/
+        .recommendation-page {
+
+        }
+
+        .recommendation-container {
+            text-align: center;
+            display: flex;
+            margin: 5vw;
+            height: 50vh;
+            background-color: #C9D7DD;
+            border: solid;
+            border-color: #637A9F;
+            border-radius: 10px;
+            box-shadow: 10px 5px 5px #B4B4B8;
+        }
+
+        .recommendation-image {
+            justify-content: flex-start; /* Align items to the start */
+            display: flex; /* Add display: flex for .recommendation-image */
+            align-items: center; /* Center vertically within the container */
+        }
+
+            /* Style for the image if you need */
+            .recommendation-image img {
+                max-height: 100%;
+            }
+
+        .recommendation-details {
+            padding: 10px;
+            font-size: 25px;
+            position: relative;
+            word-break: break-word; /* Break long words */
+            line-height: 1.5; /* Adjust line height for better readability */
+            text-align: left; /* Align text to the left */
+        }
+
+        .recommendation-text {
+            max-height: 28vh; /* Adjust the max height as needed */
+            overflow: hidden; /* Hide the overflow of the text */
+            text-overflow: ellipsis; /* Display ellipsis when the text overflows */
+        }
+
+        .read-more-link {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            color: #000;
+            padding: 5px 10px;
+            text-decoration: none;
+        }
+
+            .read-more-link:hover {
+                color: #ff7f00;
+            }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            height:5vh;
+            color: #000; /* Default color */
+            transition: color 0.3s; /* Smooth color transition */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            flex-wrap: nowrap;
+            overflow:clip;
+            text-overflow:ellipsis;
+        }
+
+            .card-title:hover {
+                color: #ff7f00; /* Orange color on hover */
+            }
+
+        .title-link {
+            color: #000;
+            text-decoration: none;
+        }
+
+            .title-link: hover {
+                    color: #ff7f00;
+                text-decoration: none;
+            }
+    </style>
+</head>
+<div class="opening-container">
+    <h1>Find your next read!</h1>
+    <h3>Let our editors pick out a book for you</h3>
+    <h4>Just select your subject and minimum rating!</h4>
+</div>
+
+<div class="form-container">
+    <div class="form-group">
+        <label for="subject">Subject</label>
+        <select class="form-control" @onchange="FilterBySubject" id="subject">
+            <option value="">All Subjects</option>
+            @foreach (var subject in GetDistinctSubjects())
+            {
+                <option value="@subject">@subject</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="minRating">Minimum Rating</label>
+        <select class="form-control" @onchange="FilterByRating" id="minRating">
+            <option value="0">0 Stars</option>
+            <option value="1">1 Star</option>
+            <option value="2">2 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="5">5 Stars</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="sort">Sort by:</label>
+        <select class="form-control" @onchange="SortBooks" id="sort">
+            <option value="relevant">Relevant</option>
+            <option value="newest">Newest</option>
+            <option value="ratingDescending">Highest to Lowest Rating</option>
+            <option value="ratingAscending">Lowest to Highest Rating</option>
+        </select>
+    </div>
+</div>
+
+<div class="recommendation-page">
+    @if (Recommendations == null)
+    {
+        <div class="alert alert-info">Loading Recommendations....</div>
+    }
+    else
+    {
+        @if (Recommendations != null && FilteredBooks != null && Staffs != null)
+        {
+            @foreach (var Recommendation in Recommendations)
+            {
+                var Book = FilteredBooks.FirstOrDefault(book => book.Id == Recommendation.BookID);
+                var Staff = Staffs.FirstOrDefault(staff => staff.Id == Recommendation.StaffID && Recommendation.Staff != null);
+
+                if (Book != null && Staff != null)
+                {
+                    <div class="recommendation-container">
+                        <div class="recommendation-image">
+                            @if (Book.Image != null)
+                            {
+                                <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" alt="Book Image" style="height: 100%;" />
+                            }
+                            else
+                            {
+                                <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image" style="height: 100%;">
+                            }
+                        </div>
+                        <div class="recommendation-details">
+                            <div class="card-title"><a href="/products/view/@Book.Id" class="title-link"><h1>@Book.Title</h1></a></div>
+                            <div class="Stars" style="--rating: @Recommendation.StaffRating;" aria-label="rating">@Recommendation.StaffRating</div>
+                            <h3>Written by <a href="/staffs/view/@Staff.Id"><i>@Staff.FirstName @Staff.LastName</i></a> on <i>@Recommendation.DateCreated</i></h3>
+                            <p class="recommendation-text">
+                                @Recommendation.Description
+                            </p>
+                            <a href="/recommendations/view/@Recommendation.Id" class="read-more-link">Read more</a> <!-- Add a read more link -->
+                        </div>
+                    </div>
+                }
+            }
+        }
+
+    }
+</div>
+
+@code {
+    private List<Recommendation>? Recommendations;
+    private List<Book>? Books;
+    private List<Staff>? Staffs;
+    private List<Book>? FilteredBooks;
+    private int minRating = 0; // Default minimum rating
+    private string selectedSubject = "";
+    private string selectedSortOption = "newest"; // Default sort option
+
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
+        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        FilteredBooks = Books;
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#recommendationsTable");
+    }
+
+    async Task Delete(int Id)
+    {
+        if (Recommendations != null)
+        {
+            var Recommendation = Recommendations.First(q => q.Id == Id);
+            var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {Recommendation.Id}?");
+            if (confirm)
+            {
+                await _client.DeleteAsync($"{Endpoints.RecommendationsEndpoint}/{Id}");
+                await OnInitializedAsync();
+            }
+        }
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#recommendationsTable");
+        _interceptor.DisposeEvent();
+    }
+
+    // Method to handle sorting based on the selected option
+    private void SortBooks(ChangeEventArgs e)
+    {
+        selectedSortOption = e.Value.ToString(); // Update the selected sort option
+
+        switch (selectedSortOption)
+        {
+            case "newest":
+                // Sort by newest
+                Recommendations = Recommendations.OrderByDescending(r => r.DateCreated).ToList();
+                break;
+            case "ratingDescending":
+                // Sort by highest to lowest rating
+                Recommendations = Recommendations.OrderByDescending(r => r.StaffRating).ToList();
+                break;
+            case "ratingAscending":
+                // Sort by lowest to highest rating
+                Recommendations = Recommendations.OrderBy(r => r.StaffRating).ToList();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /*Filtering Books*/
+    private List<string> GetDistinctSubjects()
+    {
+        if (Books != null)
+        {
+            return Books.Select(book => book.Subject).Distinct().ToList();
+        }
+        return new List<string>();
+    }
+
+    private void ApplyFilters()
+    {
+        if (!string.IsNullOrEmpty(selectedSubject))
+        {
+            // Apply both filters together
+            FilteredBooks = Recommendations
+                .Where(recommendation => recommendation.StaffRating >= minRating) // Apply star filter
+                .Join(Books, recommendation => recommendation.BookID, book => book.Id, (recommendation, book) => book) // Join with Books
+                .Where(book => book.Subject == selectedSubject) // Apply subject filter
+                .ToList();
+        }
+        else
+        {
+            // If no subject is selected, only apply the star filter
+            FilteredBooks = Recommendations
+                .Where(recommendation => recommendation.StaffRating >= minRating) // Apply star filter
+                .Join(Books, recommendation => recommendation.BookID, book => book.Id, (recommendation, book) => book) // Join with Books
+                .ToList();
+        }
+    }
+
+    private void FilterBySubject(ChangeEventArgs e)
+    {
+        selectedSubject = e.Value?.ToString();
+
+        // Apply both filters
+        ApplyFilters();
+    }
+
+    private void FilterByRating(ChangeEventArgs e)
+    {
+        minRating = Convert.ToInt32(e.Value);
+
+        // Apply both filters
+        ApplyFilters();
+    }
+}

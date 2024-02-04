@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@page "/title"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -94,65 +94,71 @@
             line-height: 2;
         }
 
-        /*Recommendations*/
-        :root {
-            --star-size: 20px;
-            --star-color: #fff;
-            --star-background: #fc0;
-        }
-
-        .Stars {
-            --percent: calc(var(--rating) / 5 * 100%);
-            display: inline-block;
-            font-size: var(--star-size);
-            font-family: Times;
-            line-height: 1;
-        }
-
-            .Stars::before {
-                content: "★★★★★";
-                letter-spacing: 3px;
-                background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-        .recommendation-page {
-            justify-content:center;
-            align-content: center;
-        }
-
-        .recommendation-container {
+        .section {
             display: flex;
-            max-width: 75vw; /* Adjust the maximum width as needed */
-            height: 80vh;
-            margin: 20px auto; /* Center the container horizontally and add margin around it */
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-image {
+            width: 100px; /* Adjust the size as needed */
+            height: 100px; /* Adjust the size as needed */
+            border-radius: 10px;
+            margin-right: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+        }
+
+        .section-content {
+            flex: 1;
+        }
+
+        .text-container {
             padding: 20px;
-            background-color: #97f57f;
-            overflow:hidden;
-            text-overflow: ellipsis;
         }
 
-
-        .recommendation-image {
-            flex:3;
-            justify-content:center;
+        .catalog-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient( rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25) ), url('https://images.unsplash.com/photo-1507738978512-35798112892c?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: blur(5px); /* Apply blur effect */
+            z-index: 1; /* Ensure the background stays behind the content */
         }
 
-            .recommendation-image img {
-                width: auto;
-                height: 75vh;
+        .catalog-content {
+            text-align: center;
+            padding: 20px; /* Add some padding to make the text readable */
+            position: relative; /* Ensure z-index works */
+            z-index: 2; /* Ensure the content is above the background image */
+        }
+
+            .catalog-content h1 {
+                font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to h1 */
+                font-size: 50px;
+                color: #000000;
+                margin-bottom: 20px;
             }
 
-        .recommendation-details {
-            flex: 4; /* Take up half the space */
-            padding: 10px;
-            font-size: 25px; /* Adjust the font size as needed */
-        }
+            .catalog-content h2 {
+                font-family: 'Montserrat', sans-serif; /* Apply Montserrat font to h2 */
+                font-size: 24px;
+                color: #ccc;
+                margin-top: 10px;
+            }
 
-            .recommendation-details-p-container{
-                height:40vh;
-                overflow: hidden;
-                text-overflow:ellipsis;
+            .catalog-content button {
+                padding: 10px 20px;
+                background-color: #fff;
+                color: #000;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
             }
     </style>
 </head>
@@ -162,89 +168,58 @@
         <div class="background-image"></div> <!-- Background image container -->
         <div class="center-content">
             <h1>Welcome to RA Book Reviews!</h1>
-            <h2>The best place to find your next read</h2> <!-- Subheading -->
+            <h2>The best place for book lovers</h2> <!-- Subheading -->
+            <a href="/staffReviews/" class="btn btn-secondary">
+                <span class="grommet-icons--catalog-option"></span>
+                Find your next read
+            </a>
+        </div>
+    </div>
+    <div class="text-container">
+        <div class="intro-paragraph">
+            <div class="section">
+                <img src="https://images.unsplash.com/photo-1614849963640-9cc74b2a826f?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 1" class="section-image">
+                <div class="section-content">
+                    <b>1. Introduction to the App:</b> Are you on the hunt for your next captivating read after finishing a book? Look no further! Welcome to RA Book Reviews, the best place to find your next literary adventure.
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-content">
+                    <b>2. Team of Veteran Editors:</b> At RA Book Reviews, our team of seasoned editors meticulously curates a selection of the finest literary works. With years of experience, they guide you towards your next favorite masterpiece.
+                </div>
+                <img src="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 2" class="section-image">
+            </div>
+            <div class="section">
+                <img src="https://plus.unsplash.com/premium_photo-1664300897489-fd98eee64faf?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 3" class="section-image">
+                <div class="section-content">
+                    <b>3. Vibrant Community:</b> But that's not all. With a vibrant community of over 1,000 avid readers, each sharing their unique insights and perspectives, you'll have the opportunity to engage in lively discussions, share your thoughts, and gain valuable insights into each book.
+                </div>
+            </div>
+            <div class="section">
+                <div class="section-content">
+                    <b>4. Join the Community:</b> Whether you're seeking to explore new genres, dive deeper into familiar topics, or discover hidden literary gems, our platform is your gateway to a world of literary exploration and discovery. Join us today and be a part of our growing community!
+                </div>
+                <img src="https://images.unsplash.com/photo-1576689560324-1b8748a830be?q=80&w=2680&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image 4" class="section-image">
+            </div>
+        </div>
+    </div>
+    <div class="title-page">
+        <div class="catalog-image"></div> <!-- Background image container -->
+        <div class="catalog-content">
+            <h1>Explore our full catalog</h1>
             <a href="/products/" class="btn btn-secondary">
                 <span class="grommet-icons--catalog-option"></span>
                 View Catalog
             </a>
         </div>
     </div>
-    <p class="intro-paragraph">
-        <b>Are you on the hunt for your next captivating read after finishing a book? Look no further!</b>
-        <br />
-        <br/>
-        At RA Book Reviews, our team of seasoned editors meticulously curates a selection of the finest literary works to guide you towards your next favorite masterpiece.
-        <br />
-        <br />
-        But that's not all. With a vibrant community of over 1,000 avid readers, each sharing their unique insights and perspectives, you'll have the opportunity to engage in lively discussions, share your thoughts, and gain valuable insights into each book. 
-        <br/>
-        Whether you're seeking to explore new genres, dive deeper into familiar topics, or discover hidden literary gems, our platform is your gateway to a world of literary exploration and discovery
-    </p>
-    <hr/>
-    <div class="recommendation-page">
-        <h1>Our Latest Picks:</h1>
-        @if (Recommendations == null)
-        {
-            <div class="alert alert-info">Loading Recommendations....</div>
-        }
-        else
-        {
-            @if (Recommendations != null && Books != null && Staffs != null)
-            {
-                @foreach (var Recommendation in Recommendations)
-                {
-                    @foreach (var Book in Books)
-                    {
-                        @foreach (var Staff in Staffs)
-                        {
-                            @if (Book.Id == Recommendation.BookID && Recommendation.StaffID == Staff.Id && Recommendation.Staff != null)
-                            {
-                                <div class="recommendation-container">
-                                    <div class="recommendation-image">
-                                        @if (Book.Image != null)
-                                        {
-                                            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Book.Image))" alt="Book Image" />
-                                        }
-                                        else
-                                        {
-                                            <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image">
-                                        }
-                                    </div>
-                                    <div class="recommendation-details">
-                                        <h1><b>@Book.Title</b></h1>
-                                        <div class="Stars" style="--rating: @Recommendation.StaffRating;" aria-label="rating">
-                                            @Recommendation.StaffRating
-                                        </div>
-                                        <h2>Written by @Recommendation.Staff.FirstName @Recommendation.Staff.LastName; @(Recommendation.Date.Date.ToString("dd/MM/yyyy"))</h2>
-                                        <div class="recommendation-details-p-container"><p>@Recommendation.Description</p></div>
-                                        <a href="/products/view/@Book.Id" class="btn btn-primary">
-                                            View Book
-                                        </a>
-                                    </div>
-                                </div>
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    </div>
 </div>
 
 
 @code {
-    private List<Recommendation>? Recommendations;
-    private List<Book>? Books;
-    private List<Staff>? Staffs;
-
     protected async override Task OnInitializedAsync()
     {
         _interceptor.MonitorEvent();
-        Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
-        Recommendations = Recommendations.OrderByDescending(r => r.Date).ToList();
-        Recommendations = Recommendations.Take(3).ToList();
-        Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
-        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
     }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
