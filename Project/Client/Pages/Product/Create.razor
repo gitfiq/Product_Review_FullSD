@@ -1,6 +1,8 @@
 ﻿@page "/products/review/create/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 
 <h1>Create Review</h1>
 
@@ -91,9 +93,15 @@ else
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         AppUsers = await _client.GetFromJsonAsync<List<AppUser>>($"{Endpoints.AppUsersEndpoint}");
         book = await _client.GetFromJsonAsync<Book>($"{Endpoints.BooksEndpoint}/{id}");
         review.BookID = book?.Id;
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 
     private async Task CreateReview()

@@ -267,11 +267,6 @@
         FilteredBooks = Books;
     }
 
-    protected async override Task OnAfterRenderAsync(bool firstRender)
-    {
-        await js.InvokeVoidAsync("AddDataTable", "#recommendationsTable");
-    }
-
     async Task Delete(int Id)
     {
         if (Recommendations != null)
@@ -288,7 +283,6 @@
 
     public void Dispose()
     {
-        js.InvokeVoidAsync("DataTablesDispose", "#recommendationsTable");
         _interceptor.DisposeEvent();
     }
 

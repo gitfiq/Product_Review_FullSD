@@ -1,5 +1,7 @@
 ﻿@inject HttpClient _client
 @inject NavigationManager _navManager
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 
 <head>
     <style>
@@ -175,6 +177,7 @@
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         loading = true; // Set loading to true initially
 
         Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
@@ -188,6 +191,11 @@
     {
         var bookId = recommendation.BookID; 
         _navManager.NavigateTo($"/products/view/{bookId}");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 
 }
