@@ -22,6 +22,19 @@ namespace Project.Server.Configurations.Entities
                     DateUpdated = DateTime.Now,
                     CreatedBy = "System",
                     UpdatedBy = "System"
+                },
+                new Publisher
+                {
+                    Id = 2,
+                    PublisherName = "Armour Publishing",
+                    ContactInfo = "65748432",
+                    EmailAddress = "ap@arpub.com",
+                    Address = "Bukit Merah Central, #02-07 Block 1003, Singapore 159836",
+                    WebsiteLink = "https://armourpublishing.com/",
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+                    CreatedBy = "System",
+                    UpdatedBy = "System"
                 }
                 );
         }
