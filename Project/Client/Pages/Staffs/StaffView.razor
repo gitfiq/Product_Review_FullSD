@@ -1,6 +1,8 @@
 ﻿@page "/staffs/view/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 
 <head>
     <style>
@@ -195,8 +197,9 @@
     private List<Recommendation>? Recommendations;
     private List<Book>? Books;
 
-    protected async override Task OnParametersSetAsync()
+    protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
         staff = await _client.GetFromJsonAsync<Staff>($"{Endpoints.StaffsEndpoint}/{id}");
         Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
         Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
@@ -205,6 +208,11 @@
     private async Task NavigateToBook()
     {
         _navManager.NavigateTo($"/staffs/");
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }
 

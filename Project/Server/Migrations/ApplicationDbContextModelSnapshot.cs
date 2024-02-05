@@ -396,7 +396,7 @@ namespace Project.Server.Migrations
                         {
                             Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "af36d876-688b-4d88-ae83-afe53c802bec",
+                            ConcurrencyStamp = "cf2b85c6-cc5a-47d9-82c7-e87616f94e0a",
                             Email = "admin@localhost.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -404,9 +404,9 @@ namespace Project.Server.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAJgwz7KTbZl6uMiTmRpmGm8LuChYBWKwqH9f62L1wxWJbKVsk+DczeX1V3Nh1afuQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMOenRFqQ3heOXhN7F/aDWqJJKzRiSCsBGoG598xjiMUaRFxaAqLfOIwSpeV6bDNkw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b6ad4dcb-4a79-49cc-a926-78e028a90634",
+                            SecurityStamp = "dabd85e5-4b76-440e-a13e-bdff6c774022",
                             TwoFactorEnabled = false,
                             UserName = "admin@localhost.com"
                         });
@@ -468,8 +468,8 @@ namespace Project.Server.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8382),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8409),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4169),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4184),
                             EmailAddress = "rayleong@bookmail.com",
                             FirstName = "Ray",
                             Gender = "Male",
@@ -482,8 +482,8 @@ namespace Project.Server.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8422),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(8423),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4189),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4190),
                             EmailAddress = "afiq@bookmail.com",
                             FirstName = "Ahmad",
                             Gender = "Male",
@@ -547,8 +547,8 @@ namespace Project.Server.Migrations
                             Biography = "Roald Dahl (1916-1990) was a prolific British author renowned for his captivating and whimsical children's literature. Born in Wales, Dahl's diverse career began as a fighter pilot in World War II before he found success as a writer. His imaginative tales, such as \"Charlie and the Chocolate Factory,\" \"Matilda,\" and \"James and the Giant Peach,\" have become timeless classics, celebrated for their dark humor and memorable characters. Dahl's unique storytelling and vivid imagination earned him widespread acclaim, making him one of the most beloved and influential children's authors of the 20th century. His legacy endures, enchanting readers of all ages.",
                             ContactInfo = "22446688",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9145),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9148),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4816),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4817),
                             EmailAddress = "roalddahl@bookmail.com",
                             FirstName = "Roald",
                             LastName = "Dahl",
@@ -560,8 +560,8 @@ namespace Project.Server.Migrations
                             Biography = "George Orwell (1903-1950), born Eric Arthur Blair in India, was a British writer and journalist renowned for his penetrating social and political critiques. Best known for dystopian classics \"Nineteen Eighty-Four\" and \"Animal Farm,\" Orwell delved into the perils of totalitarianism and the abuse of power. A committed democratic socialist, his experiences during the Spanish Civil War and reflections on totalitarian regimes fueled his compelling narratives. Orwell's non-fiction works, including \"Homage to Catalonia\" and \"Down and Out in Paris and London,\" displayed a keen eye for societal injustice. His incisive prose and commitment to truth make Orwell a literary giant whose influence persists globally.",
                             ContactInfo = "11335577",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9153),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9155),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4821),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4822),
                             EmailAddress = "georgeorwell@bookmail.com",
                             FirstName = "George",
                             LastName = "Orwell",
@@ -573,8 +573,8 @@ namespace Project.Server.Migrations
                             Biography = "J.R.R. Tolkien (born January 3, 1892, Bloemfontein, South Africa—died September 2, 1973, Bournemouth, Hampshire, England) English writer and scholar who achieved fame with his children's book The Hobbit (1937) and his richly inventive epic fantasy The Lord of the Rings ",
                             ContactInfo = "48591526",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9159),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9160),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4824),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4825),
                             EmailAddress = "jrrtolkien@bookmail.com",
                             FirstName = "J.R.R",
                             LastName = "Tolkien",
@@ -586,8 +586,8 @@ namespace Project.Server.Migrations
                             Biography = "J.K. Rowling, born Joanne Rowling on July 31, 1965, in Yate, Gloucestershire, England, is a British author best known for creating the immensely popular \"Harry Potter\" series. Rowling's journey to literary fame began with the idea for the series during a train journey in 1990. Over the next several years, she meticulously outlined the seven-book saga, which follows the magical adventures of the young wizard Harry Potter and his friends.",
                             ContactInfo = "35246857",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9165),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 201, DateTimeKind.Local).AddTicks(9166),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4827),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(4828),
                             EmailAddress = "jkrowling@bookmail.com",
                             FirstName = "J.K",
                             LastName = "Rowling",
@@ -617,8 +617,7 @@ namespace Project.Server.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Edition")
                         .HasColumnType("nvarchar(max)");
@@ -663,10 +662,10 @@ namespace Project.Server.Migrations
                         new
                         {
                             Id = 1,
-                            BookRating = 0.0,
+                            BookRating = 5.0,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This book is about magic and monsters",
+                            Description = "The Dursleys were so mean and hideous that summer that all Harry Potter wanted was to get back to the Hogwarts School for Witchcraft and Wizardry. But just as he's packing his bags, Harry receives a warning from a strange, impish creature named Dobby who says that if Harry Potter returns to Hogwarts, disaster will strike.And strike it does. For in Harry's second year at Hogwarts, fresh torments and horrors arise, including an outrageously stuck-up new professor, Gilderoy Lockhart, a spirit named Moaning Myrtle who haunts the girls' bathroom, and the unwanted attentions of Ron Weasley's younger sister, Ginny.But each of these seem minor annoyances when the real trouble begins, and someone -- or something -- starts turning Hogwarts students to stone. Could it be Draco Malfoy, a more poisonous rival than ever? Could it possibly be Hagrid, whose mysterious past is finally told? Or could it be the one everyone at Hogwarts most suspects... Harry Potter himself?",
                             Edition = "1",
                             NumberOfPages = 200,
                             PublishYear = 2014,
@@ -681,7 +680,7 @@ namespace Project.Server.Migrations
                             BookRating = 5.0,
                             DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "This book is about monsters and dwarves and humans and other things",
+                            Description = "One Ring to rule them all, One Ring to find them, One Ring to bring them all and in the darkness bind them.\r\n\r\nIn ancient times the Rings of Power were crafted by the Elven-smiths, and Sauron, the Dark Lord, forged the One Ring, filling it with his own power so that he could rule all others. But the One Ring was taken from him, and though he sought it throughout Middle-earth, it remained lost to him. After many ages it fell by chance into the hands of the hobbit Bilbo Baggins.\r\n\r\nFrom Sauron's fastness in the Dark Tower of Mordor, his power spread far and wide. Sauron gathered all the Great Rings to him, but always he searched for the One Ring that would complete his dominion.\r\n\r\nWhen Bilbo reached his eleventy-first birthday he disappeared, bequeathing to his young cousin Frodo the Ruling Ring and a perilous quest: to journey across Middle-earth, deep into the shadow of the Dark Lord, and destroy the Ring by casting it into the Cracks of Doom.",
                             Edition = "1",
                             NumberOfPages = 250,
                             PublishYear = 2015,
@@ -689,6 +688,81 @@ namespace Project.Server.Migrations
                             SchoolLevel = "Secondary 1",
                             Subject = "English",
                             Title = "Lord Of The Rings"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BookRating = 4.0,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "The family film told from the dog’s perspective also stars Britt Robertson, KJ Apa, John Ortiz, Peggy Lipton, Juliet Rylance, Luke Kirby, Pooch Hall and Dennis Quaid. A Dog’s Purpose is produced by Gavin Polone (Zombieland, TV’s Gilmore Girls). The film from Amblin Entertainment and Walden Media will be distributed by Universal Pictures. Screenplay by W. Bruce Cameron & Cathryn Michon and Audrey Wells and Maya Forbes & Wally Wolodarsky.\r\n\r\nHeartwarming, insightful, and often laugh-out-loud funny, A Dog's Purpose is not only the emotional and hilarious story of a dog's many lives, but also a dog's-eye commentary on human relationships and the unbreakable bonds between man and man's best friend. This moving and beautifully crafted story teaches us that love never dies, that our true friends are always with us, and that every creature on earth is born with a purpose.",
+                            Edition = "1",
+                            NumberOfPages = 336,
+                            PublishYear = 2015,
+                            PublisherID = 1,
+                            SchoolLevel = "Secondary 1",
+                            Subject = "English",
+                            Title = "A Dog's Purpose: A Novel for Humans"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BookRating = 3.0,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "The boy has lived his whole life trapped within a book-choked chamber older than empires and larger than cities.\r\n\r\nThe girl has been plucked from the outskirts of civilization to be trained as a librarian, studying the mysteries of the great library at the heart of her kingdom.They were never supposed to meet. But in the library, they did.\r\n\r\nTheir stories spiral around each other, across worlds and time. This is a tale of truth and lies and hearts, and the blurring of one into another. A journey on which knowledge erodes certainty and on which, though the pen may be mightier than the sword, blood will be spilled and cities burned.",
+                            Edition = "1",
+                            NumberOfPages = 421,
+                            PublishYear = 2015,
+                            PublisherID = 1,
+                            SchoolLevel = "Secondary 1",
+                            Subject = "English",
+                            Title = "The Book That Wouldn't Burn"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BookRating = 3.0,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "The third book in the Harry Potter series, illustrated in brilliant full color by MinaLima and featuring eight exclusive interactive elements, including the Marauder’s Map and more!Return to Hogwarts in this stunning edition of Harry Potter and the Prisoner of Azkaban. J.K. Rowling’s complete and unabridged text is accompanied by full-color illustrations on nearly every page and eight paper-engineered interactive elements: Readers will explore the Knight Bus, reveal the Grim in a teacup, spin the Time-Turner, and more.\r\n\r\nDesigned and illustrated by MinaLima ― the award-winning studio behind the graphic style of the Harry Potter films ― this keepsake edition is the perfect gift for Harry Potter fans of all ages, a beautiful addition to any collector’s bookshelf, and an enchanting way to share this beloved series with a new generation of readers.",
+                            Edition = "1",
+                            NumberOfPages = 421,
+                            PublishYear = 2015,
+                            PublisherID = 1,
+                            SchoolLevel = "Secondary 1",
+                            Subject = "English",
+                            Title = "Harry Potter and the Prisoner of Azkaban "
+                        },
+                        new
+                        {
+                            Id = 6,
+                            BookRating = 3.0,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Interstellar, from acclaimed filmmaker Christopher Nolan, takes us on a fantastic voyage far beyond our solar system. Yet in The Science of Interstellar, Kip Thorne, the Nobel prize-winning physicist who assisted Nolan on the scientific aspects of Interstellar, shows us that the movie’s jaw-dropping events and stunning, never-before-attempted visuals are grounded in real science. Thorne shares his experiences working as the science adviser on the film and then moves on to the science itself. In chapters on wormholes, black holes, interstellar travel, and much more, Thorne’s scientific insights―many of them triggered during the actual scripting and shooting of Interstellar―describe the physical laws that govern our universe and the truly astounding phenomena that those laws make possible.",
+                            Edition = "1",
+                            NumberOfPages = 421,
+                            PublishYear = 2015,
+                            PublisherID = 1,
+                            SchoolLevel = "Secondary 1",
+                            Subject = "English",
+                            Title = "The Science of Interstellar"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            BookRating = 3.0,
+                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateUpdated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Everyone expected Violet Sorrengail to die during her first year at Basgiath War College—Violet included. But Threshing was only the first impossible test meant to weed out the weak-willed, the unworthy, and the unlucky.\r\n\r\nNow the real training begins, and Violet’s already wondering how she’ll get through. It’s not just that it’s grueling and maliciously brutal, or even that it’s designed to stretch the riders’ capacity for pain beyond endurance. It’s the new vice commandant, who’s made it his personal mission to teach Violet exactly how powerless she is–unless she betrays the man she loves.\r\n\r\nAlthough Violet’s body might be weaker and frailer than everyone else’s, she still has her wits—and a will of iron. And leadership is forgetting the most important lesson Basgiath has taught her: Dragon riders make their own rules.\r\n\r\nBut a determination to survive won’t be enough this year.\r\n\r\nBecause Violet knows the real secret hidden for centuries at Basgiath War College—and nothing, not even dragon fire, may be enough to save them in the end.\r\n\r\nThe Empyrean series is best enjoyed in order.\r\nReading Order:\r\nBook #1 Fourth Wing\r\nBook #2 Iron Flame",
+                            Edition = "1",
+                            NumberOfPages = 421,
+                            PublishYear = 2015,
+                            PublisherID = 1,
+                            SchoolLevel = "Secondary 1",
+                            Subject = "English",
+                            Title = "Iron Flame (The Empyrean Book 2) "
                         });
                 });
 
@@ -735,8 +809,8 @@ namespace Project.Server.Migrations
                             AuthorID = 1,
                             BookID = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1048),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1049),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(5671),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(5673),
                             UpdatedBy = "System"
                         });
                 });
@@ -754,7 +828,6 @@ namespace Project.Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactInfo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -792,12 +865,25 @@ namespace Project.Server.Migrations
                             Address = "15 Serangoon North Avenue 5, Singapore 554360",
                             ContactInfo = "64629603",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(2304),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(2306),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(6403),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(6405),
                             EmailAddress = "eph@popularworld.com",
                             PublisherName = "Educational Publishing House",
                             UpdatedBy = "System",
                             WebsiteLink = "https://www.eph.com.sg/"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Bukit Merah Central, #02-07 Block 1003, Singapore 159836",
+                            ContactInfo = "65748432",
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(6416),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(6417),
+                            EmailAddress = "ap@arpub.com",
+                            PublisherName = "Armour Publishing",
+                            UpdatedBy = "System",
+                            WebsiteLink = "https://armourpublishing.com/"
                         });
                 });
 
@@ -827,8 +913,7 @@ namespace Project.Server.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StaffID")
                         .IsRequired()
@@ -855,10 +940,23 @@ namespace Project.Server.Migrations
                             Id = 1,
                             BookID = 1,
                             CreatedBy = "System",
-                            Date = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1488),
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1492),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1493),
-                            Description = "this book is very lovely and I recommended it to whoever is interested in math",
+                            Date = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(5925),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(5927),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(5928),
+                            Description = "This boook is very lovely and i recommended you to read it",
+                            StaffID = 1,
+                            StaffRating = 4.5,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BookID = 2,
+                            CreatedBy = "System",
+                            Date = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(5930),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(5932),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(5933),
+                            Description = "This book is amazing. It provides, a glimpse of the workforce world. I highly recommend it to the young adults that is searching for a job",
                             StaffID = 1,
                             StaffRating = 5.0,
                             UpdatedBy = "System"
@@ -920,8 +1018,8 @@ namespace Project.Server.Migrations
                             BookID = 1,
                             Content = "This book has changed my life, and I would highly recommend this to anyone who is in school.",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(595),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(597),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(5318),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(5319),
                             Title = "I love this book",
                             UpdatedBy = "System",
                             UserRating = 4.0
@@ -985,8 +1083,8 @@ namespace Project.Server.Migrations
                             Id = 1,
                             ContactInfo = "87907564",
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1899),
-                            DateUpdated = new DateTime(2024, 1, 31, 21, 1, 59, 202, DateTimeKind.Local).AddTicks(1902),
+                            DateCreated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(6172),
+                            DateUpdated = new DateTime(2024, 2, 5, 10, 35, 7, 217, DateTimeKind.Local).AddTicks(6173),
                             EmailAddress = "admin1@blazor.com",
                             FirstName = "Sam",
                             LastName = "Wick",

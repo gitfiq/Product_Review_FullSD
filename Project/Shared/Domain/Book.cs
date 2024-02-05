@@ -10,7 +10,6 @@ namespace Project.Shared.Domain
 
 
         [Required(ErrorMessage = "Description is required")]
-        [StringLength(200, MinimumLength = 5, ErrorMessage = "Description does not meet length requirements. Description must be at least 5 characters long ")]
         public string? Description { get; set; }
 
 

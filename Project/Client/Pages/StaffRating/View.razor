@@ -18,6 +18,7 @@
 @code {
     [Parameter] public int id { get; set; }
     Recommendation? recommendation = new Recommendation();
+
     protected async override Task OnParametersSetAsync()
     {
         recommendation = await _client.GetFromJsonAsync<Recommendation>($"{Endpoints.RecommendationsEndpoint}/{id}");

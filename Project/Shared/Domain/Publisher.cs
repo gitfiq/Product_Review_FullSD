@@ -20,8 +20,6 @@ namespace Project.Shared.Domain
         public string? EmailAddress { get; set; }
 
 
-        [Required(ErrorMessage = "Publisher's Contact Info is required")]
-        [RegularExpression("^[0-9]{8}$", ErrorMessage = "Publisher's Contact Info must be an 8-digit number")]
         public string? ContactInfo { get; set;}
 
 

@@ -1,6 +1,8 @@
 ﻿@inject HttpClient _client
 @inject NavigationManager _navManager
 @inject IJSRuntime js
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
 
 <style>
     /*Rating*/
@@ -103,152 +105,157 @@
 
 
 <EditForm Model="@book" OnValidSubmit="@OnValidSubmit">
-    <div class="product-container">
-        <div class="product-image">
-            @if (book != null)
-            {
-                @if (book.Image != null)
+    @if (loading)
+        {
+        <p>Loading data...</p>
+    }
+    else
+    {
+        <div class="product-container">
+            <div class="product-image">
+                @if (book != null)
                 {
-                    <img src="@(book.Image != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(book.Image)}" : "path/to/default/image.jpg")" alt="Book Image" />
+                    @if (book.Image != null)
+                    {
+                        <img src="@(book.Image != null ? $"data:image/jpeg;base64,{Convert.ToBase64String(book.Image)}" : "path/to/default/image.jpg")" alt="Book Image" />
 
+                    }
+                    else
+                    {
+                        <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image">
+                    }
                 }
                 else
                 {
-                    <img src="https://islandpress.org/sites/default/files/default_book_cover_2015.jpg" alt="Book Image">
+                    <p>Book Image is not available</p>
+                }
+            </div>
+            <div class="product-details">
+                <h1>@book.Title</h1>
+
+                @if (Books != null && Publishers != null)
+                {
+                    @foreach (var Publisher in Publishers)
+                    {
+                        @if (Publisher.Id == book.PublisherID)
+                        {
+                            <h3>@Publisher.PublisherName</h3>
+                        }
+                    }
+                }
+
+                <div class="rating-container">
+                    <div class="Stars" style="--rating: @averageRating;" aria-label="rating">
+                        @averageRating
+                    </div>
+                </div>
+
+                <p>@book.Description</p>
+                <h2>Details:</h2>
+                <ul>
+                    <li>Publication Year: @book.PublishYear</li>
+                    <li>Subject: @book.Subject</li>
+                    <li>School Level: @book.SchoolLevel</li>
+                    <li>Number Of Pages: @book.NumberOfPages</li>
+                    <li>Edition: @book.Edition</li>
+                </ul>
+            </div>
+        </div>
+        <div class="recommendation-container">
+            <h1>Recommendations from our staffs:</h1>
+            <br />
+            @if (Books != null)
+            {
+                @if (Recommendations != null)
+                {
+                    @foreach (var Recommendation in Recommendations)
+                    {
+                        @if (book.Id == Recommendation?.BookID)
+                        {
+                            @if (Recommendation != null && Recommendation.Staff != null)
+                            {
+                                <p>@Recommendation.Description <b>-@Recommendation.Staff.FirstName @Recommendation.Staff.LastName; @Recommendation.DateUpdated</b></p>
+                            }
+                            else
+                            {
+                                <p>Recommendations are not available.</p>
+                            }
+                        }
+                    }
+                }
+
+            }
+        </div>
+        <div class="review-container">
+            <a href="products/review/create/@book.Id" class="btn btnCreate">
+                <span class="oi oi-plus"></span>
+                Write Review for this book
+            </a>
+            <br /><br />
+
+            <h1>User Reviews:</h1>
+            @if (Books != null && Reviews != null)
+            {
+                @foreach (var Review in Reviews)
+                {
+                    @if (book.Id == Review.BookID)
+                    {
+
+                        <div class="review-item">
+                            <h3><b>@Review.Title</b></h3>
+                            <div class="rating-container">
+                                <p>Rating: @Review.UserRating </p>
+                                <div class="star-rating" style="margin-right: 10px;">
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        @if (Review.UserRating >= i + 1)
+                                        {
+                                            <span>&#9733;</span> <!-- Filled star character -->
+                                        }
+                                        else
+                                        {
+                                            <span>&#9734;</span> <!-- Empty star character -->
+                                        }
+                                    }
+                                </div>
+                                <div> Reviewed on: @Review.DateCreated.ToString("dd/MM/yyyy")</div>
+                            </div>
+                            <p>@Review.Content</p>
+                            <br>
+                            <a href="/products/review/edit/@Review.Id/@book.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(Review.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </div>
+
+                    }
                 }
             }
             else
             {
-                <p>Book Image is not available</p>
+                <p>Loading reviews....</p>
             }
         </div>
-        <div class="product-details">
-            <h1>@book.Title</h1>
 
-            @if (Books != null && Publishers != null)
-            {
-                @foreach (var Publisher in Publishers)
-                {
-                    @if (Publisher.Id == book.PublisherID)
-                    {
-                        <h3>@Publisher.PublisherName</h3>
-                    }
-                    else
-                    {
-                        <h3>No publisher found</h3>
-                    }
-                }
-            }
-
-            <div class="rating-container">
-                <div class="Stars" style="--rating: @averageRating;" aria-label="rating">
-                    @averageRating
-                </div>
-            </div>
-
-            <p>@book.Description</p>
-            <h2>Details:</h2>
-            <ul>
-                <li>Publication Year: @book.PublishYear</li>
-                <li>Subject: @book.Subject</li>
-                <li>School Level: @book.SchoolLevel</li>
-                <li>Number Of Pages: @book.NumberOfPages</li>
-                <li>Edition: @book.Edition</li>
-            </ul>
-        </div>
-    </div>
-    <div class="recommendation-container">
-        <h1>Recommendations from our staffs:</h1>
         <br />
-        @if (Books != null)
-        {
-            @if (Recommendations != null)
-            {
-                @foreach (var Recommendation in Recommendations)
-                {
-                    @if (book.Id == Recommendation?.BookID)
-                    {
-                        @if (Recommendation != null && Recommendation.Staff != null)
-                        {
-                            <p>@Recommendation.Description <b>-@Recommendation.Staff.FirstName @Recommendation.Staff.LastName; @Recommendation.DateUpdated</b></p>
-                        }
-                        else
-                        {
-                            <p>Recommendations are not available.</p>
-                        }
-                    }
-                }
-            }
-
-        }
-    </div>
-    <div class="review-container">
-        <a href="products/review/create/@book.Id" class="btn btnCreate">
-            <span class="oi oi-plus"></span>
-            Write Review for this book
-        </a>
-        <br /><br />
-
-        <h1>User Reviews:</h1>
-        @if (Books != null && Reviews != null)
-        {
-            @foreach (var Review in Reviews)
-            {
-                @if (book.Id == Review.BookID)
-                {
-
-                    <div class="review-item">
-                        <h3><b>@Review.Title</b></h3>
-                        <div class="rating-container">
-                            <p>Rating: @Review.UserRating </p>
-                            <div class="star-rating" style="margin-right: 10px;">
-                                @for (int i = 0; i < 5; i++)
-                                {
-                                    @if (Review.UserRating >= i + 1)
-                                    {
-                                        <span>&#9733;</span> <!-- Filled star character -->
-                                    }
-                                    else
-                                    {
-                                        <span>&#9734;</span> <!-- Empty star character -->
-                                    }
-                                }
-                            </div>
-                            <div> Reviewed on: @Review.DateCreated.ToString("dd/MM/yyyy")</div>
-                        </div>
-                        <p>@Review.Content</p>
-                        <br>
-                        <a href="/products/review/edit/@Review.Id/@book.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(Review.Id))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </div>
-
-                }
-            }
-        }
-        else
-        {
-            <p>Loading reviews....</p>
-        }
-    </div>
-
-    <br />
-    <div class="button-navigation">
-        <button class="btn btn-outline-dark btn-block" @onclick="NavigateToBook">
-            <span class="oi oi-arrow-left"></span>
-            Back to Catalog
-        </button>
-    </div>
-    <br />
+        <div class="button-navigation">
+            <button class="btn btn-outline-dark btn-block" @onclick="NavigateToBook">
+                <span class="oi oi-arrow-left"></span>
+                Back to Catalog
+            </button>
+        </div>
+        <br />
+    }
 
 </EditForm>
+
 @code {
     public double averageRating;
     public double totalRating = 0;
     public int totalCount = 0;
+    private bool loading = true;
     [Parameter] public bool Disabled { get; set; } = false;
     [Parameter] public Book? book { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
@@ -261,11 +268,16 @@
 
     protected async override Task OnInitializedAsync()
     {
+        _interceptor.MonitorEvent();
+        loading = true; // Set loading to true initially
+
         Recommendations = await _client.GetFromJsonAsync<List<Recommendation>>($"{Endpoints.RecommendationsEndpoint}");
         Books = await _client.GetFromJsonAsync<List<Book>>($"{Endpoints.BooksEndpoint}");
         Publishers = await _client.GetFromJsonAsync<List<Publisher>>($"{Endpoints.PublishersEndpoint}");
         Reviews = await _client.GetFromJsonAsync<List<Review>>($"{Endpoints.ReviewsEndpoint}");
         CalculateAverageRating();
+
+        loading = false; // Set loading to false after data is fetched
     }
     private void CalculateAverageRating()
     {
@@ -306,5 +318,10 @@
                 await OnInitializedAsync();
             }
         }
+    }
+
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }
